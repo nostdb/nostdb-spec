@@ -35,6 +35,7 @@ docs/NOSTDB_FORMAT.md
 docs/QUERY_SUBSET.md
 fixtures/cypher/supported
 fixtures/cypher/unsupported
+fixtures/cypher/semantic
 fixtures/nost/valid
 fixtures/nost/invalid-syntax
 fixtures/nost/invalid-semantic

@@ -107,6 +107,9 @@ fn every_code_a_fixture_declares_is_registered() {
         "fixtures/nost/invalid-syntax",
         "fixtures/nost/invalid-semantic",
         "fixtures/nostdb/header",
+        "fixtures/cypher/supported",
+        "fixtures/cypher/unsupported",
+        "fixtures/cypher/semantic",
     ];
 
     let mut declared = 0usize;
@@ -123,4 +126,69 @@ fn every_code_a_fixture_declares_is_registered() {
         }
     }
     assert!(declared > 0, "no fixture declares a diagnostic code");
+}
+
+/// Every code-shaped name a specified contract mentions is registered.
+///
+/// The reverse direction was already checked, and it missed the case that actually
+/// happened: the query subset contract named `LINKED_DATABASE_READ_ONLY` while the
+/// registry did not carry it, so a published contract promised a code no implementation
+/// could look up. Nothing detected that, because a document may legitimately mention a
+/// registered code without the registry mentioning the document.
+///
+/// A code-shaped name is a backticked token of upper-case letters, digits, and at least
+/// one underscore. Every such token across the contracts is a diagnostic code, so the
+/// pattern is exact rather than approximate. A future contract that wants an upper-snake
+/// name for something else has to register it or spell it differently, which is the point.
+#[test]
+fn every_code_shaped_name_in_a_contract_is_registered() {
+    let registered: BTreeSet<String> = common::read_json("diagnostics.json")["codes"]
+        .as_array()
+        .expect("codes array")
+        .iter()
+        .map(|e| e["code"].as_str().expect("code").to_string())
+        .collect();
+
+    let documents: Vec<String> = common::read_json("versions.json")["contracts"]
+        .as_array()
+        .expect("contracts array")
+        .iter()
+        .filter_map(|c| c["specified_in"].as_str().map(String::from))
+        .collect();
+    assert!(!documents.is_empty(), "no contract names a document");
+
+    let mut mentioned = 0usize;
+    for document in &documents {
+        for token in code_shaped_names(&common::read(document)) {
+            assert!(
+                registered.contains(&token),
+                "{document} mentions `{token}`, which the registry does not carry"
+            );
+            mentioned += 1;
+        }
+    }
+    assert!(
+        mentioned > 0,
+        "no contract mentions a diagnostic code, so this check proves nothing"
+    );
+}
+
+/// Backticked tokens of upper-case letters, digits, and at least one underscore.
+fn code_shaped_names(text: &str) -> BTreeSet<String> {
+    let mut found = BTreeSet::new();
+    for candidate in text.split('`').skip(1).step_by(2) {
+        let mut groups = candidate.split('_');
+        let shaped = groups.clone().count() >= 2
+            && groups.all(|group| {
+                !group.is_empty()
+                    && group
+                        .chars()
+                        .all(|c| c.is_ascii_uppercase() || c.is_ascii_digit())
+            })
+            && candidate.starts_with(|c: char| c.is_ascii_uppercase());
+        if shaped {
+            found.insert(candidate.to_owned());
+        }
+    }
+    found
 }

@@ -1,0 +1,3 @@
+outcome = reject
+code = CYPHER_UNSUPPORTED
+note = Whole-record assignment must decide what happens to omitted properties, so it is refused rather than guessed.

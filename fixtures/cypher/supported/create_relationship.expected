@@ -1,0 +1,2 @@
+outcome = accept
+note = Already bound endpoints are reused rather than recreated.

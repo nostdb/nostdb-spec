@@ -30,6 +30,7 @@ It does not own:
 | --- | --- | --- |
 | `.nost` language | `nost_language_version = 1` | [docs/NOST_LANGUAGE.md](docs/NOST_LANGUAGE.md) |
 | `.nostdb` container | `nostdb_format_version = 1` | [docs/NOSTDB_FORMAT.md](docs/NOSTDB_FORMAT.md) |
+| query subset | `query_subset_version = 1` | [docs/QUERY_SUBSET.md](docs/QUERY_SUBSET.md) |
 
 Supporting artifacts:
 
@@ -45,10 +46,10 @@ Supporting artifacts:
 
 ## Current status
 
-The `.nost` language and `.nostdb` container contracts are specified with a
-conformance suite. The settings, credentials, catalog, result-envelope, provider,
-plugin, manifest, and server protocol contracts have reserved version keys but
-are not authored yet; see [VERSIONS.md](VERSIONS.md).
+The `.nost` language, `.nostdb` container, and query subset contracts are specified
+with a conformance suite. The settings, credentials, catalog, result-envelope,
+provider, plugin, manifest, and server protocol contracts have reserved version keys
+but are not authored yet; see [VERSIONS.md](VERSIONS.md).
 
 No parser, storage engine, formatter, or query engine lives here. `nostdb-core`
 implements those and proves conformance by passing this suite.

@@ -1,0 +1,3 @@
+outcome = reject
+code = CYPHER_SEMANTIC_ERROR
+note = WHERE belongs to MATCH or WITH, never to RETURN.

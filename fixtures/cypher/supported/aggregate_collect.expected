@@ -1,0 +1,2 @@
+outcome = accept
+note = collect gathers a list in row order, skipping null.

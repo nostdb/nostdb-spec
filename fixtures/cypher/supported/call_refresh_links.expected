@@ -1,0 +1,2 @@
+outcome = accept
+note = The call parses. Executing it needs the provider capability, so a build without one refuses it at execution with CYPHER_UNSUPPORTED rather than at parse.

@@ -1,0 +1,3 @@
+outcome = reject
+code = CYPHER_SEMANTIC_ERROR
+note = An Edge has a source and a target, so a created relationship must be directed.

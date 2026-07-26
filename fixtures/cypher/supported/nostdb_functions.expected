@@ -1,0 +1,2 @@
+outcome = accept
+note = Every function the nostdb namespace declares. NostDB-specific values come from here rather than from new syntax.

@@ -1,0 +1,2 @@
+outcome = accept
+note = An aggregate with no grouping key returns exactly one row.

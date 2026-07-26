@@ -1,0 +1,2 @@
+outcome = accept
+note = A procedure taking an argument runs once per incoming row.

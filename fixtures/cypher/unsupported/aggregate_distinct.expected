@@ -1,0 +1,3 @@
+outcome = reject
+code = CYPHER_UNSUPPORTED
+note = DISTINCT inside an aggregate is outside the subset.

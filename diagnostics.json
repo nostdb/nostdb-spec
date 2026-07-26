@@ -115,6 +115,13 @@
       "summary": "The query is inside the subset but meaningless, such as an unbound variable or mismatched UNION columns. Nothing executed."
     },
     {
+      "code": "LINKED_DATABASE_READ_ONLY",
+      "severity": "error",
+      "contract": "query_subset_version",
+      "prd_required": true,
+      "summary": "A write named a record belonging to a linked source. Linked records are read-only from the root transaction, so nothing was modified."
+    },
+    {
       "code": "NOSTDB_FORMAT_UNSUPPORTED",
       "severity": "error",
       "contract": "nostdb_format_version",

@@ -1,0 +1,2 @@
+outcome = accept
+note = A part containing a write clause may omit RETURN.
