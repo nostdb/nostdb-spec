@@ -19,6 +19,7 @@ README.md
 LICENSE
 .gitignore
 .editorconfig
+.github/workflows/verify.yml
 "
 
 for required_file in $required_files; do
@@ -34,6 +35,7 @@ AGENTS.md
 README.md
 .gitignore
 .editorconfig
+.github/workflows/verify.yml
 scripts/verify-repository.sh
 "
 

@@ -51,6 +51,9 @@ independently. No contract in this repository couples two of those versions.
 ./scripts/verify-repository.sh
 ```
 
+Continuous integration runs the same verifier on every push and pull request, so
+a local pass and a CI pass check identical invariants.
+
 ## License
 
 Apache-2.0. See [LICENSE](LICENSE).
