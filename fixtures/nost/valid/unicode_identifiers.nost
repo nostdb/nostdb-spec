@@ -1,0 +1,13 @@
+@nost 1
+
+module módulo id "m_1" source "src/función.rs" {
+  node función id "n_1" :Función :Público {
+    nombre: "iniciar_sesión"
+  }
+
+  node _underscore_start id "n_2" :Label {
+    ключ: "value"
+  }
+
+  edge llamada id "e_1" :LLAMA (función -> _underscore_start) {}
+}

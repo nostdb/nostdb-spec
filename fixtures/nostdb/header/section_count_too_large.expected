@@ -1,0 +1,3 @@
+outcome = reject
+code = NOSTDB_LIMIT_EXCEEDED
+note = The limit is checked before the table is sized, so a corrupt count cannot drive allocation.

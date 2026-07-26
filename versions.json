@@ -1,0 +1,94 @@
+{
+  "registry_version": 1,
+  "note": "Every contract below carries its own version and evolves independently. A bump in one never implies a bump in another. See VERSIONS.md.",
+  "contracts": [
+    {
+      "key": "nost_language_version",
+      "current": 1,
+      "supported": [1],
+      "status": "specified",
+      "specified_in": "docs/NOST_LANGUAGE.md",
+      "summary": "The .nost human-readable graph source language."
+    },
+    {
+      "key": "nostdb_format_version",
+      "current": 1,
+      "supported": [1],
+      "status": "specified",
+      "specified_in": "docs/NOSTDB_FORMAT.md",
+      "summary": "The opaque .nostdb database container."
+    },
+    {
+      "key": "settings_version",
+      "current": 1,
+      "supported": [1],
+      "status": "deferred",
+      "specified_in": null,
+      "summary": "Project and global settings documents."
+    },
+    {
+      "key": "credentials_version",
+      "current": 1,
+      "supported": [1],
+      "status": "deferred",
+      "specified_in": null,
+      "summary": "Credential reference definitions, which never carry a secret."
+    },
+    {
+      "key": "catalog_version",
+      "current": 1,
+      "supported": [1],
+      "status": "deferred",
+      "specified_in": null,
+      "summary": "The per-user named database catalog."
+    },
+    {
+      "key": "result_version",
+      "current": 1,
+      "supported": [1],
+      "status": "deferred",
+      "specified_in": null,
+      "summary": "The machine-readable query result envelope."
+    },
+    {
+      "key": "provider_protocol_version",
+      "current": 1,
+      "supported": [1],
+      "status": "deferred",
+      "specified_in": null,
+      "summary": "The out-of-process source and graph-store provider protocol."
+    },
+    {
+      "key": "plugin_protocol_version",
+      "current": 1,
+      "supported": [1],
+      "status": "deferred",
+      "specified_in": null,
+      "summary": "The out-of-process plugin protocol."
+    },
+    {
+      "key": "manifest_version",
+      "current": 1,
+      "supported": [1],
+      "status": "deferred",
+      "specified_in": null,
+      "summary": "The nostdb-plugin.json manifest."
+    },
+    {
+      "key": "server_protocol_version",
+      "current": 1,
+      "supported": [1],
+      "status": "deferred",
+      "specified_in": null,
+      "summary": "The local daemon IPC protocol."
+    },
+    {
+      "key": "change_set_version",
+      "current": 1,
+      "supported": [1],
+      "status": "deferred",
+      "specified_in": null,
+      "summary": "The GraphChangeSet interchange artifact."
+    }
+  ]
+}

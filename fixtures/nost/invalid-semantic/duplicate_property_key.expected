@@ -1,0 +1,3 @@
+outcome = accept_then_diagnose
+code = NOST_DUPLICATE_PROPERTY_KEY
+note = A block sets one key twice; the last value must not silently win.

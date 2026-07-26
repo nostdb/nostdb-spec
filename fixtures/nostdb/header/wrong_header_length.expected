@@ -1,0 +1,3 @@
+outcome = reject
+code = NOSTDB_CORRUPT
+note = Version 1 fixes the header length, so a different value is corruption.

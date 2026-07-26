@@ -1,0 +1,4 @@
+@nost 1
+
+@link "./packages/child"
+@link "./packages/child" as child

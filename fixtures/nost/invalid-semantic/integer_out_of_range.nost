@@ -1,0 +1,7 @@
+@nost 1
+
+module m id "m_1" {
+  node n id "n_1" :Label {
+    too_large: 9223372036854775808
+  }
+}

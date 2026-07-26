@@ -1,0 +1,14 @@
+# section_count_too_large
+# section_count exceeds the 4096 limit.
+#
+# Whitespace is insignificant and '#' starts a comment.
+
+4E4F535444421A0A                  # magic "NOSTDB" 1A 0A
+01000000                          # nostdb_format_version = 1
+30000000                          # header_length = 48
+0100000000000000                  # database_generation = 1
+3000000000000000                  # section_table_offset = 48
+01100000                          # section_count = 4097
+00000000                          # flags = 0x00000000
+00000000                          # reserved = 0
+3DE4DB90                          # header_crc32c = 0x90DBE43D over bytes 0..44

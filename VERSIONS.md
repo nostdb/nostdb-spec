@@ -1,0 +1,52 @@
+# NostDB contract versions
+
+Every NostDB contract carries its own version and evolves independently. A bump
+in one version never implies a bump in another, and no implementation may couple
+two of them.
+
+`versions.json` is the machine-readable form of this table. The conformance suite
+checks that the two agree and that every contract marked `specified` names a file
+that exists.
+
+## Registry
+
+| Contract key | Current | Supported | Status | Specified in |
+| --- | --- | --- | --- | --- |
+| `nost_language_version` | 1 | 1 | specified | [docs/NOST_LANGUAGE.md](docs/NOST_LANGUAGE.md) |
+| `nostdb_format_version` | 1 | 1 | specified | [docs/NOSTDB_FORMAT.md](docs/NOSTDB_FORMAT.md) |
+| `settings_version` | 1 | 1 | deferred | not yet specified |
+| `credentials_version` | 1 | 1 | deferred | not yet specified |
+| `catalog_version` | 1 | 1 | deferred | not yet specified |
+| `result_version` | 1 | 1 | deferred | not yet specified |
+| `provider_protocol_version` | 1 | 1 | deferred | not yet specified |
+| `plugin_protocol_version` | 1 | 1 | deferred | not yet specified |
+| `manifest_version` | 1 | 1 | deferred | not yet specified |
+| `server_protocol_version` | 1 | 1 | deferred | not yet specified |
+| `change_set_version` | 1 | 1 | deferred | not yet specified |
+
+A `deferred` contract has a reserved key and an agreed starting version, but no
+authored contract yet. Reserving the key now is what keeps a later contract from
+inventing a competing version field.
+
+## Why the versions are independent
+
+A single product version would force unrelated churn. Changing the `.nostdb`
+container layout must not invalidate a `.nost` file, and adding a plugin action
+must not renumber the daemon protocol.
+
+Consequences an implementation must honor:
+
+- report every supported version separately, as `nostdb --version --json` does;
+- accept a file or message whose contract version is supported, regardless of
+  the versions of unrelated contracts;
+- refuse a contract version above the highest supported with an explicit
+  diagnostic rather than a best-effort parse;
+- never invalidate a cache because an unrelated component changed.
+
+## Adding a version
+
+1. Raise `current` for that one key, and extend `supported` only if the older
+   version still round-trips.
+2. Record the change in the contract document that owns the key.
+3. Add fixtures covering the new version and the now-unsupported case.
+4. Leave every other key untouched.

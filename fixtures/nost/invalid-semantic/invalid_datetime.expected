@@ -1,0 +1,3 @@
+outcome = accept_then_diagnose
+code = NOST_INVALID_DATETIME
+note = A datetime literal is not RFC 3339.

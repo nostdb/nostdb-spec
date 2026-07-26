@@ -1,0 +1,3 @@
+outcome = reject
+code = NOSTDB_CORRUPT
+note = The bounds check must not wrap, so overflow is corruption rather than an accepted range.

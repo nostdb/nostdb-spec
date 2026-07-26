@@ -1,0 +1,14 @@
+# valid_no_sections
+# A conforming 48-byte header declaring no sections.
+#
+# Whitespace is insignificant and '#' starts a comment.
+
+4E4F535444421A0A                  # magic "NOSTDB" 1A 0A
+01000000                          # nostdb_format_version = 1
+30000000                          # header_length = 48
+0100000000000000                  # database_generation = 1
+3000000000000000                  # section_table_offset = 48
+00000000                          # section_count = 0
+00000000                          # flags = 0x00000000
+00000000                          # reserved = 0
+648D3AFC                          # header_crc32c = 0xFC3A8D64 over bytes 0..44

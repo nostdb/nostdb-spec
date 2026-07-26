@@ -1,0 +1,3 @@
+outcome = reject
+code = NOSTDB_CORRUPT
+note = The magic is checked before any length is read, and only this check can fail here.

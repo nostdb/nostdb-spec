@@ -1,0 +1,122 @@
+// Executable reference encoding of the NostDB `.nost` grammar.
+//
+// nost_language_version = 1
+//
+// The normative grammar is grammar/nost.ebnf, and the normative conformance
+// gate is the fixture suite under fixtures/nost. This file exists so the
+// grammar is runnable rather than prose. It must agree with the fixtures, and it
+// does not constrain which parser technology nostdb-core chooses.
+//
+// This encoding recognizes syntax only. Comment-preserving CST construction,
+// error recovery, canonical formatting, and every semantic rule belong to
+// nostdb-core.
+
+WHITESPACE = _{ " " | "\t" | "\r" | "\n" }
+COMMENT    = _{ line_comment | block_comment }
+
+line_comment  = { "//" ~ (!"\n" ~ ANY)* }
+block_comment = { "/*" ~ (!"*/" ~ ANY)* ~ "*/" }
+
+nost_file = {
+    SOI ~ version_header ~ link_declaration* ~ module_declaration* ~ EOI
+}
+
+version_header = { "@nost" ~ integer_literal }
+
+link_declaration = { "@link" ~ string_literal ~ ("as" ~ alias_name)? }
+
+module_declaration = {
+    "module" ~ declaration_name ~ id_clause ~ source_clause?
+    ~ "{" ~ module_item* ~ "}"
+}
+
+module_item = { node_declaration | edge_declaration }
+
+node_declaration = {
+    "node" ~ declaration_name ~ id_clause ~ label_list ~ property_block
+}
+
+edge_declaration = {
+    "edge" ~ declaration_name ~ id_clause ~ relation_label
+    ~ "(" ~ endpoint ~ "->" ~ endpoint ~ ")" ~ property_block
+}
+
+id_clause     = { "id" ~ string_literal }
+source_clause = { "source" ~ string_literal }
+
+label_list     = { label+ }
+label          = { ":" ~ label_name }
+relation_label = { ":" ~ relation_name }
+
+endpoint         = { aliased_endpoint | locator_endpoint | local_endpoint }
+local_endpoint   = { declaration_name }
+aliased_endpoint = { alias_name ~ "::" ~ declaration_name }
+locator_endpoint = { string_literal ~ "::" ~ declaration_name }
+
+property_block = { "{" ~ property* ~ "}" }
+property       = { property_key ~ ":" ~ property_value }
+property_key   = { identifier }
+
+property_value = {
+    boolean_literal
+  | float_literal
+  | integer_literal
+  | string_literal
+  | bytes_literal
+  | datetime_literal
+  | list_literal
+}
+
+list_literal = { "[" ~ (property_scalar ~ ("," ~ property_scalar)*)? ~ "]" }
+
+property_scalar = {
+    boolean_literal
+  | float_literal
+  | integer_literal
+  | string_literal
+  | bytes_literal
+  | datetime_literal
+}
+
+declaration_name = { identifier }
+alias_name       = { identifier }
+label_name       = { identifier }
+relation_name    = { identifier }
+
+identifier          = @{ !reserved_word ~ identifier_start ~ identifier_continue* }
+identifier_start    = { XID_START | "_" }
+identifier_continue = { XID_CONTINUE }
+
+reserved_word = @{
+    ( "module" | "node" | "edge" | "id" | "source" | "as"
+    | "true" | "false" | "bytes" | "datetime" )
+    ~ !identifier_continue
+}
+
+boolean_literal = @{ ("true" | "false") ~ !identifier_continue }
+
+integer_literal = @{ "-"? ~ ASCII_DIGIT+ ~ !("." | "e" | "E") }
+
+float_literal = @{
+    "-"? ~ ASCII_DIGIT+ ~ "." ~ ASCII_DIGIT+ ~ exponent?
+  | "-"? ~ ASCII_DIGIT+ ~ exponent
+}
+
+exponent = @{ ("e" | "E") ~ ("+" | "-")? ~ ASCII_DIGIT+ }
+
+// The literal rules below are fully atomic. This encoding recognizes syntax; it
+// does not build a CST, so inner literal structure would buy nothing and would
+// leak misleading "expected escape_sequence" failures out of a well-formed
+// string when an enclosing rule fails later. nostdb-core builds the real
+// comment-preserving CST and reports its own diagnostics.
+string_literal   = @{ "\"" ~ string_character* ~ "\"" }
+string_character = { escape_sequence | !("\"" | "\\" | "\n" | "\r") ~ ANY }
+escape_sequence  = { "\\" ~ ("\"" | "\\" | "n" | "r" | "t" | unicode_escape) }
+unicode_escape   = { "u{" ~ ASCII_HEX_DIGIT+ ~ "}" }
+
+bytes_literal = @{
+    "bytes" ~ "\"" ~ (ASCII_HEX_DIGIT ~ ASCII_HEX_DIGIT)* ~ "\""
+}
+
+datetime_literal   = @{ "datetime" ~ "\"" ~ datetime_character* ~ "\"" }
+datetime_character = { !("\"" | "\n" | "\r") ~ ANY }

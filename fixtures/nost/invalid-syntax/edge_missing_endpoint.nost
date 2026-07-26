@@ -1,0 +1,7 @@
+@nost 1
+
+module m id "m_1" {
+  node a id "n_1" :Label {}
+
+  edge e id "e_1" :RELATES (a -> ) {}
+}

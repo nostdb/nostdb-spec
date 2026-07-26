@@ -1,0 +1,3 @@
+outcome = accept_then_diagnose
+code = NOST_VERSION_UNSUPPORTED
+note = The header names an unsupported language version.

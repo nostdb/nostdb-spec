@@ -1,0 +1,11 @@
+@nost 1
+
+module m id "m_1" {
+  node a id "n_1" :Label {}
+
+  node b id "n_2" :Label {}
+
+  edge e id "e_1" :CALLS (a -> b) {
+    confidence_score: 1.5
+  }
+}

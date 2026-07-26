@@ -1,0 +1,31 @@
+[package]
+name = "nostdb-spec-conformance"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+license = "Apache-2.0"
+description = "Conformance harness for the NostDB .nost language and .nostdb format contracts. Test-only; exposes no runtime API."
+publish = false
+
+[lib]
+path = "src/lib.rs"
+
+# pest and pest_derive are development dependencies only. They provide the
+# executable reference encoding of the normative grammar for conformance tests.
+# Because they are dev-dependencies, no consumer of this repository inherits
+# them, and nostdb-core stays free to choose its own parser technology.
+#
+# Dependency review:
+#
+# pest, pest_derive  Purpose: the executable reference encoding of the normative
+#                    grammar. Maintenance: active, pest-parser/pest.
+#                    License: MIT OR Apache-2.0.
+# serde_json         Purpose: reading versions.json, diagnostics.json, and
+#                    format/nostdb-header.json in the conformance tests, so the
+#                    machine-readable descriptors are checked rather than trusted.
+#                    Maintenance: active, serde-rs/json. License: MIT OR
+#                    Apache-2.0.
+[dev-dependencies]
+pest = "2.8"
+pest_derive = "2.8"
+serde_json = "1"

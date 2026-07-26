@@ -1,0 +1,3 @@
+outcome = reject
+code = NOSTDB_CORRUPT
+note = This is why the magic ends in 0x0A: a text-mode transfer is detected, not parsed.

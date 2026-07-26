@@ -24,11 +24,34 @@ It does not own:
 - any `.nostdb` writer, because only `nostdb-core` writes `.nostdb`;
 - a CLI, daemon, provider, or plugin implementation.
 
+## Contracts
+
+| Contract | Version | Normative document |
+| --- | --- | --- |
+| `.nost` language | `nost_language_version = 1` | [docs/NOST_LANGUAGE.md](docs/NOST_LANGUAGE.md) |
+| `.nostdb` container | `nostdb_format_version = 1` | [docs/NOSTDB_FORMAT.md](docs/NOSTDB_FORMAT.md) |
+
+Supporting artifacts:
+
+- [`grammar/nost.ebnf`](grammar/nost.ebnf) is the normative, generator-neutral
+  grammar. [`grammar/nost.pest`](grammar/nost.pest) is an executable reference
+  encoding of it.
+- [`format/nostdb-header.json`](format/nostdb-header.json) describes the container
+  header for machines.
+- [`versions.json`](versions.json) and [`VERSIONS.md`](VERSIONS.md) are the
+  independent contract version registry.
+- [`diagnostics.json`](diagnostics.json) is the diagnostic code registry.
+- [`fixtures/`](fixtures) is the conformance suite, and it is normative.
+
 ## Current status
 
-This repository is initialized as root Stage 1 scaffolding. The executable
-grammar, format contract, protocol schemas, examples, and conformance fixtures
-are authored in Stage 2 and are not present yet.
+The `.nost` language and `.nostdb` container contracts are specified with a
+conformance suite. The settings, credentials, catalog, result-envelope, provider,
+plugin, manifest, and server protocol contracts have reserved version keys but
+are not authored yet; see [VERSIONS.md](VERSIONS.md).
+
+No parser, storage engine, formatter, or query engine lives here. `nostdb-core`
+implements those and proves conformance by passing this suite.
 
 ## Product contract
 

@@ -1,0 +1,3 @@
+outcome = accept_then_diagnose
+code = NOST_DUPLICATE_LINK_SOURCE
+note = Two links canonicalize to one locator.

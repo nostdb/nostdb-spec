@@ -1,0 +1,5 @@
+outcome = reject
+code = NOST_PARSE_ERROR
+reference_line = 5
+reference_column = 14
+note = A bytes literal carries an even number of hexadecimal digits.

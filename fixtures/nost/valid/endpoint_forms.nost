@@ -1,0 +1,26 @@
+@nost 1
+
+@link "./packages/child"
+@link "./packages/shared" as shared
+
+module auth id "m_1" source "src/auth.rs" {
+  node login id "n_1" :Function {
+    name: "login"
+  }
+
+  node database id "n_2" :Database {
+    name: "primary"
+  }
+
+  edge local_call id "e_1" :CALLS (login -> database) {
+    confidence: "extracted"
+  }
+
+  edge aliased_call id "e_2" :CALLS (login -> shared::authorize) {
+    confidence: "inferred"
+  }
+
+  edge locator_call id "e_3" :CALLS (login -> "./packages/child"::handle) {
+    confidence: "inferred"
+  }
+}

@@ -1,0 +1,5 @@
+outcome = reject
+code = NOST_PARSE_ERROR
+reference_line = 1
+reference_column = 1
+note = The version header is mandatory and first.

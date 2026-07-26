@@ -1,0 +1,141 @@
+(* NostDB `.nost` grammar, normative.
+   nost_language_version = 1
+
+   This grammar is parser-generator neutral. grammar/nost.pest is a reference
+   encoding of it, and fixtures/nost is the conformance gate. An implementation
+   may use any parser technology provided it reproduces every fixture outcome.
+
+   Notation: a comma concatenates, a vertical bar alternates, square brackets
+   mark an optional part, braces mark zero or more repetitions, parentheses
+   group, double or single quotes delimit a terminal, a question-mark pair
+   delimits a special sequence described in prose, and a parenthesis-asterisk
+   pair delimits a comment.
+
+   A comment does not nest, so no comment may contain a comment terminator.
+
+   Trivia, meaning whitespace and comments, is permitted between any two tokens
+   and inside no token. It is a separate lexical root.
+
+   The roots directive below lists every rule a conformance checker treats as an
+   entry point. `nost_file` is the grammar's start symbol. `trivia` is a lexical
+   root because trivia is implicit between tokens rather than referenced by a
+   production. `reserved_word` is a lexical side-condition on `identifier`, which
+   standard EBNF has no negation operator to express, so it is stated as prose in
+   the language contract and rooted here.
+
+   @roots nost_file trivia reserved_word
+*)
+
+nost_file           = version_header , { link_declaration } ,
+                      { module_declaration } ;
+
+version_header      = "@nost" , integer_literal ;
+
+link_declaration    = "@link" , string_literal , [ "as" , alias_name ] ;
+
+module_declaration  = "module" , declaration_name , id_clause ,
+                      [ source_clause ] , "{" , { module_item } , "}" ;
+
+module_item         = node_declaration | edge_declaration ;
+
+node_declaration    = "node" , declaration_name , id_clause , label_list ,
+                      property_block ;
+
+edge_declaration    = "edge" , declaration_name , id_clause , relation_label ,
+                      "(" , endpoint , "->" , endpoint , ")" ,
+                      property_block ;
+
+id_clause           = "id" , string_literal ;
+source_clause       = "source" , string_literal ;
+
+label_list          = label , { label } ;
+label               = ":" , label_name ;
+relation_label      = ":" , relation_name ;
+
+(* A local endpoint names a declaration in the same file. An aliased endpoint
+   names a declaration in a linked source through that link's alias. A locator
+   endpoint names a declaration in a linked source by its canonical locator, and
+   is the aliasless form that docs/PRD.md section 13.2 delegates to this
+   contract. *)
+endpoint            = aliased_endpoint | locator_endpoint | local_endpoint ;
+local_endpoint      = declaration_name ;
+aliased_endpoint    = alias_name , "::" , declaration_name ;
+locator_endpoint    = string_literal , "::" , declaration_name ;
+
+property_block      = "{" , { property } , "}" ;
+property            = property_key , ":" , property_value ;
+property_key        = identifier ;
+
+(* There is no null literal. A stored null is unrepresentable, matching
+   docs/PRD.md section 11.1. Removing a property is expressed by omitting it. *)
+property_value      = boolean_literal
+                    | float_literal
+                    | integer_literal
+                    | string_literal
+                    | bytes_literal
+                    | datetime_literal
+                    | list_literal ;
+
+(* A list holds scalars only. Lists do not nest. *)
+list_literal        = "[" , [ property_scalar , { "," , property_scalar } ] ,
+                      "]" ;
+
+property_scalar     = boolean_literal
+                    | float_literal
+                    | integer_literal
+                    | string_literal
+                    | bytes_literal
+                    | datetime_literal ;
+
+declaration_name    = identifier ;
+alias_name          = identifier ;
+label_name          = identifier ;
+relation_name       = identifier ;
+
+(* A reserved word is never an identifier. *)
+identifier          = identifier_start , { identifier_continue } ;
+identifier_start    = ? a Unicode scalar with XID_Start, per UAX #31 ? | "_" ;
+identifier_continue = ? a Unicode scalar with XID_Continue, per UAX #31 ? ;
+
+reserved_word       = "module" | "node" | "edge" | "id" | "source" | "as"
+                    | "true" | "false" | "bytes" | "datetime" ;
+
+boolean_literal     = "true" | "false" ;
+
+(* An integer literal is a signed 64-bit value. A parser attempting alternatives
+   in order must attempt float_literal before integer_literal, because an
+   integer literal is a prefix of a float literal. *)
+integer_literal     = [ "-" ] , digit , { digit } ;
+
+float_literal       = [ "-" ] , digit , { digit } , "." , digit , { digit } ,
+                      [ exponent ]
+                    | [ "-" ] , digit , { digit } , exponent ;
+
+exponent            = ( "e" | "E" ) , [ "+" | "-" ] , digit , { digit } ;
+
+string_literal      = '"' , { string_character } , '"' ;
+string_character    = escape_sequence
+                    | ? a Unicode scalar other than '"', '\', U+000A, U+000D ? ;
+escape_sequence     = "\" , ( '"' | "\" | "n" | "r" | "t" | unicode_escape ) ;
+unicode_escape      = "u{" , hex_digit , { hex_digit } , "}" ;
+
+(* A bytes literal carries an even number of hexadecimal digits. *)
+bytes_literal       = "bytes" , '"' , { hex_digit , hex_digit } , '"' ;
+
+(* A datetime literal carries an RFC 3339 timestamp. Its shape is validated
+   semantically, not grammatically, and a violation raises
+   NOST_INVALID_DATETIME. *)
+datetime_literal    = "datetime" , '"' , { datetime_character } , '"' ;
+datetime_character  = ? a Unicode scalar other than '"', U+000A, U+000D ? ;
+
+digit               = "0" | "1" | "2" | "3" | "4"
+                    | "5" | "6" | "7" | "8" | "9" ;
+hex_digit           = digit
+                    | "a" | "b" | "c" | "d" | "e" | "f"
+                    | "A" | "B" | "C" | "D" | "E" | "F" ;
+
+trivia              = whitespace | line_comment | block_comment ;
+whitespace          = " " | ? U+0009 ? | ? U+000A ? | ? U+000D ? ;
+line_comment        = "//" , { ? a Unicode scalar other than U+000A ? } ;
+block_comment       = "/*" , { ? any Unicode scalar, up to the first "*/" ? } ,
+                      "*/" ;

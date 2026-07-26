@@ -1,0 +1,77 @@
+{
+  "descriptor_version": 1,
+  "nostdb_format_version": 1,
+  "note": "Machine-readable companion to docs/NOSTDB_FORMAT.md. The document is normative; this file exists so implementations and fixtures share one description of the layout.",
+  "byte_order": "little_endian",
+  "integer_encoding": "unsigned two's-complement-free fixed width, little-endian, no varints in the header or section table",
+  "magic": {
+    "hex": "4E4F535444421A0A",
+    "length": 8,
+    "ascii_prefix": "NOSTDB",
+    "rationale": "The 0x1A byte halts accidental text-mode display, and the trailing 0x0A detects CRLF translation during transfer."
+  },
+  "checksum": {
+    "algorithm": "CRC-32C",
+    "width_bits": 32,
+    "polynomial_reversed": "0x82F63B78",
+    "initial_value": "0xFFFFFFFF",
+    "final_xor": "0xFFFFFFFF",
+    "reflected": true,
+    "rationale": "CRC-32C detects container corruption and has wide hardware support. Cryptographic digests are required for downloaded graph artifacts, not for internal sections."
+  },
+  "header": {
+    "length": 48,
+    "crc_field": "header_crc32c",
+    "crc_covers": { "offset": 0, "length": 44 },
+    "fields": [
+      { "name": "magic", "offset": 0, "size": 8, "type": "bytes" },
+      { "name": "nostdb_format_version", "offset": 8, "size": 4, "type": "u32" },
+      { "name": "header_length", "offset": 12, "size": 4, "type": "u32" },
+      { "name": "database_generation", "offset": 16, "size": 8, "type": "u64" },
+      { "name": "section_table_offset", "offset": 24, "size": 8, "type": "u64" },
+      { "name": "section_count", "offset": 32, "size": 4, "type": "u32" },
+      { "name": "flags", "offset": 36, "size": 4, "type": "u32" },
+      { "name": "reserved", "offset": 40, "size": 4, "type": "u32" },
+      { "name": "header_crc32c", "offset": 44, "size": 4, "type": "u32" }
+    ]
+  },
+  "section_table_entry": {
+    "length": 32,
+    "crc_field": "crc32c",
+    "fields": [
+      { "name": "section_kind", "offset": 0, "size": 4, "type": "u32" },
+      { "name": "reserved", "offset": 4, "size": 4, "type": "u32" },
+      { "name": "offset", "offset": 8, "size": 8, "type": "u64" },
+      { "name": "length", "offset": 16, "size": 8, "type": "u64" },
+      { "name": "crc32c", "offset": 24, "size": 4, "type": "u32" },
+      { "name": "reserved2", "offset": 28, "size": 4, "type": "u32" }
+    ]
+  },
+  "limits": {
+    "max_section_count": 4096,
+    "min_section_offset": 48,
+    "required_header_length_v1": 48,
+    "required_reserved_value": 0
+  },
+  "section_kinds": {
+    "1": "string_table",
+    "2": "nodes",
+    "3": "edges",
+    "4": "properties",
+    "5": "schemas",
+    "6": "constraints",
+    "7": "evidence",
+    "8": "contributions",
+    "9": "links",
+    "10": "link_snapshots",
+    "11": "analyzer_metadata",
+    "12": "sync_metadata",
+    "13": "indexes",
+    "14": "build_coverage"
+  },
+  "reserved_section_kind_ranges": [
+    { "from": 0, "to": 0, "meaning": "invalid, never written" },
+    { "from": 15, "to": 32767, "meaning": "reserved for future standard kinds" },
+    { "from": 32768, "to": 4294967295, "meaning": "experimental, never written by a release build" }
+  ]
+}

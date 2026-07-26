@@ -1,0 +1,111 @@
+{
+  "registry_version": 1,
+  "note": "Diagnostic codes owned by nostdb-spec. A code marked prd_required appears in the required list in docs/PRD.md section 28 of the root superproject. Codes are stable identifiers: rename none of them.",
+  "codes": [
+    {
+      "code": "NOST_PARSE_ERROR",
+      "severity": "error",
+      "contract": "nost_language_version",
+      "prd_required": true,
+      "summary": "The input does not match the .nost grammar. Carries a source range."
+    },
+    {
+      "code": "NOST_VERSION_UNSUPPORTED",
+      "severity": "error",
+      "contract": "nost_language_version",
+      "prd_required": false,
+      "summary": "The @nost version header names a language version this implementation does not support."
+    },
+    {
+      "code": "NOST_DUPLICATE_LINK_ALIAS",
+      "severity": "error",
+      "contract": "nost_language_version",
+      "prd_required": false,
+      "summary": "Two link declarations claim the same alias."
+    },
+    {
+      "code": "NOST_DUPLICATE_LINK_SOURCE",
+      "severity": "error",
+      "contract": "nost_language_version",
+      "prd_required": false,
+      "summary": "Two link declarations canonicalize to the same source locator."
+    },
+    {
+      "code": "NOST_DUPLICATE_DECLARATION_NAME",
+      "severity": "error",
+      "contract": "nost_language_version",
+      "prd_required": false,
+      "summary": "Two declarations in the same scope share a name."
+    },
+    {
+      "code": "NOST_DUPLICATE_ID",
+      "severity": "error",
+      "contract": "nost_language_version",
+      "prd_required": false,
+      "summary": "Two declarations claim the same opaque record identifier."
+    },
+    {
+      "code": "NOST_DUPLICATE_PROPERTY_KEY",
+      "severity": "error",
+      "contract": "nost_language_version",
+      "prd_required": false,
+      "summary": "A property block sets the same key twice."
+    },
+    {
+      "code": "NOST_UNKNOWN_LINK_ALIAS",
+      "severity": "error",
+      "contract": "nost_language_version",
+      "prd_required": false,
+      "summary": "An aliased endpoint names an alias no link declaration defines."
+    },
+    {
+      "code": "NOST_UNRESOLVED_ENDPOINT",
+      "severity": "warning",
+      "contract": "nost_language_version",
+      "prd_required": false,
+      "summary": "An endpoint names a declaration that cannot be resolved. The Engine creates a Placeholder rather than an Edge with a null endpoint."
+    },
+    {
+      "code": "NOST_INTEGER_OUT_OF_RANGE",
+      "severity": "error",
+      "contract": "nost_language_version",
+      "prd_required": false,
+      "summary": "An integer literal does not fit in a signed 64-bit value."
+    },
+    {
+      "code": "NOST_NON_FINITE_NUMBER",
+      "severity": "error",
+      "contract": "nost_language_version",
+      "prd_required": false,
+      "summary": "A float literal is not finite, or a confidence score falls outside 0.0 through 1.0."
+    },
+    {
+      "code": "NOST_INVALID_DATETIME",
+      "severity": "error",
+      "contract": "nost_language_version",
+      "prd_required": false,
+      "summary": "A datetime literal is not a valid RFC 3339 timestamp."
+    },
+    {
+      "code": "NOSTDB_FORMAT_UNSUPPORTED",
+      "severity": "error",
+      "contract": "nostdb_format_version",
+      "prd_required": true,
+      "summary": "The container declares a format version this implementation does not support."
+    },
+    {
+      "code": "NOSTDB_CORRUPT",
+      "severity": "error",
+      "contract": "nostdb_format_version",
+      "prd_required": true,
+      "summary": "The container is structurally invalid: bad magic, failed checksum, truncation, an out-of-bounds section, or overlapping sections."
+    },
+    {
+      "code": "NOSTDB_LIMIT_EXCEEDED",
+      "severity": "error",
+      "contract": "nostdb_format_version",
+      "prd_required": false,
+      "summary": "The container exceeds a bounded-parsing limit, so it is refused without allocating from an untrusted length."
+    }
+  ]
+}

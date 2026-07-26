@@ -1,0 +1,6 @@
+@nost 1
+
+/* This comment never closes.
+
+module m id "m_1" {
+}

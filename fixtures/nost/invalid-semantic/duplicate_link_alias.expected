@@ -1,0 +1,3 @@
+outcome = accept_then_diagnose
+code = NOST_DUPLICATE_LINK_ALIAS
+note = Two links claim one alias.

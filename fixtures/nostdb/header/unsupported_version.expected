@@ -1,0 +1,3 @@
+outcome = reject
+code = NOSTDB_FORMAT_UNSUPPORTED
+note = An unknown version is refused rather than parsed on a guessed layout.

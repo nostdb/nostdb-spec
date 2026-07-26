@@ -1,0 +1,3 @@
+outcome = accept_then_diagnose
+code = NOST_DUPLICATE_DECLARATION_NAME
+note = Two declarations in one scope share a name.

@@ -1,0 +1,3 @@
+outcome = accept_then_diagnose
+code = NOST_NON_FINITE_NUMBER
+note = A confidence score falls outside 0.0 through 1.0.

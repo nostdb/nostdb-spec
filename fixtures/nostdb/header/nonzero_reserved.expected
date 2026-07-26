@@ -1,0 +1,3 @@
+outcome = reject
+code = NOSTDB_CORRUPT
+note = Rejecting a non-zero reserved field keeps the field usable in a later version.

@@ -1,0 +1,14 @@
+# wrong_header_length
+# header_length is not 48, which version 1 requires.
+#
+# Whitespace is insignificant and '#' starts a comment.
+
+4E4F535444421A0A                  # magic "NOSTDB" 1A 0A
+01000000                          # nostdb_format_version = 1
+28000000                          # header_length = 40
+0100000000000000                  # database_generation = 1
+3000000000000000                  # section_table_offset = 48
+00000000                          # section_count = 0
+00000000                          # flags = 0x00000000
+00000000                          # reserved = 0
+6EEAB9C0                          # header_crc32c = 0xC0B9EA6E over bytes 0..44

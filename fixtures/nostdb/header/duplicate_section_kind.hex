@@ -1,0 +1,28 @@
+# duplicate_section_kind
+# Two entries declare section_kind 2.
+#
+# Whitespace is insignificant and '#' starts a comment.
+
+4E4F535444421A0A                  # magic "NOSTDB" 1A 0A
+01000000                          # nostdb_format_version = 1
+30000000                          # header_length = 48
+0100000000000000                  # database_generation = 1
+3000000000000000                  # section_table_offset = 48
+02000000                          # section_count = 2
+00000000                          # flags = 0x00000000
+00000000                          # reserved = 0
+0425D99E                          # header_crc32c = 0x9ED92504 over bytes 0..44
+02000000                          # section_kind = 2 (nodes)
+00000000                          # reserved = 0
+7000000000000000                  # offset = 112
+0800000000000000                  # length = 8
+62C4FBE3                          # crc32c = 0xE3FBC462
+00000000                          # reserved2 = 0
+02000000                          # section_kind = 2 (nodes again)
+00000000                          # reserved = 0
+7800000000000000                  # offset = 120
+0800000000000000                  # length = 8
+5A5F8E53                          # crc32c = 0x538E5F5A
+00000000                          # reserved2 = 0
+0101010101010101                  # first payload at 112..120
+0202020202020202                  # second payload at 120..128

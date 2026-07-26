@@ -1,0 +1,3 @@
+outcome = reject
+code = NOSTDB_CORRUPT
+note = A file shorter than the header is corruption, checked before any field is trusted.

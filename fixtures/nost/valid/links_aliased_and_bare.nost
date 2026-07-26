@@ -1,0 +1,5 @@
+@nost 1
+
+@link "./packages/child"
+@link "./packages/shared" as shared
+@link "github://example/platform/graphs/root.nostdb?ref=main" as platform

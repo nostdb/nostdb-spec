@@ -1,0 +1,6 @@
+@nost 1
+
+module m id "m_1" {
+  node n id "n_1" {
+  }
+}

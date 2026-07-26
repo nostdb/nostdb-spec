@@ -1,0 +1,3 @@
+outcome = accept_then_diagnose
+code = NOST_UNKNOWN_LINK_ALIAS
+note = An aliased endpoint names an undeclared alias.

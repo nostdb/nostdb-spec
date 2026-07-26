@@ -1,0 +1,14 @@
+# nonzero_flags
+# A flag bit is set, but version 1 defines no flags.
+#
+# Whitespace is insignificant and '#' starts a comment.
+
+4E4F535444421A0A                  # magic "NOSTDB" 1A 0A
+01000000                          # nostdb_format_version = 1
+30000000                          # header_length = 48
+0100000000000000                  # database_generation = 1
+3000000000000000                  # section_table_offset = 48
+00000000                          # section_count = 0
+01000000                          # flags = 0x00000001
+00000000                          # reserved = 0
+43F006B5                          # header_crc32c = 0xB506F043 over bytes 0..44

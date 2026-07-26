@@ -20,6 +20,22 @@ LICENSE
 .gitignore
 .editorconfig
 .github/workflows/verify.yml
+Cargo.toml
+Cargo.lock
+rust-toolchain.toml
+src/lib.rs
+VERSIONS.md
+versions.json
+diagnostics.json
+grammar/nost.ebnf
+grammar/nost.pest
+format/nostdb-header.json
+docs/NOST_LANGUAGE.md
+docs/NOSTDB_FORMAT.md
+fixtures/nost/valid
+fixtures/nost/invalid-syntax
+fixtures/nost/invalid-semantic
+fixtures/nostdb/header
 "
 
 for required_file in $required_files; do
@@ -30,12 +46,24 @@ for required_file in $required_files; do
 done
 
 # LICENSE is verbatim upstream text and is intentionally not whitespace-scanned.
+# Fixtures are excluded: they are test data, and a future fixture may need
+# deliberately unusual whitespace. Rust sources are covered by `cargo fmt`.
 checked_text_files="
 AGENTS.md
 README.md
+VERSIONS.md
 .gitignore
 .editorconfig
 .github/workflows/verify.yml
+Cargo.toml
+rust-toolchain.toml
+versions.json
+diagnostics.json
+grammar/nost.ebnf
+grammar/nost.pest
+format/nostdb-header.json
+docs/NOST_LANGUAGE.md
+docs/NOSTDB_FORMAT.md
 scripts/verify-repository.sh
 "
 
@@ -62,5 +90,17 @@ if ! grep -q '^ *Version 2\.0, January 2004$' LICENSE; then
 fi
 
 git diff --check
+
+# The conformance harness. The crate is test-only and exposes no runtime API, so
+# these commands verify the contracts and fixtures rather than a library surface.
+if ! command -v cargo >/dev/null 2>&1; then
+  echo "cargo is required: the conformance suite is the normative gate" >&2
+  exit 1
+fi
+
+cargo fmt --check
+cargo check --all-targets --all-features
+cargo clippy --all-targets --all-features -- -D warnings
+cargo test --all-targets --all-features
 
 echo "nostdb-spec verification passed"

@@ -1,0 +1,14 @@
+// Leading comment on the file.
+@nost 1 // trailing comment on the version header
+
+/* A block comment
+   spanning lines. */
+@link "./packages/child" // trailing comment on a link
+
+module m id "m_1" { // trailing comment on a module head
+  // Leading comment on a node.
+  node n id "n_1" :Label /* inline */ {
+    // Leading comment on a property.
+    key: "value" // trailing comment on a property
+  }
+}
