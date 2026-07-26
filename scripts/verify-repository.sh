@@ -32,6 +32,9 @@ grammar/nost.pest
 format/nostdb-header.json
 docs/NOST_LANGUAGE.md
 docs/NOSTDB_FORMAT.md
+docs/QUERY_SUBSET.md
+fixtures/cypher/supported
+fixtures/cypher/unsupported
 fixtures/nost/valid
 fixtures/nost/invalid-syntax
 fixtures/nost/invalid-semantic
@@ -64,6 +67,7 @@ grammar/nost.pest
 format/nostdb-header.json
 docs/NOST_LANGUAGE.md
 docs/NOSTDB_FORMAT.md
+docs/QUERY_SUBSET.md
 scripts/verify-repository.sh
 "
 

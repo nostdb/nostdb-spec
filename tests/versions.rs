@@ -64,7 +64,7 @@ fn the_registry_is_well_formed() {
 }
 
 #[test]
-fn the_two_specified_contracts_are_the_stage_two_deliverables() {
+fn the_specified_contracts_are_exactly_those_that_have_been_authored() {
     let registry = common::read_json("versions.json");
     let specified: BTreeSet<String> = registry["contracts"]
         .as_array()
@@ -74,10 +74,16 @@ fn the_two_specified_contracts_are_the_stage_two_deliverables() {
         .map(|c| c["key"].as_str().expect("key").to_string())
         .collect();
 
-    let expected: BTreeSet<String> = ["nost_language_version", "nostdb_format_version"]
-        .into_iter()
-        .map(String::from)
-        .collect();
+    // This is a deliberate tripwire. A new specified contract is a significant event, so
+    // adding one must fail this test until the expectation is updated on purpose.
+    let expected: BTreeSet<String> = [
+        "nost_language_version",
+        "nostdb_format_version",
+        "query_subset_version",
+    ]
+    .into_iter()
+    .map(String::from)
+    .collect();
 
     assert_eq!(
         specified, expected,

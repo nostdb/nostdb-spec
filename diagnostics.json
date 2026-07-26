@@ -101,6 +101,20 @@
       "summary": "Both the database and the .nost file changed from the same baseline. Neither representation is modified."
     },
     {
+      "code": "CYPHER_UNSUPPORTED",
+      "severity": "error",
+      "contract": "query_subset_version",
+      "prd_required": true,
+      "summary": "The query uses a construct outside the declared subset. Nothing executed, and no alternative was guessed."
+    },
+    {
+      "code": "CYPHER_SEMANTIC_ERROR",
+      "severity": "error",
+      "contract": "query_subset_version",
+      "prd_required": true,
+      "summary": "The query is inside the subset but meaningless, such as an unbound variable or mismatched UNION columns. Nothing executed."
+    },
+    {
       "code": "NOSTDB_FORMAT_UNSUPPORTED",
       "severity": "error",
       "contract": "nostdb_format_version",

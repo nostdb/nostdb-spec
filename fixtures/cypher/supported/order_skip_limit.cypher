@@ -1,0 +1,1 @@
+MATCH (n:Function) RETURN n.name ORDER BY n.name DESC SKIP 10 LIMIT 20

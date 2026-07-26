@@ -14,6 +14,7 @@ that exists.
 | --- | --- | --- | --- | --- |
 | `nost_language_version` | 1 | 1 | specified | [docs/NOST_LANGUAGE.md](docs/NOST_LANGUAGE.md) |
 | `nostdb_format_version` | 1 | 1 | specified | [docs/NOSTDB_FORMAT.md](docs/NOSTDB_FORMAT.md) |
+| `query_subset_version` | 1 | 1 | specified | [docs/QUERY_SUBSET.md](docs/QUERY_SUBSET.md) |
 | `settings_version` | 1 | 1 | deferred | not yet specified |
 | `credentials_version` | 1 | 1 | deferred | not yet specified |
 | `catalog_version` | 1 | 1 | deferred | not yet specified |

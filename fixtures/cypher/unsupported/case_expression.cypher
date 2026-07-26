@@ -1,0 +1,1 @@
+MATCH (n) RETURN CASE n.language WHEN "rust" THEN 1 ELSE 0 END

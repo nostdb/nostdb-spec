@@ -1,0 +1,3 @@
+outcome = reject
+code = CYPHER_UNSUPPORTED
+note = shortestPath is outside the subset.

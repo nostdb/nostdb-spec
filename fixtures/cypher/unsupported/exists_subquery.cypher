@@ -1,0 +1,1 @@
+MATCH (n) WHERE EXISTS { MATCH (n)-[:CALLS]->() } RETURN n
