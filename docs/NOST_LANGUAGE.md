@@ -210,7 +210,16 @@ exist is simply absent.
 
 `a: null` is `NOST_PARSE_ERROR`, not a property set to nothing.
 
-### 7.2 Duplicate keys
+### 7.2 The confidence property key
+
+A property named `confidence_score` carries a confidence value and MUST be a float
+within `0.0..=1.0`. Any other value is `NOST_NON_FINITE_NUMBER`.
+
+The key is named here rather than left to convention, because the range rule is
+unenforceable without knowing which property it governs. An ordinary float property
+is not range-restricted.
+
+### 7.3 Duplicate keys
 
 A property block that sets one key twice is `NOST_DUPLICATE_PROPERTY_KEY`. An
 implementation MUST NOT silently keep the last value.
@@ -238,7 +247,7 @@ A file that parses is not necessarily valid. An implementation MUST also enforce
 | unique property key per block | `NOST_DUPLICATE_PROPERTY_KEY` |
 | declared alias or locator exists | `NOST_UNKNOWN_LINK_ALIAS` |
 | integer fits in 64 bits | `NOST_INTEGER_OUT_OF_RANGE` |
-| float is finite, confidence within 0.0 to 1.0 | `NOST_NON_FINITE_NUMBER` |
+| float is finite, and a `confidence_score` property is within 0.0 to 1.0 | `NOST_NON_FINITE_NUMBER` |
 | datetime is RFC 3339 | `NOST_INVALID_DATETIME` |
 | endpoint resolves, else Placeholder | `NOST_UNRESOLVED_ENDPOINT` |
 
@@ -264,8 +273,11 @@ A canonical writer MUST:
 5. indent with two spaces per level, and never with tabs;
 6. place one declaration and one property per line;
 7. emit an empty property block as `{}`;
-8. emit exactly one blank line between sibling declarations and none before the
-   first or after the last;
+8. emit exactly one blank line between sibling **block** declarations, meaning
+   modules within a file and nodes and edges within a module body, and none before
+   the first or after the last. Single-line directives form one group: link
+   declarations are separated from the version header and from the first module by
+   one blank line, and from each other by none;
 9. terminate the file with exactly one U+000A;
 10. write atomically, and reserialize the whole file rather than patching it.
 
@@ -317,3 +329,64 @@ implementation's own quality decision.
 Add a fixture with every language change. A fixture that no implementation can
 fail is documentation rather than a conformance test, so an accepted fixture
 SHOULD exercise a construct no other accepted fixture already covers.
+
+## 12. Synchronization with the database
+
+`.nost` is a representation of a database, so the two can disagree. This section
+defines when each is authoritative. It is placed after conformance to avoid
+renumbering earlier sections that other documents reference.
+
+Synchronization compares a **baseline**, never wall-clock time:
+
+```text
+database_generation    the generation the .nost file was produced from
+database_digest        digest of the database at that generation
+nost_content_digest    digest of the .nost text as produced
+```
+
+A timestamp comparison would be wrong here, because two machines and two clocks can
+disagree while both files are legitimate. A generation advances only on a successful
+commit, and a digest changes only when bytes change.
+
+### 12.1 The state machine
+
+| Database since baseline | `.nost` since baseline | Result |
+| --- | --- | --- |
+| unchanged | unchanged | no-op |
+| unchanged | changed | validate the `.nost` file, then atomically update the database |
+| changed | unchanged | `NOST_SOURCE_STALE`; the file must be regenerated explicitly |
+| changed | changed | `SYNC_CONFLICT`; **modify neither representation** |
+
+`SYNC_CONFLICT` is not a merge failure to retry. Both sides hold work derived from
+one baseline, and choosing either would discard the other silently, so the Engine
+stops and reports. Resolving it is a human decision.
+
+`NOST_SOURCE_STALE` is not corruption. The database is authoritative and readable;
+the file simply no longer describes it. Regeneration is explicit rather than
+automatic, because a stale file may still hold edits its author has not applied.
+
+### 12.2 Requirements
+
+An implementation MUST:
+
+- validate syntax, references, and semantic rules before mutating anything;
+- adopt a changed `.nost` file as one atomic transaction, so a failure leaves the
+  previous database generation readable;
+- detect a source edit that lands during synchronization, by re-checking the content
+  digest before commit;
+- preserve comments through the canonical reserialization synchronization performs;
+- never modify an imported read-only module;
+- report created, updated, deleted, and unresolved deltas.
+
+An implementation MUST NOT:
+
+- resolve a conflict by preferring the newer file, the larger file, or either
+  representation by default;
+- regenerate a stale `.nost` file as a side effect of an unrelated command.
+
+### 12.3 Determinism this depends on
+
+Adopting a `.nost` file and re-exporting it MUST produce the same bytes, and
+committing identical graph content MUST produce an identical database digest.
+Without both, a baseline comparison would report a change where none exists and
+synchronization would never reach the no-op state.

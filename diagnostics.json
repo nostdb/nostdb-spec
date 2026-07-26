@@ -87,6 +87,20 @@
       "summary": "A datetime literal is not a valid RFC 3339 timestamp."
     },
     {
+      "code": "NOST_SOURCE_STALE",
+      "severity": "error",
+      "contract": "nost_language_version",
+      "prd_required": true,
+      "summary": "The database advanced while the .nost file did not, so the file no longer describes the database and must be regenerated explicitly."
+    },
+    {
+      "code": "SYNC_CONFLICT",
+      "severity": "error",
+      "contract": "nost_language_version",
+      "prd_required": true,
+      "summary": "Both the database and the .nost file changed from the same baseline. Neither representation is modified."
+    },
+    {
       "code": "NOSTDB_FORMAT_UNSUPPORTED",
       "severity": "error",
       "contract": "nostdb_format_version",

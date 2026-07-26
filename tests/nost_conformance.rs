@@ -181,6 +181,18 @@ fn the_semantic_rule_table_is_covered_by_fixtures() {
         }
     }
 
+    // Codes a single-file fixture cannot express.
+    //
+    // NOST_PARSE_ERROR belongs to the syntax category, which has its own directory.
+    // The two synchronization codes describe a relationship between a database and a
+    // file, so expressing them needs a fixture triple of baseline, container, and
+    // text. That category is not defined yet; until it is, requiring a single-file
+    // fixture for them would be requiring something impossible.
+    let not_expressible_in_one_file: BTreeSet<&str> =
+        ["NOST_PARSE_ERROR", "NOST_SOURCE_STALE", "SYNC_CONFLICT"]
+            .into_iter()
+            .collect();
+
     let registry = common::read_json("diagnostics.json");
     let expected: BTreeSet<String> = registry["codes"]
         .as_array()
@@ -188,7 +200,7 @@ fn the_semantic_rule_table_is_covered_by_fixtures() {
         .iter()
         .filter(|entry| entry["contract"] == "nost_language_version")
         .map(|entry| entry["code"].as_str().expect("code string").to_string())
-        .filter(|code| code != "NOST_PARSE_ERROR")
+        .filter(|code| !not_expressible_in_one_file.contains(code.as_str()))
         .collect();
 
     let uncovered: Vec<&String> = expected.difference(&declared).collect();
