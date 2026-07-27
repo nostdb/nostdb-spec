@@ -163,14 +163,19 @@ user did not ask to change is exactly what a read-only operation must not do.
 
 ### 3.5 `federation`
 
-| Field | Type | Default |
-| --- | --- | --- |
-| `max_link_depth` | integer | `16` |
-| `max_link_databases` | integer | `256` |
-| `link_open_timeout_ms` | integer | `10000` |
+| Field | Type | Default | Counts |
+| --- | --- | --- | --- |
+| `max_link_depth` | integer | `16` | links followed from the root, which is depth zero |
+| `max_link_databases` | integer | `256` | linked databases opened, **excluding** the root |
+| `link_open_timeout_ms` | integer | `10000` | milliseconds per source |
 
 Exceeding a limit yields a structured partial-result warning rather than an
 error. Each MUST be positive.
+
+`max_link_databases` excludes the root deliberately, so that it counts the same
+thing as `linked_databases_opened` in the result envelope. A limit counting one
+thing while the number reported beside it counted another would be a trap: a
+caller comparing them would conclude the limit was off by one.
 
 ### 3.6 `plugins`
 
