@@ -1,0 +1,3 @@
+outcome = reject
+code = CHANGE_SET_INVALID
+note = Two statements about one record with no stated precedence, and picking one is a guess.

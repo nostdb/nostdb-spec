@@ -1,0 +1,114 @@
+{
+  "change_set_version": 1,
+  "base_generation": 7,
+  "owner": {
+    "kind": "analyzer",
+    "name": "rust",
+    "version": "1"
+  },
+  "source_snapshot": "tree:sha256:0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f",
+  "operations": [
+    {
+      "operation": "upsert_node",
+      "labels": [
+        "Function"
+      ],
+      "properties": {
+        "name": "login"
+      },
+      "source_unit": "u_0198a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5d",
+      "evidence": [
+        {
+          "source": ".",
+          "path": "src/main.rs",
+          "content_digest": "sha256:abababababababababababababababab",
+          "producer": "rust",
+          "producer_version": "1",
+          "method": "deterministic",
+          "confidence": "extracted"
+        }
+      ],
+      "id": "n_0198a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5b"
+    },
+    {
+      "operation": "upsert_node",
+      "labels": [
+        "Function",
+        "Exported"
+      ],
+      "properties": {
+        "name": "login"
+      },
+      "source_unit": "u_0198a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5d",
+      "evidence": [
+        {
+          "source": ".",
+          "path": "src/main.rs",
+          "content_digest": "sha256:abababababababababababababababab",
+          "producer": "rust",
+          "producer_version": "1",
+          "method": "deterministic",
+          "confidence": "extracted"
+        }
+      ],
+      "id": "n_0198a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5c"
+    },
+    {
+      "operation": "upsert_edge",
+      "source": {
+        "local": "n_0198a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5b"
+      },
+      "target": {
+        "local": "n_0198a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5c"
+      },
+      "relation": "CALLS",
+      "properties": {
+        "count": 3
+      },
+      "source_unit": "u_0198a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5d",
+      "evidence": [
+        {
+          "source": ".",
+          "path": "src/main.rs",
+          "content_digest": "sha256:abababababababababababababababab",
+          "producer": "rust",
+          "producer_version": "1",
+          "method": "deterministic",
+          "confidence": "extracted"
+        }
+      ]
+    },
+    {
+      "operation": "remove_contribution",
+      "source_unit": "u_0198a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5d"
+    },
+    {
+      "operation": "resolve_placeholder",
+      "placeholder": "n_0198a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5b",
+      "outcome": {
+        "preserved": true
+      },
+      "source_unit": "u_0198a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5d",
+      "evidence": [
+        {
+          "source": ".",
+          "path": "src/main.rs",
+          "content_digest": "sha256:abababababababababababababababab",
+          "producer": "rust",
+          "producer_version": "1",
+          "method": "deterministic",
+          "confidence": "extracted"
+        }
+      ]
+    },
+    {
+      "operation": "upsert_link",
+      "source": "./packages/child",
+      "alias": "child"
+    },
+    {
+      "operation": "remove_link",
+      "source": "./packages/other"
+    }
+  ]
+}

@@ -82,6 +82,7 @@ fn the_specified_contracts_are_exactly_those_that_have_been_authored() {
         "query_subset_version",
         "result_version",
         "settings_version",
+        "change_set_version",
     ]
     .into_iter()
     .map(String::from)

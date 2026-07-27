@@ -1,0 +1,21 @@
+{
+  "change_set_version": 1,
+  "base_generation": 1,
+  "owner": {
+    "kind": "user"
+  },
+  "source_snapshot": "manual",
+  "operations": [
+    {
+      "operation": "upsert_node",
+      "labels": [
+        "Note"
+      ],
+      "properties": {
+        "text": "reviewed"
+      },
+      "source_unit": "u_00000000-0000-0000-0000-000000000000",
+      "evidence": []
+    }
+  ]
+}

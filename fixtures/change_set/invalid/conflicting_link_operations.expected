@@ -1,0 +1,3 @@
+outcome = reject
+code = CHANGE_SET_INVALID
+note = One document declaring and removing one locator states two things about one link.

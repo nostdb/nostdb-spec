@@ -1,0 +1,22 @@
+{
+  "change_set_version": 1,
+  "base_generation": 7,
+  "owner": {
+    "kind": "analyzer",
+    "name": "rust",
+    "version": "1"
+  },
+  "source_snapshot": "tree:sha256:0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f",
+  "operations": [
+    {
+      "operation": "upsert_link",
+      "source": "./one",
+      "alias": "child"
+    },
+    {
+      "operation": "upsert_link",
+      "source": "./two",
+      "alias": "child"
+    }
+  ]
+}

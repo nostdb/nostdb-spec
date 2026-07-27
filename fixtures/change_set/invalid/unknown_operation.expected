@@ -1,0 +1,3 @@
+outcome = reject
+code = CHANGE_SET_INVALID
+note = Guessing which operation was meant is how a typo becomes a graph change.

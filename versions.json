@@ -118,9 +118,9 @@
       "supported": [
         1
       ],
-      "status": "deferred",
-      "specified_in": null,
-      "summary": "The GraphChangeSet interchange artifact."
+      "status": "specified",
+      "specified_in": "docs/CHANGE_SET.md",
+      "summary": "A batch of proposed graph changes handed to the Engine."
     }
   ]
 }

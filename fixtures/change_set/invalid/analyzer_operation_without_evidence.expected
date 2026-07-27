@@ -1,0 +1,3 @@
+outcome = reject
+code = CHANGE_SET_INVALID
+note = A fact with nothing behind it is indistinguishable from one somebody made up.

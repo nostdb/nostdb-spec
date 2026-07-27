@@ -1,0 +1,3 @@
+outcome = reject
+code = CHANGE_SET_INVALID
+note = A record with no label cannot be found by any query that would maintain it.

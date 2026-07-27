@@ -1,0 +1,3 @@
+outcome = reject
+code = CHANGE_SET_INVALID
+note = An alias names one link, so two claims on it are two links with one name.

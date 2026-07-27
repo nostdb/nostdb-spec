@@ -3,32 +3,18 @@
   "note": "Diagnostic codes owned by nostdb-spec. A code marked prd_required appears in the required list in docs/PRD.md section 28 of the root superproject. Codes are stable identifiers: rename none of them.",
   "codes": [
     {
-      "code": "NOST_PARSE_ERROR",
+      "code": "CHANGE_SET_INVALID",
       "severity": "error",
-      "contract": "nost_language_version",
+      "contract": "change_set_version",
       "prd_required": true,
-      "summary": "The input does not match the .nost grammar. Carries a source range."
+      "summary": "A change set breaks a rule decidable without a database. Reports every problem found, not the first."
     },
     {
-      "code": "NOST_VERSION_UNSUPPORTED",
+      "code": "CHANGE_SET_VERSION_UNSUPPORTED",
       "severity": "error",
-      "contract": "nost_language_version",
-      "prd_required": false,
-      "summary": "The @nost version header names a language version this implementation does not support."
-    },
-    {
-      "code": "NOST_DUPLICATE_LINK_ALIAS",
-      "severity": "error",
-      "contract": "nost_language_version",
-      "prd_required": false,
-      "summary": "Two link declarations claim the same alias."
-    },
-    {
-      "code": "NOST_DUPLICATE_LINK_SOURCE",
-      "severity": "error",
-      "contract": "nost_language_version",
-      "prd_required": false,
-      "summary": "Two link declarations canonicalize to the same source locator."
+      "contract": "change_set_version",
+      "prd_required": true,
+      "summary": "The change_set_version is not one this build reads. A change set is not preserved and rewritten, so part of one is not read."
     },
     {
       "code": "NOST_DUPLICATE_DECLARATION_NAME",
@@ -45,11 +31,25 @@
       "summary": "Two declarations claim the same opaque record identifier."
     },
     {
-      "code": "NOST_INVALID_ID",
+      "code": "NOST_DUPLICATE_LINK_ALIAS",
       "severity": "error",
       "contract": "nost_language_version",
       "prd_required": false,
-      "summary": "A stated record identifier is not a kind prefix followed by a canonical UUID."
+      "summary": "Two link declarations claim the same alias."
+    },
+    {
+      "code": "NOST_DUPLICATE_LINK_SOURCE",
+      "severity": "error",
+      "contract": "nost_language_version",
+      "prd_required": false,
+      "summary": "Two link declarations canonicalize to the same source locator."
+    },
+    {
+      "code": "NOST_DUPLICATE_PROPERTY_KEY",
+      "severity": "error",
+      "contract": "nost_language_version",
+      "prd_required": false,
+      "summary": "A property block sets the same key twice."
     },
     {
       "code": "NOST_DUPLICATE_SCHEMA_NAME",
@@ -57,6 +57,48 @@
       "contract": "nost_language_version",
       "prd_required": false,
       "summary": "Two schema declarations share a name."
+    },
+    {
+      "code": "NOST_INTEGER_OUT_OF_RANGE",
+      "severity": "error",
+      "contract": "nost_language_version",
+      "prd_required": false,
+      "summary": "An integer literal does not fit in a signed 64-bit value."
+    },
+    {
+      "code": "NOST_INVALID_DATETIME",
+      "severity": "error",
+      "contract": "nost_language_version",
+      "prd_required": false,
+      "summary": "A datetime literal is not a valid RFC 3339 timestamp."
+    },
+    {
+      "code": "NOST_INVALID_EVIDENCE",
+      "severity": "error",
+      "contract": "nost_language_version",
+      "prd_required": false,
+      "summary": "A contribution or evidence block omits a required key, states an unknown key, or gives a key a value of the wrong shape."
+    },
+    {
+      "code": "NOST_INVALID_ID",
+      "severity": "error",
+      "contract": "nost_language_version",
+      "prd_required": false,
+      "summary": "A stated record identifier is not a kind prefix followed by a canonical UUID."
+    },
+    {
+      "code": "NOST_NON_FINITE_NUMBER",
+      "severity": "error",
+      "contract": "nost_language_version",
+      "prd_required": false,
+      "summary": "A float literal is not finite, or a confidence score falls outside 0.0 through 1.0."
+    },
+    {
+      "code": "NOST_PARSE_ERROR",
+      "severity": "error",
+      "contract": "nost_language_version",
+      "prd_required": true,
+      "summary": "The input does not match the .nost grammar. Carries a source range."
     },
     {
       "code": "NOST_SCHEMA_CONFLICT",
@@ -73,18 +115,11 @@
       "summary": "A record does not satisfy a schema it names. Schema validation is soft, so this is a warning; an explicit Constraint is hard."
     },
     {
-      "code": "NOST_INVALID_EVIDENCE",
+      "code": "NOST_SOURCE_STALE",
       "severity": "error",
       "contract": "nost_language_version",
-      "prd_required": false,
-      "summary": "A contribution or evidence block omits a required key, states an unknown key, or gives a key a value of the wrong shape."
-    },
-    {
-      "code": "NOST_DUPLICATE_PROPERTY_KEY",
-      "severity": "error",
-      "contract": "nost_language_version",
-      "prd_required": false,
-      "summary": "A property block sets the same key twice."
+      "prd_required": true,
+      "summary": "The database advanced while the .nost file did not, so the file no longer describes the database and must be regenerated explicitly."
     },
     {
       "code": "NOST_UNKNOWN_LINK_ALIAS",
@@ -101,32 +136,11 @@
       "summary": "An endpoint names a declaration that cannot be resolved. The Engine creates a Placeholder rather than an Edge with a null endpoint."
     },
     {
-      "code": "NOST_INTEGER_OUT_OF_RANGE",
+      "code": "NOST_VERSION_UNSUPPORTED",
       "severity": "error",
       "contract": "nost_language_version",
       "prd_required": false,
-      "summary": "An integer literal does not fit in a signed 64-bit value."
-    },
-    {
-      "code": "NOST_NON_FINITE_NUMBER",
-      "severity": "error",
-      "contract": "nost_language_version",
-      "prd_required": false,
-      "summary": "A float literal is not finite, or a confidence score falls outside 0.0 through 1.0."
-    },
-    {
-      "code": "NOST_INVALID_DATETIME",
-      "severity": "error",
-      "contract": "nost_language_version",
-      "prd_required": false,
-      "summary": "A datetime literal is not a valid RFC 3339 timestamp."
-    },
-    {
-      "code": "NOST_SOURCE_STALE",
-      "severity": "error",
-      "contract": "nost_language_version",
-      "prd_required": true,
-      "summary": "The database advanced while the .nost file did not, so the file no longer describes the database and must be regenerated explicitly."
+      "summary": "The @nost version header names a language version this implementation does not support."
     },
     {
       "code": "SYNC_CONFLICT",
@@ -136,11 +150,25 @@
       "summary": "Both the database and the .nost file changed from the same baseline. Neither representation is modified."
     },
     {
-      "code": "CYPHER_UNSUPPORTED",
+      "code": "NOSTDB_CORRUPT",
       "severity": "error",
-      "contract": "query_subset_version",
+      "contract": "nostdb_format_version",
       "prd_required": true,
-      "summary": "The query uses a construct outside the declared subset. Nothing executed, and no alternative was guessed."
+      "summary": "The container is structurally invalid: bad magic, failed checksum, truncation, an out-of-bounds section, or overlapping sections."
+    },
+    {
+      "code": "NOSTDB_FORMAT_UNSUPPORTED",
+      "severity": "error",
+      "contract": "nostdb_format_version",
+      "prd_required": true,
+      "summary": "The container declares a format version this implementation does not support."
+    },
+    {
+      "code": "NOSTDB_LIMIT_EXCEEDED",
+      "severity": "error",
+      "contract": "nostdb_format_version",
+      "prd_required": false,
+      "summary": "The container exceeds a bounded-parsing limit, so it is refused without allocating from an untrusted length."
     },
     {
       "code": "CYPHER_SEMANTIC_ERROR",
@@ -150,11 +178,39 @@
       "summary": "The query is inside the subset but meaningless, such as an unbound variable or mismatched UNION columns. Nothing executed."
     },
     {
+      "code": "CYPHER_UNSUPPORTED",
+      "severity": "error",
+      "contract": "query_subset_version",
+      "prd_required": true,
+      "summary": "The query uses a construct outside the declared subset. Nothing executed, and no alternative was guessed."
+    },
+    {
       "code": "LINKED_DATABASE_READ_ONLY",
       "severity": "error",
       "contract": "query_subset_version",
       "prd_required": true,
       "summary": "A write named a record belonging to a linked source. Linked records are read-only from the root transaction, so nothing was modified."
+    },
+    {
+      "code": "LINK_CYCLE",
+      "severity": "warning",
+      "contract": "result_version",
+      "prd_required": true,
+      "summary": "Recursive link traversal reached a canonical source it had already opened. The cycle is cut and the result is partial."
+    },
+    {
+      "code": "LINK_LIMIT_EXCEEDED",
+      "severity": "warning",
+      "contract": "result_version",
+      "prd_required": true,
+      "summary": "Recursive link traversal reached a configured depth or database limit. Traversal stops there and the result is partial."
+    },
+    {
+      "code": "LINK_UNAVAILABLE",
+      "severity": "warning",
+      "contract": "result_version",
+      "prd_required": true,
+      "summary": "A declared link could not be opened. The declaration stays, the reachable results are returned, and the summary reports the result as partial."
     },
     {
       "code": "ORPHAN_LINK_SETTINGS",
@@ -176,48 +232,6 @@
       "contract": "settings_version",
       "prd_required": false,
       "summary": "A settings document names a version this implementation cannot read, or cannot write without losing a field it does not understand."
-    },
-    {
-      "code": "LINK_UNAVAILABLE",
-      "severity": "warning",
-      "contract": "result_version",
-      "prd_required": true,
-      "summary": "A declared link could not be opened. The declaration stays, the reachable results are returned, and the summary reports the result as partial."
-    },
-    {
-      "code": "LINK_CYCLE",
-      "severity": "warning",
-      "contract": "result_version",
-      "prd_required": true,
-      "summary": "Recursive link traversal reached a canonical source it had already opened. The cycle is cut and the result is partial."
-    },
-    {
-      "code": "LINK_LIMIT_EXCEEDED",
-      "severity": "warning",
-      "contract": "result_version",
-      "prd_required": true,
-      "summary": "Recursive link traversal reached a configured depth or database limit. Traversal stops there and the result is partial."
-    },
-    {
-      "code": "NOSTDB_FORMAT_UNSUPPORTED",
-      "severity": "error",
-      "contract": "nostdb_format_version",
-      "prd_required": true,
-      "summary": "The container declares a format version this implementation does not support."
-    },
-    {
-      "code": "NOSTDB_CORRUPT",
-      "severity": "error",
-      "contract": "nostdb_format_version",
-      "prd_required": true,
-      "summary": "The container is structurally invalid: bad magic, failed checksum, truncation, an out-of-bounds section, or overlapping sections."
-    },
-    {
-      "code": "NOSTDB_LIMIT_EXCEEDED",
-      "severity": "error",
-      "contract": "nostdb_format_version",
-      "prd_required": false,
-      "summary": "The container exceeds a bounded-parsing limit, so it is refused without allocating from an untrusted length."
     }
   ]
 }

@@ -1,0 +1,3 @@
+outcome = reject
+code = CHANGE_SET_INVALID
+note = Proposing nothing is a mistake in whatever produced the document, not a no-op.

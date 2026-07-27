@@ -1,0 +1,2 @@
+outcome = accept
+note = One analyzer-owned record with no stated identifier, which is what discovering a new symbol looks like.
