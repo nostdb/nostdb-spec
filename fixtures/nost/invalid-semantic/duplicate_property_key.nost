@@ -1,8 +1,8 @@
-@nost 1
+@nost 2
 
-module m id "m_1" {
-  node n id "n_1" :Label {
-    name: "first"
-    name: "second"
-  }
+schema Sample {}
+
+node a: Sample {
+  name: "first",
+  name: "second",
 }

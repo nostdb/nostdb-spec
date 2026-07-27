@@ -1,0 +1,2 @@
+outcome = accept
+note = A node names several schemas and validates against their union.

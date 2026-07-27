@@ -1,0 +1,3 @@
+outcome = accept_then_diagnose
+code = NOST_INVALID_ID
+note = A record identifier is a kind prefix followed by a canonical UUID, so the version 1 form is refused.

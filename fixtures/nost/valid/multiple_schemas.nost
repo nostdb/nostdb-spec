@@ -1,0 +1,14 @@
+@nost 2
+
+schema Project {
+  name: string,
+}
+
+schema Authority {
+  scope: string,
+}
+
+node foo: Project, Authority {
+  name: "nostdb",
+  scope: "admin",
+}

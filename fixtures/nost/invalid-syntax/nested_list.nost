@@ -1,7 +1,5 @@
-@nost 1
+@nost 2
 
-module m id "m_1" {
-  node n id "n_1" :Label {
-    nested: [1, [2, 3]]
-  }
+node example: Sample {
+  nested: [[1, 2], [3]],
 }

@@ -1,0 +1,5 @@
+outcome = reject
+code = NOST_PARSE_ERROR
+reference_line = 4
+reference_column = 9
+note = A field type is one of the six scalar names, optionally followed by [].

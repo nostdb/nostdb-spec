@@ -1,0 +1,7 @@
+@nost 2
+
+schema Empty {}
+
+node example: Empty {}
+
+edge example -> example :SELF {}

@@ -1,0 +1,3 @@
+outcome = accept_then_diagnose
+code = NOST_INVALID_EVIDENCE
+note = An evidence block omits the required source and digest keys.

@@ -1,0 +1,7 @@
+@nost 2
+
+schema Sample {}
+
+node a: Sample {
+  id: "n_1",
+}

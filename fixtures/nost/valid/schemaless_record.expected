@@ -1,0 +1,2 @@
+outcome = accept
+note = A record may name an undeclared schema, which is then an unvalidated label.

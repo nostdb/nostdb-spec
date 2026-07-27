@@ -1,0 +1,9 @@
+@nost 2
+
+schema Sample {
+  name: string,
+}
+
+schema Sample {
+  other: integer,
+}

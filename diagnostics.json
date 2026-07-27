@@ -45,6 +45,41 @@
       "summary": "Two declarations claim the same opaque record identifier."
     },
     {
+      "code": "NOST_INVALID_ID",
+      "severity": "error",
+      "contract": "nost_language_version",
+      "prd_required": false,
+      "summary": "A stated record identifier is not a kind prefix followed by a canonical UUID."
+    },
+    {
+      "code": "NOST_DUPLICATE_SCHEMA_NAME",
+      "severity": "error",
+      "contract": "nost_language_version",
+      "prd_required": false,
+      "summary": "Two schema declarations share a name."
+    },
+    {
+      "code": "NOST_SCHEMA_CONFLICT",
+      "severity": "error",
+      "contract": "nost_language_version",
+      "prd_required": false,
+      "summary": "Two schemas named by one record declare the same field key with different types."
+    },
+    {
+      "code": "NOST_SCHEMA_VIOLATION",
+      "severity": "warning",
+      "contract": "nost_language_version",
+      "prd_required": false,
+      "summary": "A record does not satisfy a schema it names. Schema validation is soft, so this is a warning; an explicit Constraint is hard."
+    },
+    {
+      "code": "NOST_INVALID_EVIDENCE",
+      "severity": "error",
+      "contract": "nost_language_version",
+      "prd_required": false,
+      "summary": "A contribution or evidence block omits a required key, states an unknown key, or gives a key a value of the wrong shape."
+    },
+    {
       "code": "NOST_DUPLICATE_PROPERTY_KEY",
       "severity": "error",
       "contract": "nost_language_version",

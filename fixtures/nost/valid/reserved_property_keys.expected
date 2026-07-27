@@ -1,0 +1,2 @@
+outcome = accept
+note = The reserved id and labels keys, and a record that omits id so the Engine mints one.

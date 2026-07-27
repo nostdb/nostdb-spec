@@ -1,5 +1,5 @@
 (* NostDB `.nost` grammar, normative.
-   nost_language_version = 1
+   nost_language_version = 2
 
    This grammar is parser-generator neutral. grammar/nost.pest is a reference
    encoding of it, and fixtures/nost is the conformance gate. An implementation
@@ -26,31 +26,85 @@
    @roots nost_file trivia reserved_word
 *)
 
-nost_file           = version_header , { link_declaration } ,
-                      { module_declaration } ;
+nost_file           = version_header , { link_declaration } , { declaration } ;
 
 version_header      = "@nost" , integer_literal ;
 
 link_declaration    = "@link" , string_literal , [ "as" , alias_name ] ;
 
-module_declaration  = "module" , declaration_name , id_clause ,
-                      [ source_clause ] , "{" , { module_item } , "}" ;
+(* Schema, node, and edge declarations may interleave. A node may name a schema
+   declared later in the file, because schema resolution is semantic rather than
+   positional. Link declarations stay first because they are directives. *)
+declaration         = schema_declaration | node_declaration | edge_declaration ;
 
-module_item         = node_declaration | edge_declaration ;
+(* An endpoint constraint makes a schema edge-only: it names the schemas its
+   source and target records must carry. A schema without one may describe a
+   node or an edge, and its use decides which. *)
+schema_declaration  = "schema" , schema_name , [ endpoint_constraint ] ,
+                      field_block ;
 
-node_declaration    = "node" , declaration_name , id_clause , label_list ,
-                      property_block ;
+endpoint_constraint = "(" , schema_name , "->" , schema_name , ")" ;
 
-edge_declaration    = "edge" , declaration_name , id_clause , relation_label ,
-                      "(" , endpoint , "->" , endpoint , ")" ,
-                      property_block ;
+field_block         = "{" , [ field , { "," , field } , [ "," ] ] , "}" ;
 
-id_clause           = "id" , string_literal ;
-source_clause       = "source" , string_literal ;
+(* A question mark marks the key optional. It is written on the key rather than
+   on the type, because a stored null is unrepresentable: the choice is whether
+   the property exists, never whether its value is null. *)
+field               = field_key , [ "?" ] , ":" , field_type ;
+field_key           = identifier ;
 
-label_list          = label , { label } ;
-label               = ":" , label_name ;
-relation_label      = ":" , relation_name ;
+(* An array holds scalars and does not nest, matching the property value rules
+   below, so there is no `string[][]`. *)
+field_type          = scalar_type , [ "[" , "]" ] ;
+
+scalar_type         = "boolean" | "integer" | "double" | "string"
+                    | "bytes" | "datetime" ;
+
+(* A node names one or more schemas. Each name is also one of the node's labels,
+   so a query matches on it with no additional syntax. *)
+node_declaration    = "node" , declaration_name , ":" ,
+                      schema_name , { "," , schema_name } , record_block ;
+
+(* An edge names exactly one schema, because a relation type is single valued.
+   Its two endpoints precede it, and there is no syntax for a null endpoint. An
+   edge carries no declaration name, because nothing references one: an endpoint
+   names a node. *)
+edge_declaration    = "edge" , endpoint , "->" , endpoint , ":" ,
+                      relation_name , record_block ;
+
+(* Properties are comma separated with an optional trailing comma. Contribution
+   blocks follow them and are not comma separated, because they are blocks
+   rather than fields. *)
+record_block        = "{" , [ property , { "," , property } , [ "," ] ] ,
+                      { contribution_block } , "}" ;
+
+property            = property_key , ":" , property_value ;
+property_key        = identifier ;
+
+(* Ownership and provenance. Without these a database exported to `.nost` and
+   read back would collapse every contribution into a single user-owned one,
+   which would break the guarantee that an analyzer refresh preserves user
+   edits. *)
+contribution_block  = "@by" , owner , [ "unit" , string_literal ] ,
+                      "{" , { evidence_block } , "}" ;
+
+owner               = analyzer_owner | ai_owner | user_owner ;
+analyzer_owner      = "analyzer" , string_literal , string_literal ;
+ai_owner            = "ai" , string_literal ;
+user_owner          = "user" ;
+
+evidence_block      = "@evidence" , "{" ,
+                      [ evidence_field , { "," , evidence_field } , [ "," ] ] ,
+                      "}" ;
+
+(* Which keys an evidence block accepts, and which value each one takes, is a
+   semantic rule stated in the language contract rather than a grammatical one.
+   Spelling it here would put a closed key list in the grammar and force a
+   grammar change to add one. *)
+evidence_field      = evidence_key , ":" , evidence_value ;
+evidence_key        = identifier ;
+evidence_value      = string_literal | evidence_enumerator ;
+evidence_enumerator = identifier , [ "(" , float_literal , ")" ] ;
 
 (* A local endpoint names a declaration in the same file. An aliased endpoint
    names a declaration in a linked source through that link's alias. A locator
@@ -61,10 +115,6 @@ endpoint            = aliased_endpoint | locator_endpoint | local_endpoint ;
 local_endpoint      = declaration_name ;
 aliased_endpoint    = alias_name , "::" , declaration_name ;
 locator_endpoint    = string_literal , "::" , declaration_name ;
-
-property_block      = "{" , { property } , "}" ;
-property            = property_key , ":" , property_value ;
-property_key        = identifier ;
 
 (* There is no null literal. A stored null is unrepresentable, matching
    docs/PRD.md section 11.1. Removing a property is expressed by omitting it. *)
@@ -89,7 +139,7 @@ property_scalar     = boolean_literal
 
 declaration_name    = identifier ;
 alias_name          = identifier ;
-label_name          = identifier ;
+schema_name         = identifier ;
 relation_name       = identifier ;
 
 (* A reserved word is never an identifier. *)
@@ -97,8 +147,12 @@ identifier          = identifier_start , { identifier_continue } ;
 identifier_start    = ? a Unicode scalar with XID_Start, per UAX #31 ? | "_" ;
 identifier_continue = ? a Unicode scalar with XID_Continue, per UAX #31 ? ;
 
-reserved_word       = "module" | "node" | "edge" | "id" | "source" | "as"
-                    | "true" | "false" | "bytes" | "datetime" ;
+(* `id` and `source` are no longer reserved, because both are ordinary property
+   keys in version 2. `module` is gone with the declaration it introduced. A
+   scalar type name is not reserved either, because it is only ever read in type
+   position. *)
+reserved_word       = "as" | "bytes" | "datetime" | "edge" | "false"
+                    | "node" | "schema" | "true" ;
 
 boolean_literal     = "true" | "false" ;
 

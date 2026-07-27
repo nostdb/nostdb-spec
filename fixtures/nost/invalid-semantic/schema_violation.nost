@@ -1,0 +1,15 @@
+@nost 2
+
+schema Required {
+  name: string,
+  count: integer,
+}
+
+node missing_required: Required {
+  count: 1,
+}
+
+node wrong_type: Required {
+  name: 42,
+  count: 1,
+}

@@ -1,0 +1,3 @@
+outcome = accept_then_diagnose
+code = NOST_VERSION_UNSUPPORTED
+note = Version 1 is refused explicitly rather than parsed best-effort.

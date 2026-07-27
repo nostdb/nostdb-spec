@@ -1,5 +1,5 @@
 outcome = reject
 code = NOST_PARSE_ERROR
-reference_line = 5
-reference_column = 21
-note = A list takes no trailing comma, so the canonical form is unique.
+reference_line = 4
+reference_column = 19
+note = A list literal admits no trailing comma, which keeps a one-element list unambiguous.

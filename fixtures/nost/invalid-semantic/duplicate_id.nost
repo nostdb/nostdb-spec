@@ -1,7 +1,11 @@
-@nost 1
+@nost 2
 
-module m id "m_1" {
-  node a id "n_1" :Label {}
+schema Sample {}
 
-  node b id "n_1" :Label {}
+node a: Sample {
+  id: "n_0198a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5b",
+}
+
+node b: Sample {
+  id: "n_0198a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5b",
 }

@@ -1,0 +1,3 @@
+outcome = accept_then_diagnose
+code = NOST_SCHEMA_VIOLATION
+note = A missing required field and a field of the wrong type are both warnings, because schema validation is soft.

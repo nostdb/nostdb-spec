@@ -1,0 +1,2 @@
+outcome = accept
+note = An endpoint constraint names the schemas an edge's source and target must carry.

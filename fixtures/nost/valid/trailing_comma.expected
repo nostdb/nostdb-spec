@@ -1,0 +1,2 @@
+outcome = accept
+note = A trailing comma after the last field and the last property is accepted.

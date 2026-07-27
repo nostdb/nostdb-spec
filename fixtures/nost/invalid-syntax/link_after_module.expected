@@ -1,5 +1,0 @@
-outcome = reject
-code = NOST_PARSE_ERROR
-reference_line = 6
-reference_column = 1
-note = Link declarations precede module declarations.

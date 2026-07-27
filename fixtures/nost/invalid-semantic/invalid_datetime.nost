@@ -1,7 +1,7 @@
-@nost 1
+@nost 2
 
-module m id "m_1" {
-  node n id "n_1" :Label {
-    seen_at: datetime"26/07/2026 09:00"
-  }
+schema Sample {}
+
+node example: Sample {
+  seen_at: datetime"not-a-timestamp",
 }

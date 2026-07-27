@@ -1,5 +1,0 @@
-outcome = reject
-code = NOST_PARSE_ERROR
-reference_line = 8
-reference_column = 3
-note = An edge carries exactly one relation label.

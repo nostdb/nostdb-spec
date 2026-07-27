@@ -1,8 +1,6 @@
-@nost 1
+@nost 2
 
-module m id "m_1" {
-  node n id "n_1" :Label {
-    key: "line one
-line two"
-  }
+node example: Sample {
+  name: "line
+break",
 }

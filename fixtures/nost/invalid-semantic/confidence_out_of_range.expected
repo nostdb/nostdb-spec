@@ -1,3 +1,3 @@
 outcome = accept_then_diagnose
 code = NOST_NON_FINITE_NUMBER
-note = A confidence score falls outside 0.0 through 1.0.
+note = A confidence_score property outside 0.0 through 1.0.

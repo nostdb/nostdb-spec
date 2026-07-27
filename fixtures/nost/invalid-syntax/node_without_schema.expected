@@ -1,0 +1,5 @@
+outcome = reject
+code = NOST_PARSE_ERROR
+reference_line = 3
+reference_column = 1
+note = A node names at least one schema.

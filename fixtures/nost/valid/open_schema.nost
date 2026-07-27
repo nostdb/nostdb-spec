@@ -1,0 +1,11 @@
+@nost 2
+
+schema Sparse {
+  name: string,
+}
+
+node example: Sparse {
+  name: "declared",
+  undeclared: "permitted",
+  also_undeclared: 42,
+}

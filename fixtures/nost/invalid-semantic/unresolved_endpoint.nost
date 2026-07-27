@@ -1,7 +1,7 @@
-@nost 1
+@nost 2
 
-module m id "m_1" {
-  node a id "n_1" :Label {}
+schema Sample {}
 
-  edge e id "e_1" :CALLS (a -> never_declared) {}
-}
+node local: Sample {}
+
+edge local -> absent :CALLS {}

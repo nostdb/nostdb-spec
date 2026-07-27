@@ -1,0 +1,25 @@
+@nost 2
+
+schema Function {
+  name: string,
+}
+
+schema Database {
+  name: string,
+}
+
+schema CALLS (Function -> Database) {
+  since?: datetime,
+}
+
+node login: Function {
+  name: "login",
+}
+
+node primary: Database {
+  name: "primary",
+}
+
+edge login -> primary :CALLS {
+  since: datetime"2026-07-27T00:00:00Z",
+}

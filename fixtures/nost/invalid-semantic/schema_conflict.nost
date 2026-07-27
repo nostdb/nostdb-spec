@@ -1,0 +1,13 @@
+@nost 2
+
+schema Alpha {
+  shared_key: string,
+}
+
+schema Beta {
+  shared_key: integer,
+}
+
+node example: Alpha, Beta {
+  shared_key: "which type?",
+}

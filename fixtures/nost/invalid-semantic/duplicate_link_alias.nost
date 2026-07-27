@@ -1,4 +1,4 @@
-@nost 1
+@nost 2
 
-@link "./packages/one" as shared
-@link "./packages/two" as shared
+@link "./packages/a" as shared
+@link "./packages/b" as shared

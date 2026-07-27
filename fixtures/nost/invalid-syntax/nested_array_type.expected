@@ -1,0 +1,5 @@
+outcome = reject
+code = NOST_PARSE_ERROR
+reference_line = 3
+reference_column = 15
+note = Arrays do not nest, matching the property value rules.

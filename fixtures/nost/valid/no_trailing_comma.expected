@@ -1,0 +1,2 @@
+outcome = accept
+note = Omitting the trailing comma is equally valid, which is the canonical form.

@@ -1,0 +1,5 @@
+@nost 2
+
+module auth id "m_1" source "src/auth.rs" {
+  node login: Function {}
+}

@@ -1,0 +1,11 @@
+@nost 2
+
+schema WithTrailing {
+  first: string,
+  last: integer,
+}
+
+node example: WithTrailing {
+  first: "a",
+  last: 1,
+}

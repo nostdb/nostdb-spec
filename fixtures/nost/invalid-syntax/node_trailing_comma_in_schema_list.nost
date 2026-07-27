@@ -1,0 +1,5 @@
+@nost 2
+
+node example: Alpha, {
+  name: "x",
+}

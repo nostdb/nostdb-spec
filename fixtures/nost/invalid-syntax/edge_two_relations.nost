@@ -1,0 +1,3 @@
+@nost 2
+
+edge login -> database :CALLS :READS {}

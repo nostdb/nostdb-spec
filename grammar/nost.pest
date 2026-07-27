@@ -1,6 +1,6 @@
 // Executable reference encoding of the NostDB `.nost` grammar.
 //
-// nost_language_version = 1
+// nost_language_version = 2
 //
 // The normative grammar is grammar/nost.ebnf, and the normative conformance
 // gate is the fixture suite under fixtures/nost. This file exists so the
@@ -18,44 +18,75 @@ line_comment  = { "//" ~ (!"\n" ~ ANY)* }
 block_comment = { "/*" ~ (!"*/" ~ ANY)* ~ "*/" }
 
 nost_file = {
-    SOI ~ version_header ~ link_declaration* ~ module_declaration* ~ EOI
+    SOI ~ version_header ~ link_declaration* ~ declaration* ~ EOI
 }
 
 version_header = { "@nost" ~ integer_literal }
 
 link_declaration = { "@link" ~ string_literal ~ ("as" ~ alias_name)? }
 
-module_declaration = {
-    "module" ~ declaration_name ~ id_clause ~ source_clause?
-    ~ "{" ~ module_item* ~ "}"
+declaration = { schema_declaration | node_declaration | edge_declaration }
+
+schema_declaration = {
+    "schema" ~ schema_name ~ endpoint_constraint? ~ field_block
 }
 
-module_item = { node_declaration | edge_declaration }
+endpoint_constraint = { "(" ~ schema_name ~ "->" ~ schema_name ~ ")" }
+
+field_block = { "{" ~ (field ~ ("," ~ field)* ~ ","?)? ~ "}" }
+
+field     = { field_key ~ "?"? ~ ":" ~ field_type }
+field_key = { identifier }
+
+field_type = { scalar_type ~ ("[" ~ "]")? }
+
+// Atomic with a trailing boundary check, so `stringy` is not read as `string`
+// followed by a stray identifier.
+scalar_type = @{
+    ("boolean" | "integer" | "double" | "string" | "bytes" | "datetime")
+    ~ !identifier_continue
+}
 
 node_declaration = {
-    "node" ~ declaration_name ~ id_clause ~ label_list ~ property_block
+    "node" ~ declaration_name ~ ":" ~ schema_name ~ ("," ~ schema_name)*
+    ~ record_block
 }
 
 edge_declaration = {
-    "edge" ~ declaration_name ~ id_clause ~ relation_label
-    ~ "(" ~ endpoint ~ "->" ~ endpoint ~ ")" ~ property_block
+    "edge" ~ endpoint ~ "->" ~ endpoint ~ ":" ~ relation_name ~ record_block
 }
 
-id_clause     = { "id" ~ string_literal }
-source_clause = { "source" ~ string_literal }
+record_block = {
+    "{" ~ (property ~ ("," ~ property)* ~ ","?)? ~ contribution_block* ~ "}"
+}
 
-label_list     = { label+ }
-label          = { ":" ~ label_name }
-relation_label = { ":" ~ relation_name }
+property     = { property_key ~ ":" ~ property_value }
+property_key = { identifier }
+
+contribution_block = {
+    "@by" ~ owner ~ ("unit" ~ string_literal)? ~ "{" ~ evidence_block* ~ "}"
+}
+
+owner          = { analyzer_owner | ai_owner | user_owner }
+analyzer_owner = { "analyzer" ~ string_literal ~ string_literal }
+ai_owner       = { "ai" ~ string_literal }
+user_owner     = { "user" }
+
+evidence_block = {
+    "@evidence" ~ "{"
+    ~ (evidence_field ~ ("," ~ evidence_field)* ~ ","?)?
+    ~ "}"
+}
+
+evidence_field      = { evidence_key ~ ":" ~ evidence_value }
+evidence_key        = { identifier }
+evidence_value      = { string_literal | evidence_enumerator }
+evidence_enumerator = { identifier ~ ("(" ~ float_literal ~ ")")? }
 
 endpoint         = { aliased_endpoint | locator_endpoint | local_endpoint }
 local_endpoint   = { declaration_name }
 aliased_endpoint = { alias_name ~ "::" ~ declaration_name }
 locator_endpoint = { string_literal ~ "::" ~ declaration_name }
-
-property_block = { "{" ~ property* ~ "}" }
-property       = { property_key ~ ":" ~ property_value }
-property_key   = { identifier }
 
 property_value = {
     boolean_literal
@@ -80,7 +111,7 @@ property_scalar = {
 
 declaration_name = { identifier }
 alias_name       = { identifier }
-label_name       = { identifier }
+schema_name      = { identifier }
 relation_name    = { identifier }
 
 identifier          = @{ !reserved_word ~ identifier_start ~ identifier_continue* }
@@ -88,8 +119,8 @@ identifier_start    = { XID_START | "_" }
 identifier_continue = { XID_CONTINUE }
 
 reserved_word = @{
-    ( "module" | "node" | "edge" | "id" | "source" | "as"
-    | "true" | "false" | "bytes" | "datetime" )
+    ( "as" | "bytes" | "datetime" | "edge" | "false"
+    | "node" | "schema" | "true" )
     ~ !identifier_continue
 }
 

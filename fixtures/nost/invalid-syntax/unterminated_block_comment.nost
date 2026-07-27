@@ -1,6 +1,3 @@
-@nost 1
+@nost 2
 
-/* This comment never closes.
-
-module m id "m_1" {
-}
+/* this comment never ends

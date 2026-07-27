@@ -2,4 +2,4 @@ outcome = reject
 code = NOST_PARSE_ERROR
 reference_line = 3
 reference_column = 1
-note = A block comment must close.
+note = An unterminated block comment is a parse error.

@@ -4,9 +4,9 @@
   "contracts": [
     {
       "key": "nost_language_version",
-      "current": 1,
+      "current": 2,
       "supported": [
-        1
+        2
       ],
       "status": "specified",
       "specified_in": "docs/NOST_LANGUAGE.md",

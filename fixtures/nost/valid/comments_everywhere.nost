@@ -1,14 +1,21 @@
-// Leading comment on the file.
-@nost 1 // trailing comment on the version header
+@nost 2
 
-/* A block comment
-   spanning lines. */
-@link "./packages/child" // trailing comment on a link
+// A leading comment on the link group.
+@link "./packages/child" // trailing on a link
 
-module m id "m_1" { // trailing comment on a module head
-  // Leading comment on a node.
-  node n id "n_1" :Label /* inline */ {
-    // Leading comment on a property.
-    key: "value" // trailing comment on a property
-  }
+/* A block comment between declarations. */
+
+schema Sample {
+  // leading on a field
+  name: string, // trailing on a field
+  // a comment at the end of a field block
 }
+
+// leading on a node
+node example: Sample {
+  // leading on a property
+  name: "value", // trailing on a property
+  // a comment at the end of a record block
+}
+
+// a comment at the end of the file

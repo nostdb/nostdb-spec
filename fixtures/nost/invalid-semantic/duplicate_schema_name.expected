@@ -1,0 +1,3 @@
+outcome = accept_then_diagnose
+code = NOST_DUPLICATE_SCHEMA_NAME
+note = Two schema declarations share a name.

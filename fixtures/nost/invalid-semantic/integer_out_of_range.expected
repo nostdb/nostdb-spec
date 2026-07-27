@@ -1,3 +1,3 @@
 outcome = accept_then_diagnose
 code = NOST_INTEGER_OUT_OF_RANGE
-note = An integer literal exceeds signed 64-bit range.
+note = An integer literal above the signed 64-bit maximum.

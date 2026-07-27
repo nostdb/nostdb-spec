@@ -28,7 +28,7 @@ It does not own:
 
 | Contract | Version | Normative document |
 | --- | --- | --- |
-| `.nost` language | `nost_language_version = 1` | [docs/NOST_LANGUAGE.md](docs/NOST_LANGUAGE.md) |
+| `.nost` language | `nost_language_version = 2` | [docs/NOST_LANGUAGE.md](docs/NOST_LANGUAGE.md) |
 | `.nostdb` container | `nostdb_format_version = 1` | [docs/NOSTDB_FORMAT.md](docs/NOSTDB_FORMAT.md) |
 | query subset | `query_subset_version = 1` | [docs/QUERY_SUBSET.md](docs/QUERY_SUBSET.md) |
 

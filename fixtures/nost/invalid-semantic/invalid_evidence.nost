@@ -1,0 +1,13 @@
+@nost 2
+
+schema Sample {}
+
+node example: Sample {
+  @by analyzer "rust-structural" "0.1.0" {
+    @evidence {
+      path: "src/auth.rs",
+      method: deterministic,
+      confidence: extracted,
+    }
+  }
+}

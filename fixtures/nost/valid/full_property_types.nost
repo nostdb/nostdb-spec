@@ -1,20 +1,20 @@
-@nost 1
+@nost 2
 
-module sample id "m_1" source "src/sample.rs" {
-  node example id "n_1" :Sample {
-    flag: false
-    count: 42
-    negative: -7
-    ratio: 0.75
-    scaled: -1.5e-3
-    exponent_only: 2E+10
-    name: "login"
-    escaped: "a\"b\\c\nd\te\u{1F600}"
-    payload: bytes"deadbeef"
-    empty_payload: bytes""
-    seen_at: datetime"2026-07-26T09:00:00Z"
-    tags: ["auth", "entry"]
-    mixed: [1, 2.5, true, "x"]
-    empty_list: []
-  }
+schema Sample {}
+
+node example: Sample {
+  flag: false,
+  count: 42,
+  negative: -7,
+  ratio: 0.75,
+  scaled: -1.5e-3,
+  exponent_only: 2E+10,
+  name: "login",
+  escaped: "a\"b\\c\nd\te\u{1F600}",
+  payload: bytes"deadbeef",
+  empty_payload: bytes"",
+  seen_at: datetime"2026-07-26T09:00:00Z",
+  tags: ["auth", "entry"],
+  mixed: [1, 2.5, true, "x"],
+  empty_list: [],
 }

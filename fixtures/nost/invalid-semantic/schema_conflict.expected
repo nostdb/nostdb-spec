@@ -1,0 +1,3 @@
+outcome = accept_then_diagnose
+code = NOST_SCHEMA_CONFLICT
+note = Two schemas on one record declare a shared key with different types.

@@ -12,7 +12,7 @@ that exists.
 
 | Contract key | Current | Supported | Status | Specified in |
 | --- | --- | --- | --- | --- |
-| `nost_language_version` | 1 | 1 | specified | [docs/NOST_LANGUAGE.md](docs/NOST_LANGUAGE.md) |
+| `nost_language_version` | 2 | 2 | specified | [docs/NOST_LANGUAGE.md](docs/NOST_LANGUAGE.md) |
 | `nostdb_format_version` | 1 | 1 | specified | [docs/NOSTDB_FORMAT.md](docs/NOSTDB_FORMAT.md) |
 | `query_subset_version` | 1 | 1 | specified | [docs/QUERY_SUBSET.md](docs/QUERY_SUBSET.md) |
 | `settings_version` | 1 | 1 | deferred | not yet specified |
@@ -51,3 +51,19 @@ Consequences an implementation must honor:
 2. Record the change in the contract document that owns the key.
 3. Add fixtures covering the new version and the now-unsupported case.
 4. Leave every other key untouched.
+
+## Recorded bump: `nost_language_version` 1 to 2
+
+Version 2 removed the module declaration, introduced schema declarations,
+changed the node and edge forms, made the record identifier a reserved property
+key holding a prefixed UUID, and added contribution and evidence blocks. See
+[docs/NOST_LANGUAGE.md](docs/NOST_LANGUAGE.md) section 1.1.
+
+`supported` lists 2 alone. Version 1 does not round-trip through version 2,
+because a version 1 file requires a module block that version 2 has no
+declaration for, so listing 1 as supported would promise a parse no
+implementation can deliver. A version 1 file is `NOST_VERSION_UNSUPPORTED`.
+
+No other key moved. In particular `nostdb_format_version` stayed at 1: the
+container gained no section and changed no layout, which is exactly the
+independence this registry exists to keep.

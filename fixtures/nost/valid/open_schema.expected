@@ -1,0 +1,2 @@
+outcome = accept
+note = A schema is open, so a property it does not declare is permitted and unvalidated.

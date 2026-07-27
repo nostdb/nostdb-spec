@@ -1,0 +1,17 @@
+@nost 2
+
+schema Partial {
+  required_name: string,
+  optional_name?: string,
+  optional_tags?: string[],
+}
+
+node only_required: Partial {
+  required_name: "present",
+}
+
+node all_present: Partial {
+  required_name: "present",
+  optional_name: "also present",
+  optional_tags: ["a", "b"],
+}

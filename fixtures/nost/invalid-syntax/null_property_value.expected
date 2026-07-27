@@ -1,5 +1,5 @@
 outcome = reject
 code = NOST_PARSE_ERROR
-reference_line = 5
-reference_column = 10
+reference_line = 4
+reference_column = 12
 note = There is no null literal, so a stored null is unrepresentable.

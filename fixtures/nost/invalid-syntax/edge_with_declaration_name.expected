@@ -1,0 +1,5 @@
+outcome = reject
+code = NOST_PARSE_ERROR
+reference_line = 3
+reference_column = 6
+note = The version 1 edge form, with a declaration name and parenthesised endpoints, no longer parses.

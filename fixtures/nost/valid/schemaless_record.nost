@@ -1,0 +1,7 @@
+@nost 2
+
+node orphan: Function {
+  name: "no schema was declared for this name",
+}
+
+edge orphan -> orphan :CALLS {}

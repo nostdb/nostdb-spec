@@ -1,0 +1,5 @@
+@nost 2
+
+schema Sample {}
+
+@link "./packages/child"

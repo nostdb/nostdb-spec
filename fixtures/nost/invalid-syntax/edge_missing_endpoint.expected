@@ -1,5 +1,5 @@
 outcome = reject
 code = NOST_PARSE_ERROR
-reference_line = 6
-reference_column = 34
-note = An edge has two endpoints, and a null endpoint is unrepresentable.
+reference_line = 3
+reference_column = 15
+note = An edge carries two endpoints; there is no syntax for a null one.

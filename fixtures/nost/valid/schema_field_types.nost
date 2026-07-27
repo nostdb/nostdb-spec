@@ -1,0 +1,16 @@
+@nost 2
+
+schema Every {
+  flag: boolean,
+  count: integer,
+  ratio: double,
+  name: string,
+  payload: bytes,
+  seen_at: datetime,
+  flags: boolean[],
+  counts: integer[],
+  ratios: double[],
+  names: string[],
+  payloads: bytes[],
+  moments: datetime[],
+}

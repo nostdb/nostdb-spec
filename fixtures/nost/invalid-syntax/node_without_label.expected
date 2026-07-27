@@ -1,5 +1,0 @@
-outcome = reject
-code = NOST_PARSE_ERROR
-reference_line = 4
-reference_column = 19
-note = A node carries at least one label.

@@ -1,2 +1,2 @@
 outcome = accept
-note = Leading, trailing, inline, and multi-line comments are trivia.
+note = A comment in every attachment position the canonical form must preserve.

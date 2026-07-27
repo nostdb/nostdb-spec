@@ -1,7 +1,7 @@
-@nost 1
+@nost 2
 
-module m id "m_1" {
-  node dup id "n_1" :Label {}
+schema Sample {}
 
-  node dup id "n_2" :Label {}
-}
+node a: Sample {}
+
+node a: Sample {}

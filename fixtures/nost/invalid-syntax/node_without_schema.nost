@@ -1,0 +1,5 @@
+@nost 2
+
+node example {
+  name: "x",
+}

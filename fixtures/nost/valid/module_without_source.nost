@@ -1,7 +1,0 @@
-@nost 1
-
-module user_authored id "m_1" {
-  node concept id "n_1" :Concept {
-    rationale: "Declared by a user, so it has no source locator."
-  }
-}

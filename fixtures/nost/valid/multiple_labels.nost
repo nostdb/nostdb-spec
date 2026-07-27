@@ -1,7 +1,0 @@
-@nost 1
-
-module m id "m_1" {
-  node many id "n_1" :Function :Public :Exported :Async {
-    name: "handler"
-  }
-}
