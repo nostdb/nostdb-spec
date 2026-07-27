@@ -1,0 +1,3 @@
+outcome = reject
+code = CATALOG_INVALID
+note = A catalog is resolved from an arbitrary working directory, so a relative path has no anchor.

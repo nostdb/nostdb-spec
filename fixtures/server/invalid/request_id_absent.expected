@@ -1,0 +1,3 @@
+outcome = reject
+rule = request_id_absent
+note = Responses may arrive in any order, so a reply could not be matched to its request.

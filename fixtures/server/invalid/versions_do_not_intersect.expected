@@ -1,0 +1,4 @@
+outcome = reject
+rule = versions_do_not_intersect
+code = SERVER_PROTOCOL_UNSUPPORTED
+note = The two sides have no language in common, so the daemon states what it has and closes.

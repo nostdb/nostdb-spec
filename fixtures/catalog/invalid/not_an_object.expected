@@ -1,0 +1,3 @@
+outcome = reject
+code = CATALOG_INVALID
+note = Valid JSON, but not an object, so there is nothing to read.

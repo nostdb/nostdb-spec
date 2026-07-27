@@ -1,0 +1,2 @@
+outcome = accept
+note = A session is opened before any request that needs isolation.

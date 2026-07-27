@@ -1,0 +1,3 @@
+outcome = reject
+rule = database_is_a_path
+note = The daemon is not a second route to a file; a path belongs to Embedded Mode.

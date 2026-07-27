@@ -1,0 +1,5 @@
+{
+  "message": "welcome",
+  "server_protocol_version": 1,
+  "endpoint": "/home/dana/.nostdb/run/nostdb.sock"
+}

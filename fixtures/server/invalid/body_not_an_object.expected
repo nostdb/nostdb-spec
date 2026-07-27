@@ -1,0 +1,3 @@
+outcome = reject
+rule = body_not_an_object
+note = Valid JSON, but not an object, so there is nothing to read.

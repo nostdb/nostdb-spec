@@ -1,0 +1,3 @@
+outcome = reject
+code = CATALOG_INVALID
+note = A name that looks like a path is one an implementation would resolve as a path.

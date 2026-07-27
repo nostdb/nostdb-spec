@@ -3,6 +3,22 @@
   "note": "Diagnostic codes owned by nostdb-spec. A code marked prd_required appears in the required list in docs/PRD.md section 28 of the root superproject. The owner is the repository whose implementation raises the code, which is not always the Engine: the workspace verifier compares each owner's vocabulary against the codes owned by it. Codes are stable identifiers: rename none of them.",
   "codes": [
     {
+      "code": "CATALOG_INVALID",
+      "severity": "error",
+      "contract": "catalog_version",
+      "owner": "nostdb-server",
+      "prd_required": false,
+      "summary": "A catalog breaks a rule decidable by reading it. Reports every problem found, not the first. A stale entry target is not one of them."
+    },
+    {
+      "code": "CATALOG_VERSION_UNSUPPORTED",
+      "severity": "error",
+      "contract": "catalog_version",
+      "owner": "nostdb-server",
+      "prd_required": false,
+      "summary": "The catalog_version is not one this build reads."
+    },
+    {
       "code": "CHANGE_SET_INVALID",
       "severity": "error",
       "contract": "change_set_version",
@@ -241,6 +257,22 @@
       "owner": "nostdb-core",
       "prd_required": true,
       "summary": "A declared link could not be opened. The declaration stays, the reachable results are returned, and the summary reports the result as partial."
+    },
+    {
+      "code": "SERVER_ALREADY_RUNNING",
+      "severity": "error",
+      "contract": "server_protocol_version",
+      "owner": "nostdb-server",
+      "prd_required": true,
+      "summary": "A start request found a healthy daemon. Reported as the outcome of a start, not as a failure, because starting something already started is what the caller wanted."
+    },
+    {
+      "code": "SERVER_PROTOCOL_UNSUPPORTED",
+      "severity": "error",
+      "contract": "server_protocol_version",
+      "owner": "nostdb-server",
+      "prd_required": true,
+      "summary": "The client and the daemon support no common server_protocol_version. The refusal names the versions this side has."
     },
     {
       "code": "ORPHAN_LINK_SETTINGS",

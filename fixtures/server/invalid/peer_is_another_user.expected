@@ -1,0 +1,3 @@
+outcome = reject
+rule = peer_is_another_user
+note = The endpoint's only authentication is the operating system's, and it may not be disabled.

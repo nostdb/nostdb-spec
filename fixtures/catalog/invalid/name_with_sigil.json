@@ -1,0 +1,8 @@
+{
+  "catalog_version": 1,
+  "databases": {
+    "@work": {
+      "path": "/home/dana/projects/work/.nostdb/root.nostdb"
+    }
+  }
+}

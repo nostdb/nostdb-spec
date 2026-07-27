@@ -1,0 +1,2 @@
+outcome = accept
+note = A catalog with no names states an empty object, because an absent member would be indistinguishable from a truncated file.

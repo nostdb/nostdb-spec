@@ -1,0 +1,8 @@
+{
+  "server_protocol_version": 1,
+  "request_id": "r1",
+  "session_id": "s1",
+  "operation": "query",
+  "database": "./project/.nostdb/root.nostdb",
+  "statement": "MATCH (n) RETURN n"
+}

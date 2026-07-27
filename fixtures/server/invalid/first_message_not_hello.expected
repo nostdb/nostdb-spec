@@ -1,0 +1,3 @@
+outcome = reject
+rule = first_message_not_hello
+note = Negotiation has not happened, so nothing after it is interpretable.

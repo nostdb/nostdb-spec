@@ -1,0 +1,7 @@
+{
+  "message": "refused",
+  "code": "SERVER_PROTOCOL_UNSUPPORTED",
+  "supported_versions": [
+    1
+  ]
+}

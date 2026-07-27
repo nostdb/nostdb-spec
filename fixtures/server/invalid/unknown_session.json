@@ -1,0 +1,8 @@
+{
+  "server_protocol_version": 1,
+  "request_id": "r1",
+  "session_id": "s-gone",
+  "operation": "query",
+  "database": "work",
+  "statement": "MATCH (n) RETURN n"
+}

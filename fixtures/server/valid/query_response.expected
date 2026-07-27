@@ -1,0 +1,2 @@
+outcome = accept
+note = result carries a result_version envelope verbatim; this contract states no field of it.

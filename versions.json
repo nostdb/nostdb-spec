@@ -48,8 +48,8 @@
       "supported": [
         1
       ],
-      "status": "deferred",
-      "specified_in": null,
+      "status": "specified",
+      "specified_in": "docs/CATALOG.md",
       "summary": "The per-user named database catalog."
     },
     {
@@ -108,8 +108,8 @@
       "supported": [
         1
       ],
-      "status": "deferred",
-      "specified_in": null,
+      "status": "specified",
+      "specified_in": "docs/SERVER_PROTOCOL.md",
       "summary": "The local daemon IPC protocol."
     },
     {

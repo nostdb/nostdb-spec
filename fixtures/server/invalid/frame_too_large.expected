@@ -1,0 +1,3 @@
+outcome = reject
+rule = frame_too_large
+note = A peer must not be able to name an allocation. The document records the declared length; the refusal happens before the body is read.

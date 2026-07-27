@@ -1,0 +1,3 @@
+outcome = reject
+code = CATALOG_INVALID
+note = An entry with no target is not a claim about anything.

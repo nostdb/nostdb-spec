@@ -1,0 +1,2 @@
+outcome = accept
+note = The handshake carries no version of its own, because a client that must know the version to ask which is supported cannot negotiate.

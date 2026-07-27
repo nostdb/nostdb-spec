@@ -1,0 +1,8 @@
+{
+  "catalog_version": 1,
+  "databases": {
+    "work": {
+      "path": "./.nostdb/root.nostdb"
+    }
+  }
+}

@@ -1,0 +1,3 @@
+outcome = reject
+rule = unknown_operation
+note = Guessing which was meant is how a typo becomes a write.

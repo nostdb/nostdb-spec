@@ -1,0 +1,3 @@
+outcome = reject
+code = CATALOG_INVALID
+note = The sigil belongs to the command line, not to the name.

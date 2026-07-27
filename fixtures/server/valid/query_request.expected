@@ -1,0 +1,2 @@
+outcome = accept
+note = database is a catalog name without the sigil, never a filesystem path.

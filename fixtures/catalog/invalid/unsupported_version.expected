@@ -1,0 +1,3 @@
+outcome = reject
+code = CATALOG_VERSION_UNSUPPORTED
+note = A version this build does not read is refused rather than parsed best-effort.

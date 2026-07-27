@@ -1,0 +1,2 @@
+outcome = accept
+note = An unknown member is preserved on rewrite, so an older build is not a silent downgrade.

@@ -1,0 +1,7 @@
+{
+  "message": "hello",
+  "client": "nostdb-cli",
+  "supported_versions": [
+    1
+  ]
+}

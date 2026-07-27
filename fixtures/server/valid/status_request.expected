@@ -1,0 +1,2 @@
+outcome = accept
+note = status needs no session, because it reports the daemon rather than a database.

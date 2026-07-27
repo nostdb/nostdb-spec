@@ -1,0 +1,3 @@
+outcome = reject
+rule = version_absent_after_handshake
+note = A message from a differently versioned process must be detected rather than misread.
