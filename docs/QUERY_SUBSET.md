@@ -352,6 +352,30 @@ A conflict is reported as a typed error at the API boundary rather than as a dia
 code. It describes what the caller did, not something found in analyzed content, and the
 root product contract keeps those two vocabularies apart.
 
+### 11.1 Stopping a running query
+
+An implementation MAY let a caller ask a running query to stop, and MUST report
+`QUERY_CANCELLED` when one does. This is what a daemon's query timeout is built on.
+
+Cancellation is **cooperative**. An implementation MUST observe the request at boundaries
+where stopping is safe, and this contract requires at least:
+
+- between the parts of a `UNION`;
+- between the clauses of a part;
+- between the input rows of a `MATCH`.
+
+A single operation that does not yield between those points need not be interruptible. An
+implementation MUST NOT claim a granularity it does not have: a caller that is told a query
+can be stopped, and then waits through a pattern expansion that never checks, has been given
+a guarantee that does not hold in the case it most needed one.
+
+A stopped query MUST leave the last valid database generation intact. It stops rather than
+partially commits, so a transaction it ran inside is rolled back like any other refusal.
+
+`QUERY_CANCELLED` carries no source range that means anything: nothing in the query is
+wrong. An implementation SHOULD report the range as the origin rather than pointing at a
+token, which would send a reader looking for a mistake that is not there.
+
 ## 12. The `nostdb` namespace
 
 NostDB-specific behavior lives in this namespace so the language itself stays

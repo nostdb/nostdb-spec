@@ -235,6 +235,14 @@
       "summary": "A write named a record belonging to a linked source. Linked records are read-only from the root transaction, so nothing was modified."
     },
     {
+      "code": "QUERY_CANCELLED",
+      "severity": "error",
+      "contract": "query_subset_version",
+      "owner": "nostdb-core",
+      "prd_required": false,
+      "summary": "The query was asked to stop before it finished. Cooperative: execution asks at part, clause, and match-row boundaries, so this reports a query that was stopped rather than one interrupted mid-operation."
+    },
+    {
       "code": "LINK_CYCLE",
       "severity": "warning",
       "contract": "result_version",
