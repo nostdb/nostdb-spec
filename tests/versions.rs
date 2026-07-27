@@ -109,13 +109,41 @@ fn the_human_table_agrees_with_the_machine_registry() {
             .find(|line| line.starts_with("| `") && line.contains(&format!("`{key}`")))
             .unwrap_or_else(|| panic!("VERSIONS.md has no table row for {key}"));
 
-        assert!(
-            row.contains(status),
-            "VERSIONS.md row for {key} does not state status {status}: {row}"
+        // Compare the status and version columns exactly rather than as substrings. A
+        // substring match let `change_set_version` drift: the row said `deferred` and
+        // `not yet specified`, and `row.contains("specified")` was satisfied by the
+        // "specified" inside "not yet specified", so the check reported agreement
+        // between a row and a registry entry that disagreed.
+        let columns: Vec<&str> = row.split('|').map(str::trim).collect();
+        assert_eq!(
+            columns.len(),
+            7,
+            "VERSIONS.md row for {key} must have five columns: {row}"
         );
-        assert!(
-            row.contains(&format!("| {current} |")),
-            "VERSIONS.md row for {key} does not state current version {current}: {row}"
+
+        assert_eq!(
+            columns[4], status,
+            "VERSIONS.md row for {key} states status {}, registry says {status}",
+            columns[4]
         );
+        assert_eq!(
+            columns[2],
+            current.to_string(),
+            "VERSIONS.md row for {key} states current {}, registry says {current}",
+            columns[2]
+        );
+
+        // The last column must agree too, or a row can name the wrong document, or none,
+        // while still stating the right status.
+        match contract["specified_in"].as_str() {
+            Some(path) => assert!(
+                columns[5].contains(path),
+                "VERSIONS.md row for {key} does not link {path}: {row}"
+            ),
+            None => assert_eq!(
+                columns[5], "not yet specified",
+                "VERSIONS.md row for {key} must read `not yet specified`: {row}"
+            ),
+        }
     }
 }

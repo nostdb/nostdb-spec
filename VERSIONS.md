@@ -23,7 +23,7 @@ that exists.
 | `plugin_protocol_version` | 1 | 1 | deferred | not yet specified |
 | `manifest_version` | 1 | 1 | deferred | not yet specified |
 | `server_protocol_version` | 1 | 1 | deferred | not yet specified |
-| `change_set_version` | 1 | 1 | deferred | not yet specified |
+| `change_set_version` | 1 | 1 | specified | [docs/CHANGE_SET.md](docs/CHANGE_SET.md) |
 
 A `deferred` contract has a reserved key and an agreed starting version, but no
 authored contract yet. Reserving the key now is what keeps a later contract from
