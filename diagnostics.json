@@ -178,6 +178,27 @@
       "summary": "A settings document names a version this implementation cannot read, or cannot write without losing a field it does not understand."
     },
     {
+      "code": "LINK_UNAVAILABLE",
+      "severity": "warning",
+      "contract": "result_version",
+      "prd_required": true,
+      "summary": "A declared link could not be opened. The declaration stays, the reachable results are returned, and the summary reports the result as partial."
+    },
+    {
+      "code": "LINK_CYCLE",
+      "severity": "warning",
+      "contract": "result_version",
+      "prd_required": true,
+      "summary": "Recursive link traversal reached a canonical source it had already opened. The cycle is cut and the result is partial."
+    },
+    {
+      "code": "LINK_LIMIT_EXCEEDED",
+      "severity": "warning",
+      "contract": "result_version",
+      "prd_required": true,
+      "summary": "Recursive link traversal reached a configured depth or database limit. Traversal stops there and the result is partial."
+    },
+    {
       "code": "NOSTDB_FORMAT_UNSUPPORTED",
       "severity": "error",
       "contract": "nostdb_format_version",

@@ -33,6 +33,7 @@ format/nostdb-header.json
 docs/NOST_LANGUAGE.md
 docs/NOSTDB_FORMAT.md
 docs/QUERY_SUBSET.md
+docs/RESULT.md
 docs/SETTINGS.md
 fixtures/cypher/supported
 fixtures/cypher/unsupported
@@ -44,6 +45,8 @@ fixtures/nostdb/header
 fixtures/settings/valid
 fixtures/settings/invalid
 fixtures/settings/merge
+fixtures/result/valid
+fixtures/result/invalid
 "
 
 for required_file in $required_files; do
@@ -73,6 +76,7 @@ format/nostdb-header.json
 docs/NOST_LANGUAGE.md
 docs/NOSTDB_FORMAT.md
 docs/QUERY_SUBSET.md
+docs/RESULT.md
 docs/SETTINGS.md
 scripts/verify-repository.sh
 "

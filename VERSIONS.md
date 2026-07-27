@@ -18,7 +18,7 @@ that exists.
 | `settings_version` | 1 | 1 | specified | [docs/SETTINGS.md](docs/SETTINGS.md) |
 | `credentials_version` | 1 | 1 | deferred | not yet specified |
 | `catalog_version` | 1 | 1 | deferred | not yet specified |
-| `result_version` | 1 | 1 | deferred | not yet specified |
+| `result_version` | 1 | 1 | specified | [docs/RESULT.md](docs/RESULT.md) |
 | `provider_protocol_version` | 1 | 1 | deferred | not yet specified |
 | `plugin_protocol_version` | 1 | 1 | deferred | not yet specified |
 | `manifest_version` | 1 | 1 | deferred | not yet specified |

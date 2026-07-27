@@ -80,6 +80,7 @@ fn the_specified_contracts_are_exactly_those_that_have_been_authored() {
         "nost_language_version",
         "nostdb_format_version",
         "query_subset_version",
+        "result_version",
         "settings_version",
     ]
     .into_iter()

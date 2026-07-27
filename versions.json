@@ -68,8 +68,8 @@
       "supported": [
         1
       ],
-      "status": "deferred",
-      "specified_in": null,
+      "status": "specified",
+      "specified_in": "docs/RESULT.md",
       "summary": "The machine-readable query result envelope."
     },
     {
