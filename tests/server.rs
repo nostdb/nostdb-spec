@@ -16,7 +16,7 @@ use std::path::Path;
 
 /// Every refusal the contract's section 8 table states, paired with the fixture that
 /// exercises it. Adding a row to that table without a fixture fails the last test here.
-const REFUSAL_RULES: [&str; 11] = [
+const REFUSAL_RULES: [&str; 12] = [
     "versions_do_not_intersect",
     "version_absent_after_handshake",
     "first_message_not_hello",
@@ -27,6 +27,7 @@ const REFUSAL_RULES: [&str; 11] = [
     "unknown_operation",
     "database_is_a_path",
     "unknown_session",
+    "second_session_on_one_connection",
     "peer_is_another_user",
 ];
 

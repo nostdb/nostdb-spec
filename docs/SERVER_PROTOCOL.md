@@ -203,12 +203,42 @@ failure the Engine already named.
 A session is the unit of isolation. Requests in one session see one consistent view; requests
 in different sessions MUST NOT observe each other's uncommitted work.
 
+### 6.1 One session per connection
+
+A connection carries at most one session. A second `open_session` on a connection that already
+has one MUST be refused rather than opening another or replacing the first.
+
+Version 1 states this because leaving it unstated left the wrong thing implied. Isolation between
+sessions is what section 6 is about, and the honest way to provide it is one session per
+connection: concurrency comes from opening more connections, each of which the daemon serves
+independently.
+
+The alternative — several sessions multiplexed over one connection — sounds more capable and is
+worse in practice. A transaction is a region during which the daemon is committed to one
+session's view, so a second session's request arriving inside that region has to be either
+queued, which is unbounded buffering a client cannot see, or refused, which is a failure a client
+cannot predict. Neither is a better answer than opening a second connection.
+
+`session_id` stays on the wire. It is not redundant: it names the session `close_session` ends,
+and it lets a request confirm which session it believes it is in rather than inheriting whatever
+the connection currently holds. A request naming a session the connection does not have is
+refused as `unknown_session`.
+
+A later version MAY lift this. Nothing here prevents multiplexing from being added, and adding it
+would need `server_protocol_version` 2 rather than a silent widening.
+
+### 6.2 Transactions
+
 A transaction lives inside a session and MUST NOT span two. Closing a session with an open
 transaction MUST roll it back: a client that disconnects mid-transaction has not decided to
 commit, and treating a dropped connection as consent is how a partial write becomes permanent.
 
-A dropped connection MUST end its sessions. The daemon MUST reclaim a session whose client is
+A dropped connection MUST end its session. The daemon MUST reclaim a session whose client is
 gone rather than holding its resources until shutdown.
+
+Two sessions MAY target one named database. Neither sees the other's uncommitted work, and a
+commit computed against a generation the database has since moved past is refused by the Engine
+rather than merged: `nostdb_format_version` decides that, not this protocol.
 
 Writes affect only the database the session targets. Linked databases are read-only from it,
 which `query_subset_version` already requires and this protocol does not relax.
@@ -245,6 +275,7 @@ client that cannot frame a message correctly is not yet a caller.
 | `operation` is absent or unknown | guessing which was meant is how a typo becomes a write |
 | `database` holds a path rather than a name | the daemon is not a second route to a file |
 | a request names an unknown `session_id` | the isolation the session guaranteed no longer exists |
+| a second `open_session` on a connection that has one | section 6.1: opening another would silently widen the connection, and replacing the first would discard a session the client still believes in |
 | the peer belongs to another operating-system user | the endpoint's only authentication is the operating system's |
 
 ## 9. Versions
