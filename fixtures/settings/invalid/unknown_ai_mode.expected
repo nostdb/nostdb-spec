@@ -1,0 +1,3 @@
+outcome = reject
+code = SETTINGS_INVALID
+note = An unrecognized enumerator is refused rather than treated as a default.

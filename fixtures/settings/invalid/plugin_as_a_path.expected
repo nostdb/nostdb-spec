@@ -1,0 +1,3 @@
+outcome = reject
+code = SETTINGS_INVALID
+note = Settings must not be able to name an executable to run.

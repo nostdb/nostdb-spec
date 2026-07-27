@@ -1,0 +1,12 @@
+{
+  "settings_version": 1,
+  "links": [
+    {
+      "source": "./packages/child"
+    },
+    {
+      "source": "./packages/child",
+      "timeout_ms": 5000
+    }
+  ]
+}

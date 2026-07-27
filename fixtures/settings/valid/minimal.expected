@@ -1,0 +1,2 @@
+outcome = accept
+note = The version is the only required member, so a configured project may hold nothing else.

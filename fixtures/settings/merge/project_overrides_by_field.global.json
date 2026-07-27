@@ -1,0 +1,7 @@
+{
+  "settings_version": 1,
+  "database": {
+    "path": "global.nostdb",
+    "nost": true
+  }
+}

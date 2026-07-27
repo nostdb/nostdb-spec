@@ -1,0 +1,3 @@
+outcome = reject
+code = SETTINGS_VERSION_UNSUPPORTED
+note = A version above the highest supported is refused rather than read best-effort.

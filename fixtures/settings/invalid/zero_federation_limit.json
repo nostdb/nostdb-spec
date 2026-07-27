@@ -1,0 +1,6 @@
+{
+  "settings_version": 1,
+  "federation": {
+    "max_link_depth": 0
+  }
+}

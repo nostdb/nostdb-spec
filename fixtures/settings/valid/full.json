@@ -1,0 +1,36 @@
+{
+  "settings_version": 1,
+  "database": {
+    "path": "root.nostdb",
+    "nost": true
+  },
+  "analysis": {
+    "ai_mode": "auto",
+    "max_input_tokens": 100000,
+    "max_output_tokens": 20000,
+    "max_cost_usd": "5.00",
+    "on_budget_exceeded": "ask"
+  },
+  "links": [
+    {
+      "source": "./packages/child",
+      "credential_ref": null,
+      "refresh": "manual",
+      "timeout_ms": 10000
+    },
+    {
+      "source": "github://example/shared/graphs/root.nostdb?ref=main",
+      "credential_ref": "github.work",
+      "refresh": "manual",
+      "timeout_ms": 15000
+    }
+  ],
+  "federation": {
+    "max_link_depth": 16,
+    "max_link_databases": 256,
+    "link_open_timeout_ms": 10000
+  },
+  "plugins": {
+    "view": "org.nostdb.view-webgpu"
+  }
+}

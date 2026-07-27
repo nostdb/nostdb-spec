@@ -1,0 +1,2 @@
+outcome = merge
+note = Two empty documents produce the documented defaults and nothing else.

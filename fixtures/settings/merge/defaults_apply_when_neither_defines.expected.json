@@ -1,0 +1,21 @@
+{
+  "settings_version": 1,
+  "database": {
+    "path": "root.nostdb",
+    "nost": false
+  },
+  "analysis": {
+    "ai_mode": "auto",
+    "max_input_tokens": null,
+    "max_output_tokens": null,
+    "max_cost_usd": null,
+    "on_budget_exceeded": "ask"
+  },
+  "links": [],
+  "federation": {
+    "max_link_depth": 16,
+    "max_link_databases": 256,
+    "link_open_timeout_ms": 10000
+  },
+  "plugins": {}
+}

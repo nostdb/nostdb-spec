@@ -1,0 +1,2 @@
+outcome = merge
+note = links is one field, so defining it in the project replaces the global list entirely.

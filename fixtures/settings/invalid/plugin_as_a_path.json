@@ -1,0 +1,6 @@
+{
+  "settings_version": 1,
+  "plugins": {
+    "view": "./bin/viewer"
+  }
+}

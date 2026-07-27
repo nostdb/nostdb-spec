@@ -1,0 +1,3 @@
+outcome = reject
+code = SETTINGS_INVALID
+note = There is nothing to read fields from.

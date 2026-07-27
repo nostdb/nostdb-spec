@@ -1,0 +1,7 @@
+{
+  "settings_version": 1,
+  "analysis": {
+    "max_input_tokens": 0,
+    "on_budget_exceeded": "stop"
+  }
+}

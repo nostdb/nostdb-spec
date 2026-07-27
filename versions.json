@@ -28,8 +28,8 @@
       "supported": [
         1
       ],
-      "status": "deferred",
-      "specified_in": null,
+      "status": "specified",
+      "specified_in": "docs/SETTINGS.md",
       "summary": "Project and global settings documents."
     },
     {

@@ -1,0 +1,2 @@
+outcome = accept
+note = An unknown field inside a supported version is kept, so a downgrade is not lossy.

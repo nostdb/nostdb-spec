@@ -1,0 +1,9 @@
+{
+  "settings_version": 1,
+  "links": [
+    {
+      "source": "./packages/child",
+      "alias": "child"
+    }
+  ]
+}

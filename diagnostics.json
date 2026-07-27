@@ -157,6 +157,27 @@
       "summary": "A write named a record belonging to a linked source. Linked records are read-only from the root transaction, so nothing was modified."
     },
     {
+      "code": "ORPHAN_LINK_SETTINGS",
+      "severity": "warning",
+      "contract": "settings_version",
+      "prd_required": true,
+      "summary": "A settings link entry names a source no link declaration in the database carries. The entry is ignored."
+    },
+    {
+      "code": "SETTINGS_INVALID",
+      "severity": "error",
+      "contract": "settings_version",
+      "prd_required": false,
+      "summary": "A settings document is malformed: a missing or non-positive version, a wrong field type, an unsafe database path, an aliased or duplicate link entry, or a negative limit."
+    },
+    {
+      "code": "SETTINGS_VERSION_UNSUPPORTED",
+      "severity": "error",
+      "contract": "settings_version",
+      "prd_required": false,
+      "summary": "A settings document names a version this implementation cannot read, or cannot write without losing a field it does not understand."
+    },
+    {
       "code": "NOSTDB_FORMAT_UNSUPPORTED",
       "severity": "error",
       "contract": "nostdb_format_version",

@@ -1,0 +1,13 @@
+{
+  "settings_version": 1,
+  "database": {
+    "path": "root.nostdb"
+  },
+  "future_section": {
+    "whatever": [
+      1,
+      2,
+      3
+    ]
+  }
+}

@@ -1,0 +1,2 @@
+outcome = merge
+note = database.path and database.nost are two defined fields, so one is replaced and the other is kept.
