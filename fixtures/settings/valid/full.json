@@ -30,6 +30,9 @@
     "max_link_databases": 256,
     "link_open_timeout_ms": 10000
   },
+  "cache": {
+    "user": true
+  },
   "plugins": {
     "view": "org.nostdb.view-webgpu"
   }

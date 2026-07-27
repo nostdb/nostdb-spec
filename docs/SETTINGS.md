@@ -82,6 +82,9 @@ current operating-system user, where the platform supports such permissions.
     "max_link_databases": 256,
     "link_open_timeout_ms": 10000
   },
+  "cache": {
+    "user": true
+  },
   "plugins": {
     "view": "org.nostdb.view-webgpu"
   }
@@ -177,7 +180,27 @@ thing as `linked_databases_opened` in the result envelope. A limit counting one
 thing while the number reported beside it counted another would be a trap: a
 caller comparing them would conclude the limit was off by one.
 
-### 3.6 `plugins`
+### 3.6 `cache`
+
+| Field | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `user` | boolean | `true` | whether the user-global cache tier is read |
+
+An implementation caches derived analysis in two tiers, read project first and then
+user. This field turns the second off for one project.
+
+The project tier has no field, because a project that could not cache its own
+derived work would have nothing to turn off — the tier lives inside the project
+and is discarded with it. The user tier is different: it is shared across every
+project the same operating-system user builds, and a project may have reason not
+to read from something another project wrote.
+
+Setting `user` to `false` MUST NOT be read as a privacy guarantee about the other
+direction. Nothing here says what an implementation writes; the tier a write goes
+to is an implementation decision, and a future team cache is out of scope for this
+version.
+
+### 3.7 `plugins`
 
 An object mapping an action name to the plugin that serves it. A value is a
 plugin name, never a path and never a command line, because settings must not be

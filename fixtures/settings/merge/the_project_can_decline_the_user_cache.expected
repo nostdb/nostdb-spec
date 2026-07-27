@@ -1,0 +1,2 @@
+outcome = merge
+note = A project declining the shared tier overrides a global that reads it, by defined field.

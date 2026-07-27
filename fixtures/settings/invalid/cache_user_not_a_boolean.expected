@@ -1,0 +1,3 @@
+outcome = reject
+code = SETTINGS_INVALID
+note = Guessing that the string "no" means false is how a typo becomes a silent behavior change.
