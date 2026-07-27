@@ -5,6 +5,18 @@ mod common;
 
 use std::collections::{BTreeMap, BTreeSet};
 
+/// Repositories that may own a diagnostic code, from the normative child directory names in
+/// `docs/PRD.md` section 8.1. A code's owner is where its implementation lives, so this is
+/// deliberately a closed list: an owner outside it would name a repository the workspace
+/// verifier cannot check.
+const KNOWN_OWNERS: [&str; 5] = [
+    "nostdb-core",
+    "nostdb-cli",
+    "nostdb-server",
+    "nostdb-provider-github",
+    "plugins",
+];
+
 #[test]
 fn the_registry_is_well_formed() {
     let registry = common::read_json("diagnostics.json");
@@ -45,6 +57,16 @@ fn the_registry_is_well_formed() {
         assert!(
             known_contracts.contains(contract),
             "{code}: contract {contract} is not in the version registry"
+        );
+
+        // The owner is the repository whose implementation raises the code. It is not
+        // always the Engine: the daemon raises the server codes and the Engine cannot,
+        // which is why the workspace verifier compares each owner against the codes owned
+        // by it rather than comparing one vocabulary against the whole registry.
+        let owner = entry["owner"].as_str().expect("owner is a string");
+        assert!(
+            KNOWN_OWNERS.contains(&owner),
+            "{code}: owner {owner} is not a normative child repository"
         );
 
         assert!(
