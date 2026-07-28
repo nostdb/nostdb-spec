@@ -1,0 +1,6 @@
+{
+  "provider_protocol_version": 1,
+  "reply": "error",
+  "code": "PROVIDER_SOURCE_UNAVAILABLE",
+  "message": "the host did not answer"
+}

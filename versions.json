@@ -78,8 +78,8 @@
       "supported": [
         1
       ],
-      "status": "deferred",
-      "specified_in": null,
+      "status": "specified",
+      "specified_in": "docs/PROVIDER_PROTOCOL.md",
       "summary": "The out-of-process source and graph-store provider protocol."
     },
     {

@@ -1,0 +1,3 @@
+outcome = accept
+canonical = github://example/payments/?ref=main
+note = An empty path names the repository root and is written with a trailing slash.

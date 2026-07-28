@@ -1,0 +1,2 @@
+outcome = accept
+note = content_id is the host's own identifier, used to avoid a download rather than to trust the bytes.

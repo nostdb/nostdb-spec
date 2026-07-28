@@ -1,0 +1,3 @@
+outcome = accept
+canonical = github://example/payments/.nostdb/root.nostdb?ref=v1.2.0
+note = Retrieving a published graph for read-only federation.

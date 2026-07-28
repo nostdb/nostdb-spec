@@ -1,0 +1,11 @@
+{
+  "provider_protocol_version": 1,
+  "reply": "enumerate",
+  "entries": [
+    {
+      "path": "src/main.rs",
+      "bytes": 412,
+      "content_id": "b1946ac9"
+    }
+  ]
+}

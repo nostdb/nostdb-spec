@@ -1,0 +1,3 @@
+outcome = accept
+canonical = github://example/payments/src/Main.rs?ref=Feature-A
+note = A repository's own paths and its refs are case-sensitive.

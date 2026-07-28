@@ -1,0 +1,3 @@
+outcome = reject
+code = PROVIDER_LOCATOR_INVALID
+note = An empty ref names nothing.

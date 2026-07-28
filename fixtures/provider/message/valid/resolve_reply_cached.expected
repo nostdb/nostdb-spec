@@ -1,0 +1,2 @@
+outcome = accept
+note = Section 16.3 permits serving a cached immutable snapshot when the host is unreachable, and requires saying so.

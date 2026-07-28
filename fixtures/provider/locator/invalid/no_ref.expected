@@ -1,0 +1,3 @@
+outcome = reject
+code = PROVIDER_LOCATOR_INVALID
+note = The default branch of a repository can change, and a locator is an identity.

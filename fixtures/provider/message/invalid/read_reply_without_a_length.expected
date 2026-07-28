@@ -1,0 +1,3 @@
+outcome = reject
+code = PROVIDER_REQUEST_INVALID
+note = Without a length the Engine cannot tell where the content ends and the next reply begins.

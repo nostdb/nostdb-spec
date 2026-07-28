@@ -19,7 +19,7 @@ that exists.
 | `credentials_version` | 1 | 1 | deferred | not yet specified |
 | `catalog_version` | 1 | 1 | specified | [docs/CATALOG.md](docs/CATALOG.md) |
 | `result_version` | 1 | 1 | specified | [docs/RESULT.md](docs/RESULT.md) |
-| `provider_protocol_version` | 1 | 1 | deferred | not yet specified |
+| `provider_protocol_version` | 1 | 1 | specified | [docs/PROVIDER_PROTOCOL.md](docs/PROVIDER_PROTOCOL.md) |
 | `plugin_protocol_version` | 1 | 1 | deferred | not yet specified |
 | `manifest_version` | 1 | 1 | deferred | not yet specified |
 | `server_protocol_version` | 1 | 1 | specified | [docs/SERVER_PROTOCOL.md](docs/SERVER_PROTOCOL.md) |

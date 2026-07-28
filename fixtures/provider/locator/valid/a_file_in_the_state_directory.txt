@@ -1,0 +1,1 @@
+github://example/payments/.nostdb/root.nostdb?ref=v1.2.0

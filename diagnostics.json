@@ -211,6 +211,62 @@
       "summary": "The container exceeds a bounded-parsing limit, so it is refused without allocating from an untrusted length."
     },
     {
+      "code": "PROVIDER_CREDENTIAL_REJECTED",
+      "severity": "error",
+      "contract": "provider_protocol_version",
+      "owner": "nostdb-provider-github",
+      "prd_required": true,
+      "summary": "The host refused the credential."
+    },
+    {
+      "code": "PROVIDER_CREDENTIAL_REQUIRED",
+      "severity": "error",
+      "contract": "provider_protocol_version",
+      "owner": "nostdb-provider-github",
+      "prd_required": true,
+      "summary": "The source needs a credential that was not supplied. Never downgraded to an anonymous request."
+    },
+    {
+      "code": "PROVIDER_LIMIT_EXCEEDED",
+      "severity": "error",
+      "contract": "provider_protocol_version",
+      "owner": "nostdb-provider-github",
+      "prd_required": true,
+      "summary": "A host quota or rate limit was reached."
+    },
+    {
+      "code": "PROVIDER_LOCATOR_INVALID",
+      "severity": "error",
+      "contract": "provider_protocol_version",
+      "owner": "nostdb-provider-github",
+      "prd_required": true,
+      "summary": "The locator is not one this provider reads."
+    },
+    {
+      "code": "PROVIDER_PROTOCOL_UNSUPPORTED",
+      "severity": "error",
+      "contract": "provider_protocol_version",
+      "owner": "nostdb-provider-github",
+      "prd_required": true,
+      "summary": "The request's provider_protocol_version is not implemented. Refused with a reply, never by exiting."
+    },
+    {
+      "code": "PROVIDER_REQUEST_INVALID",
+      "severity": "error",
+      "contract": "provider_protocol_version",
+      "owner": "nostdb-provider-github",
+      "prd_required": true,
+      "summary": "The request is malformed or names a kind this version does not define."
+    },
+    {
+      "code": "PROVIDER_SOURCE_UNAVAILABLE",
+      "severity": "error",
+      "contract": "provider_protocol_version",
+      "owner": "nostdb-provider-github",
+      "prd_required": true,
+      "summary": "The host could not be reached, or has no such snapshot. The link remains declared."
+    },
+    {
       "code": "CYPHER_SEMANTIC_ERROR",
       "severity": "error",
       "contract": "query_subset_version",

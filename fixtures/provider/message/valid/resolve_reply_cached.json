@@ -1,0 +1,7 @@
+{
+  "provider_protocol_version": 1,
+  "reply": "resolve",
+  "snapshot": "0f1e2d3c",
+  "canonical_locator": "github://example/payments/?ref=main",
+  "cached": true
+}

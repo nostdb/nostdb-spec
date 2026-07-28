@@ -1,0 +1,3 @@
+outcome = reject
+code = PROVIDER_REQUEST_INVALID
+note = Guessing which request was meant is how a typo reaches a network.

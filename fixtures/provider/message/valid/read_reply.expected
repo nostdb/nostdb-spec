@@ -1,0 +1,2 @@
+outcome = accept
+note = The bytes follow the newline as an opaque run rather than travelling inside JSON.

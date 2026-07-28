@@ -1,0 +1,10 @@
+{
+  "provider_protocol_version": 1,
+  "reply": "handshake",
+  "provider": "github",
+  "provider_version": "1.0.0",
+  "roles": [
+    "source",
+    "graph_store"
+  ]
+}

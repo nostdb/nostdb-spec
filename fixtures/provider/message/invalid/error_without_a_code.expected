@@ -1,0 +1,3 @@
+outcome = reject
+code = PROVIDER_REQUEST_INVALID
+note = The code is the signal; a caller matching on message text would break the first time the wording improved.

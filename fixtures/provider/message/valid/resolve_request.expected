@@ -1,0 +1,2 @@
+outcome = accept
+note = A credential travels as a name. The Engine never holds the secret.
