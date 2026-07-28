@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_SOURCE_INVALID
+note = A source with no manifest is not a plugin with a bad one. Reporting a manifest as invalid would send an author to edit a file they do not have.

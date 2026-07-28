@@ -1,0 +1,2 @@
+outcome = admit
+note = Component by component and numerically. Compared as strings, 0.10.0 would sort below 0.9.0 and a working build would be refused.

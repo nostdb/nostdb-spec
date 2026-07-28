@@ -1,0 +1,3 @@
+outcome = accept
+accepted_entries = 9
+note = Exactly 64 MiB across the plugin. the_plugin_is_too_large is over it with every entry individually legal.

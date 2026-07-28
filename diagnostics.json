@@ -51,6 +51,54 @@
       "summary": "The manifest_version is not one this build reads."
     },
     {
+      "code": "PLUGIN_SOURCE_INVALID",
+      "severity": "error",
+      "contract": "plugin_install_version",
+      "owner": "nostdb-cli",
+      "prd_required": false,
+      "summary": "A fetched tree is not a plugin: an entry path escapes or does not round-trip, the named subdirectory holds nothing, or there is no nostdb-plugin.json at the plugin's root. Distinct from a refused manifest, because a source with no manifest is not a plugin with a bad one."
+    },
+    {
+      "code": "PLUGIN_LIMIT_EXCEEDED",
+      "severity": "error",
+      "contract": "plugin_install_version",
+      "owner": "nostdb-cli",
+      "prd_required": false,
+      "summary": "A tree exceeds a fixed archive limit on entry count, entry bytes, total bytes, path length, or path depth. Reported separately from an invalid path because the fixes differ: a tree over a limit is trimmed by its author, and one with an escaping path is corrected."
+    },
+    {
+      "code": "PLUGIN_INCOMPATIBLE",
+      "severity": "error",
+      "contract": "plugin_install_version",
+      "owner": "nostdb-cli",
+      "prd_required": true,
+      "summary": "The manifest's nostdb range parses and excludes the Engine present. The manifest is correct and this build is not the one it is for, which is why this is not a manifest refusal. Checked again before execution, because an Engine can be upgraded after a plugin was installed."
+    },
+    {
+      "code": "PLUGIN_DIGEST_MISMATCH",
+      "severity": "error",
+      "contract": "plugin_install_version",
+      "owner": "nostdb-cli",
+      "prd_required": true,
+      "summary": "A recorded commit yielded different bytes than the record says. A commit is immutable, so this means something between the host and this machine is not what it was, and no flag installs over it: a user cannot evaluate that question."
+    },
+    {
+      "code": "PLUGIN_RECORD_INVALID",
+      "severity": "error",
+      "contract": "plugin_install_version",
+      "owner": "nostdb-cli",
+      "prd_required": false,
+      "summary": "An installation record breaks a rule decidable by reading it. Reports every problem found, not the first. Not repaired: the record is the evidence of what a user approved."
+    },
+    {
+      "code": "PLUGIN_RECORD_VERSION_UNSUPPORTED",
+      "severity": "error",
+      "contract": "plugin_install_version",
+      "owner": "nostdb-cli",
+      "prd_required": false,
+      "summary": "The plugin_install_version is not one this build reads."
+    },
+    {
       "code": "NOST_DUPLICATE_DECLARATION_NAME",
       "severity": "error",
       "contract": "nost_language_version",

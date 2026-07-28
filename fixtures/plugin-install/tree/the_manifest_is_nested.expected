@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_SOURCE_INVALID
+note = The manifest is at the plugin root. A manager that searched for one would be choosing which of two candidates is the plugin.

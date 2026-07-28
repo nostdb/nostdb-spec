@@ -1,0 +1,6 @@
+{
+  "entries": [
+    { "path": "plugin/nostdb-plugin.json", "bytes": 412 },
+    { "path": "plugin/bin/nostdb-view", "bytes": 1024 }
+  ]
+}

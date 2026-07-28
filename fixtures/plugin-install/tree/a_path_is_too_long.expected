@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_LIMIT_EXCEEDED
+note = Over 1024 bytes in one path, at a depth of two. Length and depth are separate bounds because a tree can exceed either without the other.

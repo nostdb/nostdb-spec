@@ -1,0 +1,40 @@
+{
+  "entries": [
+    {
+      "path": "nostdb-plugin.json",
+      "bytes": 412
+    },
+    {
+      "path": "bin/part-0",
+      "bytes": 8388608
+    },
+    {
+      "path": "bin/part-1",
+      "bytes": 8388608
+    },
+    {
+      "path": "bin/part-2",
+      "bytes": 8388608
+    },
+    {
+      "path": "bin/part-3",
+      "bytes": 8388608
+    },
+    {
+      "path": "bin/part-4",
+      "bytes": 8388608
+    },
+    {
+      "path": "bin/part-5",
+      "bytes": 8388608
+    },
+    {
+      "path": "bin/part-6",
+      "bytes": 8388608
+    },
+    {
+      "path": "bin/part-7",
+      "bytes": 8388196
+    }
+  ]
+}

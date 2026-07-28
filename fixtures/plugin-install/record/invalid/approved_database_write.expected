@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_RECORD_INVALID
+note = Only the Engine writes .nostdb. Execution is checked against this record, so a record granting it would be a grant.

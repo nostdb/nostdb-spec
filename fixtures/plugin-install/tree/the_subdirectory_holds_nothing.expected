@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_SOURCE_INVALID
+note = An empty plugin is not a plugin, and reporting success for one would install nothing under a name a project then depends on.

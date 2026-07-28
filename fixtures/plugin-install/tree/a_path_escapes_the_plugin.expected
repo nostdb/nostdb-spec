@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_SOURCE_INVALID
+note = Refused whole rather than skipped: whoever wrote that path meant something by it, and an implementation cannot know what.

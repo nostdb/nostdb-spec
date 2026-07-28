@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_MANIFEST_INVALID
+note = A two-component version leaves a reader to decide whether the patch is zero or any, and the two admit different builds.

@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_RECORD_INVALID
+note = One name resolving to two installations has no answer, and a project pins by name.

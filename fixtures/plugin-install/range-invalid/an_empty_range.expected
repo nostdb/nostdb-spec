@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_MANIFEST_INVALID
+note = A range admitting everything is written as a comparator that admits everything, not as silence.

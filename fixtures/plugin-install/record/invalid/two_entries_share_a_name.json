@@ -1,0 +1,37 @@
+{
+  "plugin_install_version": 1,
+  "installed": [
+    {
+      "name": "org.example.viewer",
+      "repository": "https://github.com/example/viewer",
+      "commit": "1111111111111111111111111111111111111111",
+      "manifest_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "tree_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+      "scope": "project",
+      "manifest_version": 1,
+      "plugin_version": "0.3.1",
+      "approved_permissions": {
+        "graph_read": true,
+        "database_write": false,
+        "output_paths": [],
+        "network_hosts": []
+      }
+    },
+    {
+      "name": "org.example.viewer",
+      "repository": "https://github.com/example/viewer",
+      "commit": "1111111111111111111111111111111111111111",
+      "manifest_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "tree_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+      "scope": "project",
+      "manifest_version": 1,
+      "plugin_version": "0.3.1",
+      "approved_permissions": {
+        "graph_read": true,
+        "database_write": false,
+        "output_paths": [],
+        "network_hosts": []
+      }
+    }
+  ]
+}

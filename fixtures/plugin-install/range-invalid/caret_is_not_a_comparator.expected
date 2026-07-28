@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_MANIFEST_INVALID
+note = A caret means different things in different ecosystems, and an author who wrote one expecting one reading would get another.

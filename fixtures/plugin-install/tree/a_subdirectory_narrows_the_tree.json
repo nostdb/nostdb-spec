@@ -1,0 +1,9 @@
+{
+  "subdirectory": "reference/view-webgpu",
+  "entries": [
+    { "path": "README.md", "bytes": 4096 },
+    { "path": "AUTHORING.md", "bytes": 8192 },
+    { "path": "reference/view-webgpu/nostdb-plugin.json", "bytes": 412 },
+    { "path": "reference/view-webgpu/bin/nostdb-view", "bytes": 1024 }
+  ]
+}

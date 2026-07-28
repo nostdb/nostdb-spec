@@ -1,0 +1,3 @@
+outcome = accept
+accepted_entries = 4096
+note = Exactly 4096. Paired with there_are_too_many_entries, which is one more, this is what makes the number in section 4 normative rather than advisory.

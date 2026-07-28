@@ -1,0 +1,2 @@
+outcome = accept
+note = Ordered by name, so two managers installing the same set in different orders produce the same file.

@@ -1,0 +1,13 @@
+{
+  "entries": [
+    { "path": "nostdb-plugin.json", "bytes": 412 },
+    { "path": "bin/a", "bytes": 8388608 },
+    { "path": "bin/b", "bytes": 8388608 },
+    { "path": "bin/c", "bytes": 8388608 },
+    { "path": "bin/d", "bytes": 8388608 },
+    { "path": "bin/e", "bytes": 8388608 },
+    { "path": "bin/f", "bytes": 8388608 },
+    { "path": "bin/g", "bytes": 8388608 },
+    { "path": "bin/h", "bytes": 8388608 }
+  ]
+}

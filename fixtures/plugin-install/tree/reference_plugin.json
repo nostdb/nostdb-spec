@@ -1,0 +1,7 @@
+{
+  "entries": [
+    { "path": "README.md", "bytes": 1201 },
+    { "path": "bin/nostdb-view", "bytes": 2097152 },
+    { "path": "nostdb-plugin.json", "bytes": 412 }
+  ]
+}

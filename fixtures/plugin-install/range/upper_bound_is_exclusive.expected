@@ -1,0 +1,2 @@
+outcome = exclude
+note = A range is a conjunction, so the upper comparator alone excludes this.

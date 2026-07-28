@@ -1,0 +1,7 @@
+{
+  "subdirectory": "reference/absent",
+  "entries": [
+    { "path": "nostdb-plugin.json", "bytes": 412 },
+    { "path": "reference/view-webgpu/nostdb-plugin.json", "bytes": 412 }
+  ]
+}

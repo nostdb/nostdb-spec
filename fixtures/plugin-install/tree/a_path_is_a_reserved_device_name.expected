@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_SOURCE_INVALID
+note = A tree that cannot be written on one supported platform is refused on every platform, so an install is not a different act depending on where it runs.

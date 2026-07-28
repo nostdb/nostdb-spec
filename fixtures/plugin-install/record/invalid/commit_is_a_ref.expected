@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_RECORD_INVALID
+note = A ref recorded where a commit belongs is a pin that can move, which is the whole thing resolving once prevents.

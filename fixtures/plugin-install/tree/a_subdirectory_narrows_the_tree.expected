@@ -1,0 +1,3 @@
+outcome = accept
+accepted_entries = 2
+note = Only what is beneath the subdirectory is part of the plugin. The two documents above it are not validated and not digested, because they are not what was installed.

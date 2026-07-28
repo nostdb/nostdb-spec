@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_LIMIT_EXCEEDED
+note = One byte over 8 MiB. The bound is checked from the enumeration, before the byte arrives.

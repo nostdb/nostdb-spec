@@ -1,0 +1,3 @@
+outcome = accept
+scope = global
+note = A source that named no subdirectory records none. It is the one optional member.

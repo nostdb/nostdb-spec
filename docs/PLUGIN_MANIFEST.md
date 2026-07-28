@@ -152,6 +152,12 @@ because nothing about the plugin's stated intent would have changed.
 
 Execution refuses an installation whose digests no longer match.
 
+How each digest is computed, what a tree must satisfy before it is fetched, and the document
+that carries the record are [`PLUGIN_INSTALL.md`](PLUGIN_INSTALL.md), which carries
+`plugin_install_version`. This section states what is recorded, because an author has a right
+to know what installing their plugin writes down about it. It does not state the record's shape,
+which is a manager's business and moves with the manager.
+
 ## 6. Rejected manifests
 
 An implementation MUST reject, rather than repair, each of the following with

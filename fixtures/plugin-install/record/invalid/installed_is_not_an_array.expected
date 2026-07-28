@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_RECORD_INVALID
+note = A record that did not say is not one recording nothing.

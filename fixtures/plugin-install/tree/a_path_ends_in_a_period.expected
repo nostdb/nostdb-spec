@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_SOURCE_INVALID
+note = A name that does not round-trip is one the tree digest would cover and the filesystem would not preserve.

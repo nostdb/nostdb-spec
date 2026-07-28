@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_MANIFEST_INVALID
+note = A bare version is not a comparator. Whether it means = or >= is exactly the ambiguity this grammar removes.

@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_LIMIT_EXCEEDED
+note = Four thousand and ninety-seven entries. `repeat` is a fixture encoding and not a contract concept: it expands to that many entries with an index appended, so the fixture stays readable.

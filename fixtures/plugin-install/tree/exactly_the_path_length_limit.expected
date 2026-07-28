@@ -1,0 +1,3 @@
+outcome = accept
+accepted_entries = 2
+note = Exactly 1024 bytes. a_path_is_too_long is over it at a depth of two, so length and depth are pinned separately.

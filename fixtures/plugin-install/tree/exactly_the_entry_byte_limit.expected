@@ -1,0 +1,3 @@
+outcome = accept
+accepted_entries = 2
+note = Exactly 8 MiB in one entry. an_entry_is_too_large is one byte more.

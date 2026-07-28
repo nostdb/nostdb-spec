@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_RECORD_INVALID
+note = Every member but subdirectory is required. A record missing a digest cannot detect the change it exists to detect.

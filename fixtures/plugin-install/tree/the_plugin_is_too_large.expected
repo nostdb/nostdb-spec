@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_LIMIT_EXCEEDED
+note = Every entry is within its own bound and the total is not. A per-entry limit alone would admit a tree assembled to exceed any total.

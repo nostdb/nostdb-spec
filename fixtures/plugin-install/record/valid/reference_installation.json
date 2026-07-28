@@ -1,0 +1,22 @@
+{
+  "plugin_install_version": 1,
+  "installed": [
+    {
+      "name": "org.nostdb.view-webgpu",
+      "repository": "https://github.com/nostdb/plugins",
+      "commit": "0f1e2d3c4b5a69788796a5b4c3d2e1f009182736",
+      "subdirectory": "reference/view-webgpu",
+      "manifest_digest": "sha256:9e1f2a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f7",
+      "tree_digest": "sha256:41ab2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f9",
+      "scope": "project",
+      "manifest_version": 1,
+      "plugin_version": "1.0.0",
+      "approved_permissions": {
+        "graph_read": true,
+        "database_write": false,
+        "output_paths": [".nostdb/out/**"],
+        "network_hosts": []
+      }
+    }
+  ]
+}

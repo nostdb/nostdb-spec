@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_MANIFEST_INVALID
+note = A wildcard is a shorthand whose reading differs; a conjunction of comparators has one reading everywhere.

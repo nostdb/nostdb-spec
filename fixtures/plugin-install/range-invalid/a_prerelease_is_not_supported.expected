@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_MANIFEST_INVALID
+note = Pre-release ordering is the subtlest rule in every scheme that has one, and this contract does not have one.
