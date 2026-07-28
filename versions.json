@@ -113,6 +113,16 @@
       "summary": "What an installation fetches, checks, and records. Separate from the manifest because the manifest is what an author writes and the record is what a manager writes."
     },
     {
+      "key": "view_exchange_version",
+      "current": 1,
+      "supported": [
+        1
+      ],
+      "status": "specified",
+      "specified_in": "docs/VIEW_EXCHANGE.md",
+      "summary": "The viewer exchange container a plugin receives and a browser fetches. Separate from the plugin protocol because a payload is not a handoff: a renderer improves without renegotiating a protocol, and the protocol grows a handoff without invalidating a renderer."
+    },
+    {
       "key": "server_protocol_version",
       "current": 1,
       "supported": [

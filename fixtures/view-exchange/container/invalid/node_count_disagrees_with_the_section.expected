@@ -1,0 +1,3 @@
+outcome = reject
+code = VIEW_EXCHANGE_INVALID
+note = A node_labels section of three entries with a node_count of nine is a disagreement, and trusting either over the other would draw a graph nobody sent.

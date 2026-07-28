@@ -1,0 +1,3 @@
+outcome = reject
+code = VIEW_EXCHANGE_INVALID
+note = Refused, not defaulted to the empty string: a renderer showing a blank label where the file said something is lying about its input.

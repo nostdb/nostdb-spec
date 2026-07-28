@@ -1,0 +1,3 @@
+outcome = reject
+code = VIEW_EXCHANGE_INVALID
+note = Overlapping sections mean one of the two is being read as something it is not.

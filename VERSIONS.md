@@ -23,6 +23,7 @@ that exists.
 | `plugin_protocol_version` | 1 | 1 | specified | [docs/PLUGIN_PROTOCOL.md](docs/PLUGIN_PROTOCOL.md) |
 | `manifest_version` | 1 | 1 | specified | [docs/PLUGIN_MANIFEST.md](docs/PLUGIN_MANIFEST.md) |
 | `plugin_install_version` | 1 | 1 | specified | [docs/PLUGIN_INSTALL.md](docs/PLUGIN_INSTALL.md) |
+| `view_exchange_version` | 1 | 1 | specified | [docs/VIEW_EXCHANGE.md](docs/VIEW_EXCHANGE.md) |
 | `server_protocol_version` | 1 | 1 | specified | [docs/SERVER_PROTOCOL.md](docs/SERVER_PROTOCOL.md) |
 | `change_set_version` | 1 | 1 | specified | [docs/CHANGE_SET.md](docs/CHANGE_SET.md) |
 

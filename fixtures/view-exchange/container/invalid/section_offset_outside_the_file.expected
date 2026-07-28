@@ -1,0 +1,3 @@
+outcome = reject
+code = VIEW_EXCHANGE_INVALID
+note = Bounded reading: an offset outside the file is refused before any read is attempted.

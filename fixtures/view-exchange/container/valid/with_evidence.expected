@@ -1,0 +1,6 @@
+outcome = accept
+nodes = 3
+edges = 2
+sources = 2
+evidence = 1
+note = Sparse, and ordered by node index, so a viewer may binary search it for source navigation.

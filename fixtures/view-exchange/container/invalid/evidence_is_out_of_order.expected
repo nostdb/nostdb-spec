@@ -1,0 +1,3 @@
+outcome = reject
+code = VIEW_EXCHANGE_INVALID
+note = Ascending node index is what lets a viewer binary search it. Out of order, a search would miss entries that are present.

@@ -1,0 +1,3 @@
+outcome = reject
+code = VIEW_EXCHANGE_INVALID
+note = Every node names a source, so a container without the sources section describes items whose origin cannot be shown.

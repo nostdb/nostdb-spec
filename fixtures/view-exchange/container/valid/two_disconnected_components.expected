@@ -1,0 +1,6 @@
+outcome = accept
+nodes = 4
+edges = 2
+sources = 1
+evidence = 0
+note = Two components with no edge between them. A viewer that invented one would be reporting a relationship the graph does not have.

@@ -1,0 +1,3 @@
+outcome = reject
+code = VIEW_EXCHANGE_INVALID
+note = The header carries the counts a reader allocates on, so a corrupt one is caught before any allocation.

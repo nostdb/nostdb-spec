@@ -1,0 +1,6 @@
+outcome = accept
+nodes = 0
+edges = 0
+sources = 1
+evidence = 0
+note = A configured project with nothing built yet. Empty is a graph, not an error, and a viewer that refused it would refuse every new project.

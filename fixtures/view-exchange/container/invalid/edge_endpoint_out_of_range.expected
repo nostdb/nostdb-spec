@@ -1,0 +1,3 @@
+outcome = reject
+code = VIEW_EXCHANGE_INVALID
+note = An endpoint past the node count is the one corruption that would otherwise read out of a renderer's buffer.

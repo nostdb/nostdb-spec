@@ -1,0 +1,3 @@
+outcome = reject
+code = VIEW_EXCHANGE_INVALID
+note = Refused rather than skipped. A viewer that skipped one would render a graph missing whatever it carried and report success.

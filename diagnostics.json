@@ -147,6 +147,22 @@
       "summary": "An invocation did not complete, a plugin broke the protocol, exited without replying, or reported an output it never declared."
     },
     {
+      "code": "VIEW_EXCHANGE_INVALID",
+      "severity": "error",
+      "contract": "view_exchange_version",
+      "owner": "plugins",
+      "prd_required": false,
+      "summary": "A viewer exchange container is not readable: a bad magic, an unsupported version, a checksum that does not match, a section that overlaps or falls outside the file, an unknown section kind, a count past a fixed bound, or a length that disagrees with the header's counts."
+    },
+    {
+      "code": "VIEW_CAPACITY_EXCEEDED",
+      "severity": "error",
+      "contract": "view_exchange_version",
+      "owner": "plugins",
+      "prd_required": true,
+      "summary": "A readable exchange is more than this viewer on this machine can render, which section 24.3 requires it to report rather than crash. A fact about a renderer and never about the file: the same file may exceed one machine's capacity and not another's."
+    },
+    {
       "code": "NOST_DUPLICATE_DECLARATION_NAME",
       "severity": "error",
       "contract": "nost_language_version",

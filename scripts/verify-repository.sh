@@ -107,6 +107,23 @@ git diff --check
 
 # The conformance harness. The crate is test-only and exposes no runtime API, so
 # these commands verify the contracts and fixtures rather than a library surface.
+# The viewer exchange fixtures are generated, and the generator is the readable form of what the
+# bytes are. Regenerating must reproduce every one: a fixture edited by hand would be a byte array
+# nobody could extend, and a generator that had drifted from its output would be a document
+# describing a file it no longer writes.
+if command -v node >/dev/null 2>&1; then
+  before=$(find fixtures/view-exchange -name '*.bin' -exec shasum -a 256 {} + | LC_ALL=C sort)
+  node fixtures/view-exchange/generate.mjs >/dev/null
+  after=$(find fixtures/view-exchange -name '*.bin' -exec shasum -a 256 {} + | LC_ALL=C sort)
+  if [ "$before" != "$after" ]; then
+    echo "the viewer exchange fixtures differ from what generate.mjs writes" >&2
+    exit 1
+  fi
+  echo "view exchange: every fixture matches its generator"
+else
+  echo "view exchange: node is absent, so the generator was not re-run" >&2
+fi
+
 if ! command -v cargo >/dev/null 2>&1; then
   echo "cargo is required: the conformance suite is the normative gate" >&2
   exit 1

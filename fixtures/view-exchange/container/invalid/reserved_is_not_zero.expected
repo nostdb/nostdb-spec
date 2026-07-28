@@ -1,0 +1,3 @@
+outcome = reject
+code = VIEW_EXCHANGE_INVALID
+note = A reserved field is where a later version puts something. A writer setting it now would make that version unable to tell an old file from a new one.

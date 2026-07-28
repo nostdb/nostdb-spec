@@ -1,0 +1,3 @@
+outcome = reject
+code = VIEW_EXCHANGE_INVALID
+note = Per-section checksums, so a reader knows which section is wrong rather than only that something is.

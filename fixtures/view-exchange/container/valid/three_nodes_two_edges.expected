@@ -1,0 +1,6 @@
+outcome = accept
+nodes = 3
+edges = 2
+sources = 2
+evidence = 0
+note = A root graph and one unavailable remote link, so scoped identity and the broken-link marker are both exercised.

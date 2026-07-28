@@ -1,0 +1,3 @@
+outcome = reject
+code = VIEW_EXCHANGE_INVALID
+note = The version is what makes every other rule interpretable, so it is read before anything else.

@@ -1,0 +1,3 @@
+outcome = reject
+code = VIEW_EXCHANGE_INVALID
+note = The magic detects a byte-swapped or text-mangled file with no runtime probe.

@@ -1,0 +1,3 @@
+outcome = reject
+code = VIEW_EXCHANGE_INVALID
+note = A length that would run past the end is refused rather than clamped: clamping would decode a truncated section as a shorter graph.
