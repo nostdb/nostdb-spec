@@ -1,0 +1,10 @@
+{
+  "settings_version": 1,
+  "links": [
+    {
+      "source": "github://example/payments/?ref=main",
+      "resolved_commit": "0f1e2d3c4b5a69788796a5b4c3d2e1f009182736",
+      "resolved_digest": "sha256:abababababababababababababababababababababababababababababababab"
+    }
+  ]
+}

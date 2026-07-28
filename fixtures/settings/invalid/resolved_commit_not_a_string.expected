@@ -1,0 +1,3 @@
+outcome = reject
+code = SETTINGS_INVALID
+note = A commit is an opaque identifier, and a number is not one.

@@ -1,0 +1,2 @@
+outcome = accept
+note = A resolved commit is what the link last pointed at; the configured source remains what it is.

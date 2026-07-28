@@ -1,0 +1,9 @@
+{
+  "settings_version": 1,
+  "links": [
+    {
+      "source": "github://example/payments/?ref=main",
+      "resolved_commit": 12345
+    }
+  ]
+}

@@ -138,6 +138,17 @@ Each entry mirrors one semantic link declaration.
 | `credential_ref` | string or null | `null` | a name in `credentials.json`, never a secret |
 | `refresh` | `"manual"` | `"manual"` | when a remote snapshot advances |
 | `timeout_ms` | integer | `10000` | how long opening this source may take |
+| `resolved_commit` | string or null | `null` | the immutable commit this link last resolved to |
+| `resolved_digest` | string or null | `null` | the content digest of what that commit yielded |
+
+`resolved_commit` and `resolved_digest` are **snapshot metadata, not identity**. The
+configured `source` remains what the link *is*; these record what it last pointed at. That
+separation is the reason they live here rather than in the graph: an alias is semantic and a
+resolved commit is operational, and putting a commit in a shared graph file would make two
+checkouts disagree about a link that is identical in both.
+
+An implementation MUST NOT advance either field as a side effect of a query. Only an explicit
+refresh records a newer commit, which is what keeps a branch from moving underneath a build.
 
 An entry MUST NOT carry an alias. An entry carrying one is rejected, rather than
 ignored, because silently dropping it would leave two files disagreeing about
