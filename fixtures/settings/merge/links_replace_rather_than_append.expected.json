@@ -16,7 +16,9 @@
       "source": "./project",
       "credential_ref": null,
       "refresh": "manual",
-      "timeout_ms": 10000
+      "timeout_ms": 10000,
+      "resolved_commit": null,
+      "resolved_digest": null
     }
   ],
   "federation": {
