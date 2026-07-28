@@ -1,0 +1,5 @@
+outcome = accept
+kind = error
+role = reply
+code = PLUGIN_ACTION_UNKNOWN
+note = A refusal is a reply. A plugin never exits to signal one.

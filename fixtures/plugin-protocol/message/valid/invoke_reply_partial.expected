@@ -1,0 +1,4 @@
+outcome = accept
+kind = invoke
+role = reply
+note = Partial is not complete, and what a partial invocation produced is not deleted.

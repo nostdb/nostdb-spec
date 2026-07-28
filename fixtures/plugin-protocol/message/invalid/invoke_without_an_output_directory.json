@@ -1,0 +1,5 @@
+{
+  "plugin_protocol_version": 1,
+  "request": "invoke",
+  "action": "view"
+}

@@ -1,0 +1,4 @@
+outcome = reject
+code = PLUGIN_FAILED
+role = reply
+note = A code outside the registry is one no caller can look up.

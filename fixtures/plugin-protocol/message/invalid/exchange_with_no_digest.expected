@@ -1,0 +1,4 @@
+outcome = reject
+code = PLUGIN_REQUEST_INVALID
+role = request
+note = A plugin verifies the digest before interpreting the artifact, so an artifact without one cannot be verified.

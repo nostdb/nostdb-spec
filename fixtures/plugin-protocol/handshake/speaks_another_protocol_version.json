@@ -1,0 +1,17 @@
+{
+  "approved": {
+    "name": "org.example.tool",
+    "actions": [
+      "view"
+    ]
+  },
+  "handshake": {
+    "plugin_protocol_version": 2,
+    "reply": "handshake",
+    "plugin": "org.example.tool",
+    "plugin_version": "1.0.0",
+    "actions": [
+      "view"
+    ]
+  }
+}

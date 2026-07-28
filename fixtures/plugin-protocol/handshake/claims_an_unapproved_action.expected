@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_IDENTITY_MISMATCH
+note = A running process claiming an action nobody approved is claiming a capability nobody agreed to.

@@ -1,0 +1,4 @@
+outcome = accept
+kind = handshake
+role = request
+note = The manager sends this first and sends nothing else until it has a reply.

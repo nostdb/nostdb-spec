@@ -1,0 +1,13 @@
+{
+  "plugin_protocol_version": 1,
+  "request": "invoke",
+  "action": "view",
+  "output_directory": "/p/.nostdb/out",
+  "exchange": {
+    "kind": "artifact",
+    "media_type": "application/vnd.nostdb.graph+json",
+    "path": "tmp/graph.json",
+    "bytes": 81920,
+    "content_digest": "sha256:9e1f2a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f7"
+  }
+}

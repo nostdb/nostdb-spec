@@ -88,9 +88,9 @@
       "supported": [
         1
       ],
-      "status": "deferred",
-      "specified_in": null,
-      "summary": "The out-of-process plugin protocol."
+      "status": "specified",
+      "specified_in": "docs/PLUGIN_PROTOCOL.md",
+      "summary": "The out-of-process plugin protocol: the transport, the handshake, invoking an action, and the exchange handoff. It carries the exchange artifact by reference and does not specify what is inside it."
     },
     {
       "key": "manifest_version",

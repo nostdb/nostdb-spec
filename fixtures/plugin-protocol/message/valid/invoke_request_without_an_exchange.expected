@@ -1,0 +1,4 @@
+outcome = accept
+kind = invoke
+role = request
+note = No exchange, because the approval did not grant graph_read. The absence is the permission meaning something.

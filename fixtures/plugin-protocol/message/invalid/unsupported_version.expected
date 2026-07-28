@@ -1,0 +1,4 @@
+outcome = reject
+code = PLUGIN_PROTOCOL_UNSUPPORTED
+role = request
+note = Reported by whichever side received it, because either may be the newer.

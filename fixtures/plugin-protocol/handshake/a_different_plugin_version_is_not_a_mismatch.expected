@@ -1,0 +1,2 @@
+outcome = accept
+note = plugin_version is what the process says it is, and is never compared. An edited manifest is what the digests detect.

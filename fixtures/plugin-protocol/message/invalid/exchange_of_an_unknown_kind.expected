@@ -1,0 +1,4 @@
+outcome = reject
+code = PLUGIN_REQUEST_INVALID
+role = request
+note = `kind` is reserved so a later version can add a handoff. This version defines one.

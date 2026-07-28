@@ -1,0 +1,14 @@
+{
+  "approved": {
+    "name": "org.example.tool",
+    "actions": [
+      "view"
+    ]
+  },
+  "handshake": {
+    "plugin_protocol_version": 1,
+    "reply": "invoke",
+    "status": "complete",
+    "outputs": []
+  }
+}

@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_PROTOCOL_UNSUPPORTED
+note = Refused before any action is invoked, because agreeing on a version is what the handshake is for.

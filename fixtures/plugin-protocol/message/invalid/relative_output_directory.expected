@@ -1,0 +1,4 @@
+outcome = reject
+code = PLUGIN_REQUEST_INVALID
+role = request
+note = A relative directory is resolved against a working directory nobody agreed on.

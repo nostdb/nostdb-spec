@@ -1,0 +1,4 @@
+outcome = reject
+code = PLUGIN_FAILED
+role = reply
+note = The code is the signal and the message is for a person. A refusal with only a message is one nothing can branch on.

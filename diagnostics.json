@@ -99,6 +99,54 @@
       "summary": "The plugin_install_version is not one this build reads."
     },
     {
+      "code": "PLUGIN_PROTOCOL_UNSUPPORTED",
+      "severity": "error",
+      "contract": "plugin_protocol_version",
+      "owner": "nostdb-cli",
+      "prd_required": false,
+      "summary": "The plugin_protocol_version in a message is not one this build implements. Reported by whichever side received it, because either may be the newer."
+    },
+    {
+      "code": "PLUGIN_REQUEST_INVALID",
+      "severity": "error",
+      "contract": "plugin_protocol_version",
+      "owner": "nostdb-cli",
+      "prd_required": false,
+      "summary": "A request is malformed, names an unknown kind, or carries an exchange media type the plugin does not read. Distinct from an unknown action, which is a well-formed request for something this plugin does not do."
+    },
+    {
+      "code": "PLUGIN_ACTION_UNKNOWN",
+      "severity": "error",
+      "contract": "plugin_protocol_version",
+      "owner": "nostdb-cli",
+      "prd_required": false,
+      "summary": "The action is not one this plugin implements. Refused before the process starts when the record's manifest never declared it, so a plugin is never launched to be told no."
+    },
+    {
+      "code": "PLUGIN_IDENTITY_MISMATCH",
+      "severity": "error",
+      "contract": "plugin_protocol_version",
+      "owner": "nostdb-cli",
+      "prd_required": false,
+      "summary": "A handshake disagrees with what was approved: a different name, or an action the record's manifest never declared. The digests cover the bytes on disk and this covers what the running process says about itself."
+    },
+    {
+      "code": "PLUGIN_REQUIRED",
+      "severity": "error",
+      "contract": "plugin_protocol_version",
+      "owner": "nostdb-cli",
+      "prd_required": true,
+      "summary": "An action needs a plugin that is not installed. Raised whether the user named it or an action did: the message names the plugin and, when the manager knows one, the exact command that would install it. A caller branches on the code, never on the message."
+    },
+    {
+      "code": "PLUGIN_FAILED",
+      "severity": "error",
+      "contract": "plugin_protocol_version",
+      "owner": "nostdb-cli",
+      "prd_required": false,
+      "summary": "An invocation did not complete, a plugin broke the protocol, exited without replying, or reported an output it never declared."
+    },
+    {
       "code": "NOST_DUPLICATE_DECLARATION_NAME",
       "severity": "error",
       "contract": "nost_language_version",

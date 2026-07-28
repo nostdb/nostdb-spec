@@ -1,0 +1,17 @@
+{
+  "approved": {
+    "name": "org.nostdb.view-webgpu",
+    "actions": [
+      "view"
+    ]
+  },
+  "handshake": {
+    "plugin_protocol_version": 1,
+    "reply": "handshake",
+    "plugin": "org.nostdb.view-webgpu",
+    "plugin_version": "1.0.0",
+    "actions": [
+      "view"
+    ]
+  }
+}

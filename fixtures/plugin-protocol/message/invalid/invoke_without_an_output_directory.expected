@@ -1,0 +1,4 @@
+outcome = reject
+code = PLUGIN_REQUEST_INVALID
+role = request
+note = A plugin with nowhere to write cannot be told to write.

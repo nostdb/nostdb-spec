@@ -1,0 +1,4 @@
+outcome = reject
+code = PLUGIN_FAILED
+role = reply
+note = The same, spelled absolutely.

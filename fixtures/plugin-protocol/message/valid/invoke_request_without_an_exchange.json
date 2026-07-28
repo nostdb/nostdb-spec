@@ -1,0 +1,7 @@
+{
+  "plugin_protocol_version": 1,
+  "request": "invoke",
+  "action": "report",
+  "output_directory": "/project/.nostdb/out",
+  "options": {}
+}

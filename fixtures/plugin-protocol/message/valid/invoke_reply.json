@@ -1,0 +1,9 @@
+{
+  "plugin_protocol_version": 1,
+  "reply": "invoke",
+  "status": "complete",
+  "outputs": [
+    "view.html",
+    "view.data.bin"
+  ]
+}

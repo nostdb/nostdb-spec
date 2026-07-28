@@ -1,0 +1,4 @@
+outcome = reject
+code = PLUGIN_REQUEST_INVALID
+role = request
+note = An artifact path is absolute; a relative one names a different file depending on where the plugin was started.

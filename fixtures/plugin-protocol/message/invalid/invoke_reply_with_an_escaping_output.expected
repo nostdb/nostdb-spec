@@ -1,0 +1,4 @@
+outcome = reject
+code = PLUGIN_FAILED
+role = reply
+note = An output naming something outside the output directory is refused, and the invocation is failed rather than partial.

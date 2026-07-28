@@ -1,0 +1,6 @@
+{
+  "plugin_protocol_version": 1,
+  "reply": "error",
+  "code": "PLUGIN_MADE_UP",
+  "message": "no"
+}

@@ -1,0 +1,2 @@
+outcome = accept
+note = A plugin may implement less than it advertised. Invoking the missing one is PLUGIN_ACTION_UNKNOWN, which is a smaller problem than claiming more.

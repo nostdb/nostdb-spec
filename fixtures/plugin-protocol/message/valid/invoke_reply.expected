@@ -1,0 +1,4 @@
+outcome = accept
+kind = invoke
+role = reply
+note = Outputs are relative to the output directory, and are what the manager checks against the approval.

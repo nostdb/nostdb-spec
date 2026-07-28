@@ -1,0 +1,4 @@
+outcome = accept
+kind = handshake
+role = reply
+note = What the process says about itself, which is a different claim from what its bytes are.

@@ -1,0 +1,4 @@
+outcome = accept
+kind = invoke
+role = reply
+note = An action may legitimately write nothing. An empty list says so; an absent one would not.

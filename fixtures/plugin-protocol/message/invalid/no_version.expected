@@ -1,0 +1,4 @@
+outcome = reject
+code = PLUGIN_REQUEST_INVALID
+role = request
+note = A version is never inferred from a message shape: two versions that differ in meaning may not differ in shape.

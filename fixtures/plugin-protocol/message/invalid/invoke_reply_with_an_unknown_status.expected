@@ -1,0 +1,4 @@
+outcome = reject
+code = PLUGIN_FAILED
+role = reply
+note = `complete` and `partial` are the two statuses, because a third would need a rule for what to do with it.

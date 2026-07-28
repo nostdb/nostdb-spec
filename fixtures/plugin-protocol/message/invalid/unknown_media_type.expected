@@ -1,0 +1,4 @@
+outcome = reject
+code = PLUGIN_REQUEST_INVALID
+role = request
+note = Refused naming the type it was given, and never resolved by reading the path extension.

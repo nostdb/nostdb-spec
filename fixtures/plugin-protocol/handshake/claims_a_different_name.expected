@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_IDENTITY_MISMATCH
+note = The name is how a project pins a plugin, so a process answering to another one is not the plugin that was installed.

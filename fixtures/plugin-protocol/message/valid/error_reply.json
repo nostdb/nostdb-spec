@@ -1,0 +1,6 @@
+{
+  "plugin_protocol_version": 1,
+  "reply": "error",
+  "code": "PLUGIN_ACTION_UNKNOWN",
+  "message": "this build implements only `view`"
+}

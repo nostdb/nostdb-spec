@@ -1,0 +1,4 @@
+outcome = accept
+kind = invoke
+role = request
+note = The invocation the contract publishes, unchanged.
