@@ -127,12 +127,35 @@ approve, and a field that can express it makes refusing harder rather than easie
 ## 4. The GitHub source
 
 ```text
-https://github.com/<owner>/<repository>[?ref=<git-ref>][#<subdirectory>]
+https://github.com/<owner>/<repository>?ref=<git-ref>[#<subdirectory>]
 ```
 
-With no `ref`, the manager resolves the default branch **once** and records the commit. Every
-later action uses the recorded commit, so a plugin does not change underneath a project that
-installed it.
+`ref` is **required**. It is resolved **once** to an immutable commit, and every later action
+uses that commit, so a plugin does not change underneath a project that installed it.
+
+A source with no `ref` is refused with `PLUGIN_MANIFEST_INVALID`.
+
+### 4.1 Why a ref is required rather than defaulted
+
+The first revision of this section said that with no `ref` the manager resolves the default
+branch once. That could not be implemented, and the reason is worth recording rather than
+quietly dropping.
+
+A manager retrieves through a provider, and
+[`PROVIDER_PROTOCOL.md`](PROVIDER_PROTOCOL.md) section 6 requires every locator to carry a
+`ref` and forbids an implementation from defaulting one, because a default branch can change
+and a locator is an identity. The protocol has no request that reports a default branch. So
+this section required a manager to resolve something it had no way to ask about, which made
+version 1 internally contradictory rather than merely incomplete.
+
+Requiring the `ref` here resolves it in the direction this contract already argues for.
+Installation exists to pin a plugin to one commit; asking for the ref in the command that
+installs makes what was installed visible in the command that installed it, rather than
+recoverable only by reading the record afterwards.
+
+This is a correction to version 1 and not a version 2. A version bump would imply that an
+implementation could conform to version 1 as first written, and none could: the promise it made
+was unimplementable against the sibling contract every implementation must also obey.
 
 A `subdirectory` MUST be relative and MUST NOT escape the repository.
 

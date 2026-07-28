@@ -43,9 +43,12 @@ decide.
 An installation performs these steps in this order. The order is normative: each step exists to
 make the next one safe.
 
-1. **parse the source.** The grammar is section 4 of the manifest contract;
-2. **resolve** the ref, or the default branch when none was given, to one immutable commit.
-   Everything after this uses that commit and never the ref;
+1. **parse the source.** The grammar is section 4 of the manifest contract, and it requires a
+   `ref`. A source with no ref is refused here, before a provider is reached: whether a source
+   can be resolved at all is decidable from the source, and demanding a provider first would
+   send somebody to install one only to meet this refusal afterwards;
+2. **resolve** the ref to one immutable commit. Everything after this uses that commit and never
+   the ref;
 3. **enumerate** the tree at that commit;
 4. **validate** every entry against section 3, and the tree as a whole against section 4.
    Nothing has been downloaded yet;

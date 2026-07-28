@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_MANIFEST_INVALID
+note = A ref is required. An installation pins a plugin to one commit, and a source with no ref would have to be resolved against a default branch that can change — which the provider protocol forbids a locator from expressing, and for the same reason.
