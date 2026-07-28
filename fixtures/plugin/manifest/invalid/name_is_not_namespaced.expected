@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_MANIFEST_INVALID
+note = Two authors independently choosing `viewer` would make one project's pin ambiguous.

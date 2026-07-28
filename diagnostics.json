@@ -35,6 +35,22 @@
       "summary": "The change_set_version is not one this build reads. A change set is not preserved and rewritten, so part of one is not read."
     },
     {
+      "code": "PLUGIN_MANIFEST_INVALID",
+      "severity": "error",
+      "contract": "manifest_version",
+      "owner": "nostdb-cli",
+      "prd_required": true,
+      "summary": "A plugin manifest breaks a rule decidable by reading it. Reports every problem found, not the first."
+    },
+    {
+      "code": "PLUGIN_MANIFEST_VERSION_UNSUPPORTED",
+      "severity": "error",
+      "contract": "manifest_version",
+      "owner": "nostdb-cli",
+      "prd_required": true,
+      "summary": "The manifest_version is not one this build reads."
+    },
+    {
       "code": "NOST_DUPLICATE_DECLARATION_NAME",
       "severity": "error",
       "contract": "nost_language_version",

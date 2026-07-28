@@ -1,0 +1,1 @@
+https://github.com/example/nostdb-plugins?ref=v1.0.0

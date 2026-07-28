@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_MANIFEST_INVALID
+note = Clamping would grant something adjacent to what was asked and the author would not know which.

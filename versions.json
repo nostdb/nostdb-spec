@@ -98,8 +98,8 @@
       "supported": [
         1
       ],
-      "status": "deferred",
-      "specified_in": null,
+      "status": "specified",
+      "specified_in": "docs/PLUGIN_MANIFEST.md",
       "summary": "The nostdb-plugin.json manifest."
     },
     {

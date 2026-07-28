@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_MANIFEST_INVALID
+note = Only the Engine writes .nostdb. Refusing by name beats ignoring, so the author learns.

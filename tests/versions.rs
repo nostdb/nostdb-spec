@@ -86,6 +86,7 @@ fn the_specified_contracts_are_exactly_those_that_have_been_authored() {
         "catalog_version",
         "server_protocol_version",
         "provider_protocol_version",
+        "manifest_version",
     ]
     .into_iter()
     .map(String::from)

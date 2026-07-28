@@ -1,0 +1,3 @@
+outcome = accept
+canonical = https://github.com/example/nostdb-plugins
+note = No ref: the manager resolves the default branch once and records the commit.

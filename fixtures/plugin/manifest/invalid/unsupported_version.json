@@ -1,0 +1,26 @@
+{
+  "manifest_version": 2,
+  "name": "org.nostdb.view-webgpu",
+  "version": "1.0.0",
+  "nostdb": ">=0.1.0 <0.2.0",
+  "entrypoint": {
+    "command": [
+      "bin/nostdb-view"
+    ]
+  },
+  "protocol_version": 1,
+  "actions": [
+    {
+      "name": "view",
+      "ai_usage": "none"
+    }
+  ],
+  "permissions": {
+    "graph_read": true,
+    "database_write": false,
+    "output_paths": [
+      ".nostdb/out/**"
+    ],
+    "network_hosts": []
+  }
+}

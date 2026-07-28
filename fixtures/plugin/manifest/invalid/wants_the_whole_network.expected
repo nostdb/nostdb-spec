@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_MANIFEST_INVALID
+note = A plugin wanting the whole network is asking for what nobody can meaningfully approve.

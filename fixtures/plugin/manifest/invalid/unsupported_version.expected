@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_MANIFEST_VERSION_UNSUPPORTED
+note = Nothing after an unreadable version is interpretable.
