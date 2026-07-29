@@ -411,6 +411,14 @@
       "summary": "The query uses a construct outside the declared subset. Nothing executed, and no alternative was guessed."
     },
     {
+      "code": "CYPHER_UNKNOWN_LABEL",
+      "severity": "warning",
+      "contract": "query_subset_version",
+      "owner": "nostdb-core",
+      "prd_required": false,
+      "summary": "The query matched on a label no record in the database carries. It executed and returned what it found, which for that pattern is nothing. A warning rather than an error: a label may be absent because the project has none of that thing, and refusing would make an ordinary empty result a failure."
+    },
+    {
       "code": "LINKED_DATABASE_READ_ONLY",
       "severity": "error",
       "contract": "query_subset_version",

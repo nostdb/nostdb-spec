@@ -96,6 +96,7 @@ order is relying on something the contract never promised.
 | Code | Meaning |
 | --- | --- |
 | `CYPHER_UNSUPPORTED` | the query uses a construct outside the subset; it did not execute |
+| `CYPHER_UNKNOWN_LABEL` | a warning: the query matched on a label no record carries; it executed |
 | `CYPHER_SEMANTIC_ERROR` | the query is in the subset but meaningless: an unbound variable, a type mismatch, mismatched `UNION` columns, a negative `SKIP` |
 | `LINKED_DATABASE_READ_ONLY` | a write named a record belonging to a linked source; nothing was modified |
 
@@ -436,3 +437,21 @@ That is the correct code rather than a semantic error, because the same query ag
 build that has the capability succeeds. A caller can act on the difference: retrying an
 unsupported call against a more complete build is reasonable, and retrying a semantic error
 is not.
+
+## A label no record carries is a warning, not an error
+
+A `MATCH` naming a label the database has never held executes and returns nothing, and MUST report
+`CYPHER_UNKNOWN_LABEL` as a warning on the result's diagnostics.
+
+Zero rows is otherwise indistinguishable from zero rows: a caller cannot tell "this project has no such
+thing" from "that word means nothing here". Both are legitimate and they call for opposite responses —
+one is an answer and the other is a misspelling or a concept the database does not model.
+
+A warning rather than an error, for two reasons. A label may be absent because the project genuinely has
+none of that thing, and refusing would turn an ordinary empty result into a failure. And a query is
+written once and run against many databases, so a label present in one and absent in another must not
+make the query invalid.
+
+The warning names the label. It MUST NOT suggest an alternative: a near-miss suggestion is a guess at
+what somebody meant, and `CYPHER_UNSUPPORTED` exists precisely so nothing executes under a guessed
+alternative.
