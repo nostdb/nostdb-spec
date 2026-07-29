@@ -104,13 +104,13 @@
     },
     {
       "key": "plugin_install_version",
-      "current": 1,
+      "current": 2,
       "supported": [
-        1
+        2
       ],
       "status": "specified",
       "specified_in": "docs/PLUGIN_INSTALL.md",
-      "summary": "What an installation fetches, checks, and records. Separate from the manifest because the manifest is what an author writes and the record is what a manager writes."
+      "summary": "Installing a plugin from a declared repository index, and what an install records."
     },
     {
       "key": "view_exchange_version",

@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_SOURCE_INVALID
+note = A repository that declared no plugins has not declared itself a plugin source.

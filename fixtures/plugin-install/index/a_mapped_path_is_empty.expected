@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_SOURCE_INVALID
+note = An empty directory is not the repository root by another name; it is a mapping nobody wrote.

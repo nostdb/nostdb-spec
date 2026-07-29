@@ -1,0 +1,6 @@
+{
+  "plugin_install_version": 1,
+  "plugins": {
+    "a": "plugins/a"
+  }
+}

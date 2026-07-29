@@ -22,7 +22,7 @@ that exists.
 | `provider_protocol_version` | 1 | 1 | specified | [docs/PROVIDER_PROTOCOL.md](docs/PROVIDER_PROTOCOL.md) |
 | `plugin_protocol_version` | 1 | 1 | specified | [docs/PLUGIN_PROTOCOL.md](docs/PLUGIN_PROTOCOL.md) |
 | `manifest_version` | 1 | 1 | specified | [docs/PLUGIN_MANIFEST.md](docs/PLUGIN_MANIFEST.md) |
-| `plugin_install_version` | 1 | 1 | specified | [docs/PLUGIN_INSTALL.md](docs/PLUGIN_INSTALL.md) |
+| `plugin_install_version` | 2 | 2 | specified | [docs/PLUGIN_INSTALL.md](docs/PLUGIN_INSTALL.md) |
 | `view_exchange_version` | 1 | 1 | specified | [docs/VIEW_EXCHANGE.md](docs/VIEW_EXCHANGE.md) |
 | `server_protocol_version` | 1 | 1 | specified | [docs/SERVER_PROTOCOL.md](docs/SERVER_PROTOCOL.md) |
 | `change_set_version` | 1 | 1 | specified | [docs/CHANGE_SET.md](docs/CHANGE_SET.md) |
@@ -69,3 +69,27 @@ implementation can deliver. A version 1 file is `NOST_VERSION_UNSUPPORTED`.
 No other key moved. In particular `nostdb_format_version` stayed at 1: the
 container gained no section and changed no layout, which is exactly the
 independence this registry exists to keep.
+
+## Recorded bump: `plugin_install_version` 1 to 2
+
+Version 1 recognised a plugin by a **path**: a source named a subdirectory with a fragment, and any
+directory holding `nostdb-plugin.json` was installable. Version 2 recognises one by a **declaration**:
+a repository must carry `nostdb.plugins.json` at its root, that file maps names to directories, and a
+source's fragment names a key in it.
+
+`supported` is `[2]` and not `[2, 1]`. The two cannot round-trip in either direction: a version-1
+source has no index and version 2 refuses it, and a version-2 fragment names a key that version 1
+would read as a directory path and fail to find. Listing 1 as supported would mean an implementation
+could accept a repository nobody had declared as a plugin source, which is the whole thing the bump
+exists to stop.
+
+### Why this is a bump and not a correction
+
+Section 4 of the manifest contract was **corrected** in place earlier, when it began requiring `?ref=`,
+on the grounds that nothing had shipped against the old reading. That argument is not available here
+and was not used: `plugin_install_version` 1 is published, in 0.1.0 and 0.1.1, and reported by both.
+
+What is true is that no published build could install a plugin at all — the GitHub provider was never
+bundled in a release, so every install refused for want of a provider before reaching any of this. That
+makes the practical cost of the bump zero, and it is not a reason to pretend the version did not
+change. A version is what an implementation reports it can do, and this changes what it can do.

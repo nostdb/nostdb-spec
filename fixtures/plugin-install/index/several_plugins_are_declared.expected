@@ -1,0 +1,2 @@
+outcome = accept
+note = Accepted as an index. A source with no fragment against this one is refused separately, because choosing for the caller would install something nobody named.

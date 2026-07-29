@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_SOURCE_INVALID
+note = Version 1 recognised a plugin by path and declared no index. An index claiming that version is claiming a contract that had none.

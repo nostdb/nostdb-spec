@@ -1,0 +1,3 @@
+outcome = reject
+code = PLUGIN_SOURCE_INVALID
+note = A name is what a source's fragment writes, and no fragment can name an empty string.

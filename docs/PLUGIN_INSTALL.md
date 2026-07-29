@@ -50,20 +50,28 @@ make the next one safe.
 2. **resolve** the ref to one immutable commit. Everything after this uses that commit and never
    the ref;
 3. **enumerate** the tree at that commit;
-4. **validate** every entry against section 3, and the tree as a whole against section 4.
-   Nothing has been downloaded yet;
-5. **read** the manifest entry, and validate it against the manifest contract;
-6. **check** the manifest's `nostdb` range against the Engine present, per section 5;
-7. **read** every remaining accepted entry;
-8. **compute** both digests, per section 6;
-9. **compare** against an existing record for the same plugin name in the same scope, per
+4. **read the index** `nostdb.plugins.json` from the repository root, per section 3.2, and resolve the
+   source's fragment against it, per section 3.3. This precedes validation because it decides *which*
+   entries are the plugin — validating the whole repository would refuse a source over a path in a
+   directory the install never touches;
+5. **validate** every entry beneath the resolved directory against section 3, and the tree as a whole
+   against section 4. Nothing has been downloaded yet;
+6. **read** the manifest entry, and validate it against the manifest contract;
+7. **check** the manifest's `nostdb` range against the Engine present, per section 5;
+8. **read** every remaining accepted entry;
+9. **compute** both digests, per section 6;
+10. **compare** against an existing record for the same plugin name in the same scope, per
    section 8;
-10. **write** the plugin's files and then the record, per section 9.
+11. **write** the plugin's files and then the record, per section 9.
 
-Step 4 precedes any download. A limit checked after the bytes have arrived is a description of
+Step 5 precedes any download. A limit checked after the bytes have arrived is a description of
 what was downloaded rather than a limit on it.
 
-Step 6 precedes step 10 so that nothing is written under a digest that was not computed over
+The index is read at step 4 and is **not** part of the plugin: it is not validated as a plugin entry,
+not digested, and not written. It says which directory to install, and a file that decided what to
+install is not part of what was installed.
+
+Step 9 precedes step 11 so that nothing is written under a digest that was not computed over
 exactly the bytes being written.
 
 ## 3. Entry rules
@@ -86,17 +94,72 @@ Rejected rather than skipped, for the reason an escaping `output_paths` entry is
 than clamped: skipping would install a plugin that is not the one the author published, and
 nothing would say which parts are missing.
 
-### 3.1 A subdirectory install narrows the tree
+### 3.1 The resolved directory narrows the tree
 
-When the source names a subdirectory, only entries beneath it are part of the plugin, and each
+The index resolves a source to one directory. Only entries beneath it are part of the plugin, and each
 entry's path within the plugin is its path with that prefix removed. Entries outside it are not
 validated and are not digested: they are not part of what was installed.
 
-A subdirectory naming nothing in the tree is refused with `PLUGIN_SOURCE_INVALID`. An empty
-plugin is not a plugin, and reporting success for one would install nothing under a name a
-project then depends on.
+A resolved directory holding no entries is refused with `PLUGIN_SOURCE_INVALID`. An empty plugin is not
+a plugin, and reporting success for one would install nothing under a name a project then depends on.
 
-### 3.2 The manifest must be present
+### 3.2 A repository declares its plugins in an index
+
+A plugin source names a **repository**, and that repository MUST contain `nostdb.plugins.json` at its
+root. Its absence is refused with `PLUGIN_SOURCE_INVALID`: a repository that has not declared itself a
+plugin source is not one, and treating any repository with a `nostdb-plugin.json` somewhere inside it
+as installable would make every fork, vendored copy, and test fixture a plugin nobody published.
+
+```json
+{
+  "plugin_install_version": 2,
+  "plugins": {
+    "view-webgpu": "plugins/view-webgpu"
+  }
+}
+```
+
+- `plugin_install_version` is this contract's version. A value above the highest supported is refused
+  with `PLUGIN_SOURCE_INVALID` rather than parsed as best effort;
+- `plugins` maps a **name** to the directory holding that plugin, relative to the repository root. It
+  MUST be an object, and MUST hold at least one entry; an index declaring nothing is refused.
+- a name MUST be non-empty, because a name is what a source's fragment writes and no fragment can
+  write an empty string. A mapped directory MUST be non-empty for the same kind of reason: an empty
+  path is not the repository root spelled differently, it is a mapping nobody wrote.
+
+Each mapped directory MUST satisfy section 3's entry rules and MUST contain `nostdb-plugin.json` at
+its own top level. A mapping naming a directory the tree does not hold is refused: an index is a
+declaration by the author, and one that points at nothing is a mistake rather than an empty plugin.
+
+A name in the index is the name a caller writes. It is **not** required to equal the manifest's
+declared plugin name, and the manifest's name remains what an installation records — the index names
+what to fetch, the manifest names what was installed. Where they differ, both appear in the install
+report so nobody has to guess which one a later command wants.
+
+Two entries mapping to the same directory are accepted; two entries with the same name cannot exist,
+because JSON object keys are unique.
+
+### 3.3 The source names an index entry, not a path
+
+When a source carries a fragment, the fragment names a **key in the index**:
+
+```text
+https://github.com/nostdb/plugins?ref=main#view-webgpu
+```
+
+A fragment naming no key is refused with `PLUGIN_SOURCE_INVALID`, and the refusal lists the keys the
+index declares. Naming a raw directory path is what a fragment used to mean, and it is no longer
+accepted: two ways to name one plugin is two answers to which plugin was installed, and a path is the
+one an author can change without changing what they published.
+
+With no fragment:
+
+- an index declaring exactly one plugin installs that one. A repository publishing one plugin should
+  not require its caller to name it;
+- an index declaring more than one is refused, and the refusal lists them. Choosing for the caller
+  would install something nobody named.
+
+### 3.4 The manifest must be present
 
 The plugin's root MUST contain `nostdb-plugin.json`, at the top level of the plugin — not
 nested. Its absence is refused with `PLUGIN_SOURCE_INVALID` rather than

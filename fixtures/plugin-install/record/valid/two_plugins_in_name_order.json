@@ -1,5 +1,5 @@
 {
-  "plugin_install_version": 1,
+  "plugin_install_version": 2,
   "installed": [
     {
       "name": "org.example.alpha",
@@ -30,7 +30,9 @@
         "graph_read": false,
         "database_write": false,
         "output_paths": [],
-        "network_hosts": ["api.example.com"]
+        "network_hosts": [
+          "api.example.com"
+        ]
       }
     }
   ]

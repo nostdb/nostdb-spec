@@ -17,9 +17,17 @@ use std::path::Path;
 
 /// Every rejection the record table in section 9.1 states, paired with the fixture that
 /// exercises it. Adding a row to that table without a fixture fails a test here.
-const RECORD_RULES: [&str; 10] = [
+const RECORD_RULES: [&str; 11] = [
     "version_absent",
-    "version_unsupported",
+    // Both directions, and they are separate rules rather than one with two values.
+    //
+    // `plugin_install_version` went from 1 to 2, which made version 1 unreadable — and a record
+    // written by 0.1.1 is on disk right now, so the below-range case is the one a user meets rather
+    // than a hypothetical. The above-range case is a record from a newer install, which is what a
+    // downgrade produces. A single fixture can only be one value, and covering the future while
+    // leaving the past untested is the wrong half to keep after a bump.
+    "version_below_the_supported_range",
+    "version_above_the_supported_range",
     "installed_is_not_an_array",
     "entry_has_no_tree_digest",
     "two_entries_share_a_name",
@@ -115,6 +123,7 @@ fn every_fixture_pairs_with_an_expectation() {
         "range",
         "range-invalid",
         "tree",
+        "index",
     ] {
         let relative = format!("fixtures/plugin-install/{directory}");
         assert_eq!(
@@ -389,6 +398,71 @@ fn an_unparseable_range_is_a_manifest_refusal() {
         "plugin install conformance: {} unparseable ranges verified",
         stems("fixtures/plugin-install/range-invalid", "json").len()
     );
+}
+
+/// Every rule sections 3.2 and 3.3 state about the repository index, paired with its fixture.
+///
+/// Listed here for the reason `RECORD_RULES` is: a rule added to the contract without a fixture, or a
+/// fixture exercising nothing the contract states, fails a test rather than passing quietly.
+const INDEX_RULES: [&str; 12] = [
+    "one_plugin_needs_no_fragment",
+    "several_plugins_are_declared",
+    "version_absent",
+    "version_above_the_supported_range",
+    "version_below_the_supported_range",
+    "plugins_is_absent",
+    "plugins_is_empty",
+    "plugins_is_not_an_object",
+    "a_name_is_empty",
+    "a_mapped_path_is_absolute",
+    "a_mapped_path_escapes_the_repository",
+    "a_mapped_path_is_empty",
+];
+
+#[test]
+fn every_index_rule_in_the_contract_has_a_fixture() {
+    let present = stems("fixtures/plugin-install/index", "json");
+    let known: BTreeSet<&str> = INDEX_RULES.iter().copied().collect();
+    let missing: Vec<&&str> = known
+        .iter()
+        .filter(|rule| !present.contains(**rule))
+        .collect();
+    assert!(
+        missing.is_empty(),
+        "these index rules have no fixture: {missing:?}"
+    );
+    let extra: Vec<&String> = present
+        .iter()
+        .filter(|stem| !known.contains(stem.as_str()))
+        .collect();
+    assert!(
+        extra.is_empty(),
+        "these fixtures exercise a rule the contract does not state: {extra:?}"
+    );
+}
+
+#[test]
+fn an_index_fixture_declares_a_decidable_outcome() {
+    for path in common::files_with_extension("fixtures/plugin-install/index", "json") {
+        let expected = expectation(&path);
+        let outcome = expected
+            .get("outcome")
+            .unwrap_or_else(|| panic!("{}: no outcome", path.display()));
+        match outcome.as_str() {
+            "accept" => assert!(
+                !expected.contains_key("code"),
+                "{}: an accepted index names no code",
+                path.display()
+            ),
+            "reject" => assert_eq!(
+                expected.get("code").map(String::as_str),
+                Some("PLUGIN_SOURCE_INVALID"),
+                "{}: a refused index is a refused source",
+                path.display()
+            ),
+            other => panic!("{}: {other} is not an outcome", path.display()),
+        }
+    }
 }
 
 /// The number of entries a tree fixture places inside the plugin.
