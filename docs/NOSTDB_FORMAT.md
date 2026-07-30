@@ -86,11 +86,11 @@ reading any length.
 | 40 | 4 | u32 | `reserved` |
 | 44 | 4 | u32 | `header_crc32c` |
 
-Total header length in version 1 is 48 bytes.
+Total header length is 48 bytes in every version defined so far.
 
-- `header_length` MUST equal 48 when `nostdb_format_version` is 1. Carrying the
-  length explicitly lets a later version extend the header while an older reader
-  still knows where the header ends.
+- `header_length` MUST equal 48 for versions 1 and 2. Carrying the length
+  explicitly lets a later version extend the header while an older reader still
+  knows where the header ends.
 - `reserved` MUST be 0. A reader MUST reject a non-zero value rather than ignore
   it, so the field stays usable later.
 - `flags` is a bit set. Version 1 defines no flags, and every bit MUST be 0.
@@ -216,6 +216,24 @@ The journal lives beside the database, under the project's `.nostdb/journal`
 directory, not inside the container.
 
 ## 13. Version handling and migration
+
+### 13.1 What changed in version 2
+
+A contribution's owner was one of three tagged shapes — a name and a version, a
+bare contract digest, or the user — and is one interned name. There is no reader
+for the earlier tags, so version 1 is **not** supported.
+
+Refusing it at the header is deliberate. A version 1 database read by a version 2
+reader would decode until it reached an owner byte and then report an unknown
+tag, which is what a corrupt file reports. `NOSTDB_FORMAT_UNSUPPORTED` says what
+is true: a database to rebuild, not a database to fear. Structural analysis of
+supported source spends no external tokens, so rebuilding costs time and no
+money.
+
+`nostdb_format_version` moves alone. The `.nost` language moved for its own
+reason in the same revision, and the two remain independently versioned.
+
+### 13.2 The comparison
 
 A reader compares `nostdb_format_version` against the versions it supports:
 

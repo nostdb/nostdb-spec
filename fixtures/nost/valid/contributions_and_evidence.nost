@@ -1,4 +1,4 @@
-@nost 2
+@nost 3
 
 schema Function {
   name: string,
@@ -7,18 +7,19 @@ schema Function {
 node login: Function {
   name: "login",
 
-  @by analyzer "rust-structural" "0.1.0" unit "u_0198a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5b" {
+  @by "rust-structural" unit "u_0198a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5b" {
     @evidence {
       source: "./",
       path: "src/auth.rs",
       digest: "sha256:cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
       range: "12:1:340-40:2:1180",
+      producer_version: "0.1.0",
       method: deterministic,
       confidence: extracted,
     }
   }
 
-  @by ai "sha256:1f0e3dad99908345f7439f8ffabdffc4184b6cf8f5e2b1a3c7d9e0f1a2b3c4d5" {
+  @by "ai:sha256:1f0e3dad99908345f7439f8ffabdffc4184b6cf8f5e2b1a3c7d9e0f1a2b3c4d5" {
     @evidence {
       source: "./",
       path: "src/auth.rs",
@@ -30,5 +31,5 @@ node login: Function {
     }
   }
 
-  @by user {}
+  @by "user" {}
 }

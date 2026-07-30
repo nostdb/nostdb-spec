@@ -46,7 +46,7 @@ neither producer asked for.
 {
   "change_set_version": 1,
   "base_generation": 7,
-  "owner": { "kind": "analyzer", "name": "rust", "version": "1" },
+  "owner": "nostdb",
   "source_snapshot": "tree:sha256:0f1e2d...",
   "operations": [
     {
@@ -74,15 +74,26 @@ gets overwritten.
 
 ### 2.2 `owner`
 
-| `kind` | Further members | Meaning |
-| --- | --- | --- |
-| `analyzer` | `name`, `version` | a deterministic analyzer |
-| `ai_analysis` | `contract_digest` | AI analysis, identified by the contract it ran under |
-| `user` | none | a person |
+One string, whose kind follows from the name:
 
-An analyzer's version is part of its identity. Upgrading an analyzer MUST NOT silently adopt
-the previous version's facts as the new version's own, and carrying the version in the owner
-is what prevents it.
+| Name | Meaning |
+| --- | --- |
+| `user` | a person |
+| `ai:<contract-digest>` | AI analysis, identified by the contract it ran under |
+| anything else | a deterministic analyzer, named by itself |
+
+`user` and the `ai:` prefix are **reserved**, so an analyzer MUST NOT be named either.
+
+An owner carries **no version**. It used to, justified by saying that upgrading an analyzer
+MUST NOT silently adopt the previous version's facts as the new version's own — and that is
+what produced the defect: move the version and every record an earlier run wrote answers to a
+name no later set names, so nothing can withdraw them and a graph holds two readings of every
+file. What section 11.3 of the root PRD needs is that a refresh replaces its **own** prior
+contributions and leaves other producers' alone, which one name delivers.
+
+There is no other shape. An earlier revision of this schema wrote an object with a `kind`, and
+a `name` and `version` beside it; an implementation MUST refuse one, because a set applied under
+an owner nothing can withdraw is worse than a set refused for its spelling.
 
 An analyzer-owned or AI-owned operation MUST carry evidence. A user-owned one need not,
 because the user is the evidence.

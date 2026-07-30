@@ -24,7 +24,29 @@ Parsing, comment-preserving CST construction, error recovery, canonical
 formatting, and synchronization are implemented in `nostdb-core`. This document
 specifies what they must produce; it does not implement them.
 
-### 1.1 What changed in version 2
+### 1.1 What changed in version 3
+
+Version 3 is not compatible with version 2. An implementation reading `@nost 2`
+MUST reject it with `NOST_VERSION_UNSUPPORTED` rather than parse it
+best-effort.
+
+| Change | Version 2 | Version 3 |
+| --- | --- | --- |
+| Owner | one of three keyword forms: `analyzer "<name>" "<version>"`, `ai "<digest>"`, `user` | one string, whose kind follows from the name |
+| Owner version | part of an analyzer owner's identity | removed; an owner carries no version |
+| `producer_version` | inheritable from an analyzer owner | always stated, because no owner carries one |
+
+Rejecting at the header is the point. A version 2 document reaching a version 3
+parser would otherwise fail at `@by` with a parse error, which reads as a
+malformed document rather than as one written to a contract this revision no
+longer implements. There is no reader for the keyword forms and no conversion
+path: a document written under version 2 is edited, not migrated.
+
+Only `nost_language_version` moves. The `.nostdb` format is versioned
+independently and moved for its own reason — an owner is one interned name there
+too — and settings, provider, plugin, and server contracts are unchanged.
+
+### 1.2 What changed in version 2
 
 Version 2 is not compatible with version 1. An implementation reading `@nost 1`
 MUST reject it with `NOST_VERSION_UNSUPPORTED` rather than parse it
@@ -93,7 +115,7 @@ A file is a version header, then link declarations, then schema, node, and edge
 declarations:
 
 ```nost
-@nost 2
+@nost 3
 
 @link "./packages/child"
 @link "./packages/shared" as shared
@@ -120,7 +142,7 @@ benefit.
 ### 5.1 Version header
 
 ```nost
-@nost 2
+@nost 3
 ```
 
 The header is mandatory and first. A version above the highest supported, or a
@@ -254,7 +276,7 @@ a multigraph, and a canonical writer orders them deterministically.
 node login: Function {
   name: "login",
 
-  @by analyzer "rust-structural" "0.1.0" unit "u_0198a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5b" {
+  @by "rust-structural" unit "u_0198a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5b" {
     @evidence {
       source: "./",
       path: "src/auth.rs",
@@ -275,13 +297,29 @@ section 11.3 guarantee that an analyzer refresh preserves user edits.
 Contribution blocks follow the properties in a record block and are not comma
 separated, because they are blocks rather than fields.
 
-Three owners exist:
+An owner is **one string**, and its kind follows from the name rather than from a
+keyword beside it:
 
 | Owner | Syntax | Evidence |
 | --- | --- | --- |
-| analyzer | `analyzer "<name>" "<version>"` | required |
-| AI analysis | `ai "<contract-digest>"` | required |
-| user | `user` | optional; the user is the evidence |
+| analyzer | `"<name>"` | required |
+| AI analysis | `"ai:<contract-digest>"` | required |
+| user | `"user"` | optional; the user is the evidence |
+
+`user` and the `ai:` prefix are **reserved**. An implementation MUST read `"user"`
+as the user and `"ai:…"` as AI analysis, so an analyzer MUST NOT be named either.
+Every other name is an analyzer, which is what lets an analyzer this
+specification has never heard of name itself.
+
+An owner carries no version. It used to, and the justification was that upgrading
+an analyzer must not adopt the previous version's facts — but not adopting them is
+what left records answering to a name no change set names, so nothing could
+withdraw them. What section 11.3 of the root PRD needs is that a refresh replaces
+its **own** prior contributions, which one name delivers.
+
+There is no other spelling. The keyword forms version 2 used have no production
+in this revision, and a document declaring version 2 is refused at its header
+rather than read with them.
 
 `unit` names the source unit the contribution derives from. It is optional and
 defaults to the nil source unit, which is the unit a change made outside any
@@ -300,13 +338,19 @@ An evidence block accepts these keys:
 | `path` | string; the path within the source | no |
 | `range` | string; `line:column:offset-line:column:offset` | no |
 | `producer` | string | no when the owner is an analyzer |
-| `producer_version` | string | no when the owner is an analyzer |
+| `producer_version` | string | yes, always |
 
-`producer` and `producer_version` default to the analyzer's name and version.
-They are separate fields in the model because evidence may come from a producer
-other than the owner, but they are the same value often enough that repeating
-them on every block would be noise. When the owner is `ai` or `user` there is no
-name to inherit, so both are required.
+`producer` defaults to the owner's name when the owner is an **analyzer**, whose
+name is a producer's. An `ai:` owner's name is the digest of the contract that
+ran rather than a tool, so inheriting it would report the enricher as
+`ai:sha256:…`; a `user` owner has no name at all. Both therefore state a
+producer. They are separate fields in the model because evidence may come from a
+producer other than the owner, but they are the same value often enough that
+repeating it on every analyzer block would be noise.
+
+`producer_version` has nothing to default to and is therefore always stated. An
+owner carries no version, which is the honest division: the owner says who read
+the file and the evidence says which revision of that reader did.
 
 A score is a float within `0.0..=1.0`. `extracted` carries none, because a fact
 read directly out of source has nothing to weigh.

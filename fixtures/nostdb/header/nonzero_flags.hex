@@ -4,11 +4,11 @@
 # Whitespace is insignificant and '#' starts a comment.
 
 4E4F535444421A0A                  # magic "NOSTDB" 1A 0A
-01000000                          # nostdb_format_version = 1
+02000000                          # nostdb_format_version = 2
 30000000                          # header_length = 48
 0100000000000000                  # database_generation = 1
 3000000000000000                  # section_table_offset = 48
 00000000                          # section_count = 0
 01000000                          # flags = 0x00000001
 00000000                          # reserved = 0
-43F006B5                          # header_crc32c = 0xB506F043 over bytes 0..44
+873C53E1                          # header_crc32c = 0xE1533C87 over bytes 0..44

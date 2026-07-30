@@ -1,4 +1,4 @@
-@nost 2
+@nost 3
 
 schema Function {
   name: string,
@@ -7,10 +7,11 @@ schema Function {
 node login: Function {
   name: "login",
 
-  @by analyzer "heuristic" "0.1.0" {
+  @by "heuristic" {
     @evidence {
       source: "./",
       digest: "sha256:cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      producer_version: "0.1.0",
       method: deterministic,
       confidence: ambiguous(0.4),
     }

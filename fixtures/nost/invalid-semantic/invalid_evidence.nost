@@ -1,9 +1,9 @@
-@nost 2
+@nost 3
 
 schema Sample {}
 
 node example: Sample {
-  @by analyzer "rust-structural" "0.1.0" {
+  @by "rust-structural" {
     @evidence {
       path: "src/auth.rs",
       method: deterministic,

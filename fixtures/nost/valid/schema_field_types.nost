@@ -1,4 +1,4 @@
-@nost 2
+@nost 3
 
 schema Every {
   flag: boolean,

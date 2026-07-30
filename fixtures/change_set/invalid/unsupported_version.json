@@ -1,11 +1,7 @@
 {
   "change_set_version": 2,
   "base_generation": 7,
-  "owner": {
-    "kind": "analyzer",
-    "name": "rust",
-    "version": "1"
-  },
+  "owner": "nostdb",
   "source_snapshot": "tree:sha256:0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f",
   "operations": [
     {

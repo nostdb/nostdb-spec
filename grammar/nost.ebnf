@@ -1,5 +1,5 @@
 (* NostDB `.nost` grammar, normative.
-   nost_language_version = 2
+   nost_language_version = 3
 
    This grammar is parser-generator neutral. grammar/nost.pest is a reference
    encoding of it, and fixtures/nost is the conformance gate. An implementation
@@ -88,10 +88,7 @@ property_key        = identifier ;
 contribution_block  = "@by" , owner , [ "unit" , string_literal ] ,
                       "{" , { evidence_block } , "}" ;
 
-owner               = analyzer_owner | ai_owner | user_owner ;
-analyzer_owner      = "analyzer" , string_literal , string_literal ;
-ai_owner            = "ai" , string_literal ;
-user_owner          = "user" ;
+owner               = string_literal ;
 
 evidence_block      = "@evidence" , "{" ,
                       [ evidence_field , { "," , evidence_field } , [ "," ] ] ,

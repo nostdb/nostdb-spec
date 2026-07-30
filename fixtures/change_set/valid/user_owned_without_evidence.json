@@ -1,9 +1,7 @@
 {
   "change_set_version": 1,
   "base_generation": 1,
-  "owner": {
-    "kind": "user"
-  },
+  "owner": "user",
   "source_snapshot": "manual",
   "operations": [
     {

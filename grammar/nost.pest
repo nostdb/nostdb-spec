@@ -1,6 +1,6 @@
 // Executable reference encoding of the NostDB `.nost` grammar.
 //
-// nost_language_version = 2
+// nost_language_version = 3
 //
 // The normative grammar is grammar/nost.ebnf, and the normative conformance
 // gate is the fixture suite under fixtures/nost. This file exists so the
@@ -67,10 +67,10 @@ contribution_block = {
     "@by" ~ owner ~ ("unit" ~ string_literal)? ~ "{" ~ evidence_block* ~ "}"
 }
 
-owner          = { analyzer_owner | ai_owner | user_owner }
-analyzer_owner = { "analyzer" ~ string_literal ~ string_literal }
-ai_owner       = { "ai" ~ string_literal }
-user_owner     = { "user" }
+// An owner is one string, whose kind follows from the name: `user` is the user, an `ai:` prefix is AI
+// analysis, and anything else is an analyzer. Language version 2 wrote three keyword forms; there is no
+// production for them here, and a document declaring that version is refused at its header.
+owner          = { string_literal }
 
 evidence_block = {
     "@evidence" ~ "{"

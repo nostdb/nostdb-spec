@@ -12,8 +12,8 @@ that exists.
 
 | Contract key | Current | Supported | Status | Specified in |
 | --- | --- | --- | --- | --- |
-| `nost_language_version` | 2 | 2 | specified | [docs/NOST_LANGUAGE.md](docs/NOST_LANGUAGE.md) |
-| `nostdb_format_version` | 1 | 1 | specified | [docs/NOSTDB_FORMAT.md](docs/NOSTDB_FORMAT.md) |
+| `nost_language_version` | 3 | 3 | specified | [docs/NOST_LANGUAGE.md](docs/NOST_LANGUAGE.md) |
+| `nostdb_format_version` | 2 | 2 | specified | [docs/NOSTDB_FORMAT.md](docs/NOSTDB_FORMAT.md) |
 | `query_subset_version` | 1 | 1 | specified | [docs/QUERY_SUBSET.md](docs/QUERY_SUBSET.md) |
 | `settings_version` | 1 | 1 | specified | [docs/SETTINGS.md](docs/SETTINGS.md) |
 | `credentials_version` | 1 | 1 | deferred | not yet specified |
@@ -53,6 +53,31 @@ Consequences an implementation must honor:
 2. Record the change in the contract document that owns the key.
 3. Add fixtures covering the new version and the now-unsupported case.
 4. Leave every other key untouched.
+
+## Recorded bump: `nost_language_version` 2 to 3, and `nostdb_format_version` 1 to 2
+
+Both moved in one revision, for the same underlying change and independently of
+each other: a contribution's owner is one string.
+
+`nost_language_version` 3 replaced three keyword owner forms —
+`analyzer "<name>" "<version>"`, `ai "<digest>"`, and `user` — with one string
+whose kind follows from the name, and removed the version an analyzer owner
+carried. `producer_version` is now always stated, because no owner supplies one
+to inherit. See [docs/NOST_LANGUAGE.md](docs/NOST_LANGUAGE.md) section 1.1.
+
+`nostdb_format_version` 2 replaced three tagged owner shapes with one interned
+name. See [docs/NOSTDB_FORMAT.md](docs/NOSTDB_FORMAT.md) section 13.1.
+
+Neither lists its predecessor as supported, and that is the decision rather than
+an oversight. There is no reader for the earlier owner spellings, so listing them
+would promise a parse no implementation can deliver — and a version 1 database
+read by a version 2 reader would decode until it reached an owner byte and then
+report an unknown tag, which is what a *corrupt* file reports. Refusing at the
+header instead says what is true: a database to rebuild.
+
+Two keys moved together and neither implies the other. A reader supporting one
+and not the other is a coherent implementation, which is the independence this
+registry exists to keep.
 
 ## Recorded bump: `nost_language_version` 1 to 2
 
