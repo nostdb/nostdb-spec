@@ -1,0 +1,30 @@
+{
+  "change_set_version": 1,
+  "base_generation": 7,
+  "owner": "ai:sha256:1f0e3dad99908345f7439f8ffabdffc4184b6cf8f5e2b1a3c7d9e0f1a2b3c4d5",
+  "source_snapshot": "tree:sha256:0f1e2d3c4b5a69788796a5b4c3d2e1f00f1e2d3c4b5a69788796a5b4c3d2e1f0",
+  "operations": [
+    {
+      "operation": "upsert_node",
+      "labels": [
+        "Request"
+      ],
+      "properties": {
+        "name": "NewUser"
+      },
+      "source_unit": "u_0198a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5d",
+      "evidence": [
+        {
+          "source": ".",
+          "path": "src/main/java/com/demo/UserApi.java",
+          "content_digest": "sha256:abababababababababababababababab",
+          "range": "12:1:340-40:2:1180",
+          "producer": "semantic-enricher",
+          "producer_version": "0.2.1",
+          "method": "ai_inferred",
+          "confidence": "extracted(0.9)"
+        }
+      ]
+    }
+  ]
+}

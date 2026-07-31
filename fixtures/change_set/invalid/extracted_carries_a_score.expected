@@ -1,0 +1,3 @@
+outcome = reject
+code = CHANGE_SET_INVALID
+note = A fact read directly out of source has nothing to weigh, so `extracted` carries no score. The `.nost` reader has always refused this and the change-set reader accepted it by ignoring the field.

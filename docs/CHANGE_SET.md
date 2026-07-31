@@ -98,7 +98,46 @@ an owner nothing can withdraw is worse than a set refused for its spelling.
 An analyzer-owned or AI-owned operation MUST carry evidence. A user-owned one need not,
 because the user is the evidence.
 
-### 2.3 `source_snapshot`
+### 2.3 `evidence`
+
+An array of entries, one per place a fact was read.
+
+| Member | Type | Required | Meaning |
+| --- | --- | --- | --- |
+| `source` | string | yes | the canonical source the fact was read from |
+| `path` | string | no | the path within that source |
+| `revision` | string | no | the immutable revision, when the source has one |
+| `content_digest` | string | yes | the digest of the bytes that were read |
+| `range` | string | no | `line:column:offset-line:column:offset` within them |
+| `producer` | string | yes | what read them |
+| `producer_version` | string | yes | which revision of it |
+| `method` | `deterministic`, `ai_inferred`, or `user_declared` | yes | how the fact was arrived at |
+| `confidence` | `extracted`, `inferred(<score>)`, or `ambiguous(<score>)` | no | how far it can be relied on |
+
+This table is a **repair**. Sections 2.2 and 3 required evidence and named it an array, and no
+revision of this document said what an entry contains — the shape lived only in a fixture. An
+implementation read `method` and substituted `Confidence::Extracted` for whatever the document
+declared, dropping `range` the same way, and every conformance run passed: the one published
+fixture declares `extracted`, which is the value the substitution produced.
+
+So an AI's inference was stored at the confidence reserved for a fact read directly out of
+source, which the root PRD's section 17.3 forbids — results must not imply that an inferred
+fact carries the weight of an extracted one.
+
+`confidence` absent MUST be read as `extracted`. A deterministic producer means exactly that,
+and it is what makes the entries written before this table valid under it.
+
+A score MUST be finite and within `0.0..=1.0`, and one outside MUST be refused rather than
+clamped. A producer that computed 1.4 has a defect, and storing 1.0 would hide it.
+
+`extracted` MUST carry no score — a fact read directly out of source has nothing to weigh —
+and `inferred` and `ambiguous` MUST carry one.
+
+The spelling is the one `.nost` uses for the same values, deliberately. Two routes reach one
+graph, and a confidence written one way here and another way there is two contracts for one
+fact.
+
+### 2.4 `source_snapshot`
 
 The immutable source the changes were derived from, as a non-empty string. A provider
 supplies a commit for a remote source; a local working tree has no such identity and states

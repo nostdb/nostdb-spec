@@ -1,0 +1,2 @@
+outcome = accept
+note = An AI-owned record whose evidence states a score and a range. Both were read and discarded by an implementation for two releases, and no fixture declared either — this one exists so a reader that substitutes a confidence cannot pass.
