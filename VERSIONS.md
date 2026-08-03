@@ -18,7 +18,7 @@ that exists.
 | `settings_version` | 1 | 1 | specified | [docs/SETTINGS.md](docs/SETTINGS.md) |
 | `credentials_version` | 1 | 1 | deferred | not yet specified |
 | `catalog_version` | 1 | 1 | specified | [docs/CATALOG.md](docs/CATALOG.md) |
-| `result_version` | 2 | 1, 2 | specified | [docs/RESULT.md](docs/RESULT.md) |
+| `result_version` | 2 | 2 | specified | [docs/RESULT.md](docs/RESULT.md) |
 | `provider_protocol_version` | 1 | 1 | specified | [docs/PROVIDER_PROTOCOL.md](docs/PROVIDER_PROTOCOL.md) |
 | `plugin_protocol_version` | 1 | 1 | specified | [docs/PLUGIN_PROTOCOL.md](docs/PLUGIN_PROTOCOL.md) |
 | `manifest_version` | 1 | 1 | specified | [docs/PLUGIN_MANIFEST.md](docs/PLUGIN_MANIFEST.md) |
@@ -88,11 +88,17 @@ first write upgrades the container — which is the migration
 previous bump left users.
 
 `result_version` 2 adds one value form, `{"object": {...}}`, and widens a list to
-hold any value. It lists 1 and 2, and that costs nothing to honor: an envelope is
-a message rather than a stored artifact, so the two versions coexist without
-anything being rewritten. A version 1 consumer receives an object only from a
-database that could not have existed under version 1, and refuses it as an
-unknown tag — which is why the form is tagged rather than bare.
+hold any value. It lists **2 alone**, and the reason is what `supported` means in
+this registry: the versions *this implementation accepts as input*. Nothing in
+NostDB reads a result envelope — it only produces them — so listing 1 would claim
+a reader that does not exist, which is the same defect as a value declared and
+never produced.
+
+Version 1 is therefore not a compatibility promise but a description of what
+earlier builds emitted. A consumer still holding a version 1 reader meets
+`{"object": ...}` as an **unknown tag** and refuses it, which is why the form is
+tagged rather than bare: an unknown tag is refusable, and a bare object would have
+been silently misread as one of the tagged forms.
 
 `query_subset_version` deliberately does **not** move. Returning a property whose
 value is an object is the envelope's business; reaching *inside* one from a query

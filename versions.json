@@ -67,7 +67,6 @@
       "key": "result_version",
       "current": 2,
       "supported": [
-        1,
         2
       ],
       "status": "specified",

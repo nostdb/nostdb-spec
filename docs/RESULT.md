@@ -24,15 +24,15 @@ Version 2 adds one value form, `{"object": {...}}`, and widens a list to hold an
 rather than scalars only. Both follow `nost_language_version` 4, under which a stored
 property may be an object.
 
-Version 1 **stays supported**, because an envelope is a message rather than a stored
-artifact: a version 1 producer emits nothing a version 2 consumer cannot read, and a
-version 1 consumer receives an object only from a database that could not have existed
-under version 1. Nothing has to be rewritten for the two to coexist.
+`supported` lists **2 alone**, and that is not a gap. An implementation of NostDB
+*produces* this envelope and never reads one, so listing version 1 as supported would
+promise a reader nothing implements. Version 1 describes what earlier builds emitted
+rather than an input this one accepts.
 
-A version 1 consumer meeting `{"object": ...}` MUST treat it as an unknown tag and refuse
-it, exactly as section 3.1 requires of any tag it does not know. That is the reason the
-form is tagged rather than bare: an unknown tag is refusable, while a bare object would
-have been silently misread as one of the tagged forms.
+A consumer still holding a version 1 reader meets `{"object": ...}` and MUST treat it as
+an unknown tag, refusing it exactly as section 3.1 requires of any tag it does not know.
+That is the reason the form is tagged rather than bare: an unknown tag is refusable, while
+a bare object would have been silently misread as one of the tagged forms.
 
 ### 1.2 Data and diagnostics are separate
 
@@ -47,7 +47,7 @@ anything else on standard error.
 
 ```json
 {
-  "result_version": 1,
+  "result_version": 2,
   "columns": ["name", "source"],
   "rows": [
     ["authorize", "github://example/shared/.nostdb/root.nostdb?ref=main"]
