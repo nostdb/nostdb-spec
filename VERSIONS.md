@@ -13,7 +13,7 @@ that exists.
 | Contract key | Current | Supported | Status | Specified in |
 | --- | --- | --- | --- | --- |
 | `nost_language_version` | 4 | 4 | specified | [docs/NOST_LANGUAGE.md](docs/NOST_LANGUAGE.md) |
-| `nostdb_format_version` | 3 | 2, 3 | specified | [docs/NOSTDB_FORMAT.md](docs/NOSTDB_FORMAT.md) |
+| `nostdb_format_version` | 3 | 3 | specified | [docs/NOSTDB_FORMAT.md](docs/NOSTDB_FORMAT.md) |
 | `query_subset_version` | 1 | 1 | specified | [docs/QUERY_SUBSET.md](docs/QUERY_SUBSET.md) |
 | `settings_version` | 1 | 1 | specified | [docs/SETTINGS.md](docs/SETTINGS.md) |
 | `credentials_version` | 1 | 1 | deferred | not yet specified |
@@ -68,24 +68,28 @@ separator between two fields or two properties. See
 `nostdb_format_version` 3 adds a map value tag and makes a list element a value
 rather than a scalar. See [docs/NOSTDB_FORMAT.md](docs/NOSTDB_FORMAT.md).
 
-**The two `supported` lists differ deliberately, and the asymmetry is the
-decision.** The language lists 4 alone; the format lists 2 and 3.
+**Every one of the three lists exactly one version**, and the format's list was
+briefly two.
 
-Every syntax this version adds is additive, so a version 3 document means exactly
-what it meant before. Listing 3 as supported would still be wrong, because the
-version field would then be decorative: a reader accepting `@nost 3` must refuse
-the syntax version 3 had no production for, or the number it read changed nothing.
-Gating syntax on a declared version is real machinery, and it buys a one-line edit
-to a file that is usually generated from the database anyway.
+For the language, listing 3 would be wrong even though every version 4 syntax is
+additive: a reader accepting `@nost 3` must refuse the syntax version 3 had no
+production for, or the number it read governed nothing. Gating syntax on a declared
+version is real machinery, and it buys a one-line edit to a file that is usually
+generated from the database anyway.
 
-A `.nostdb` is the opposite case. It is opaque, a user cannot edit it, and it holds
-user-owned contributions that no analyzer can rebuild from source. Refusing a
-version 2 container would therefore destroy data to avoid a decode branch, and the
-branch is narrow: version 2 has no map tag, and its list elements are scalars
-where version 3's are values. So version 2 is read, version 3 is written, and the
-first write upgrades the container — which is the migration
-[docs/PRD.md](../docs/PRD.md) section 12 requires rather than the rebuild the
-previous bump left users.
+The format listed 2 and 3 for one revision, reasoned as protecting user-owned
+contributions no analyzer can rebuild. **That reasoning describes a released
+product, and this one is not released.** No database exists whose loss would be a
+user's rather than a developer's, so the compatibility cost a version branch in the
+schema reader and a version field on the container to feed it, and bought nothing.
+Both are gone.
+
+The refusal is unchanged and is the part [docs/PRD.md](../docs/PRD.md) section 12
+actually requires: an unsupported version is reported with the version in the
+diagnostic rather than decoded on a guessed layout. Narrowing the range also made a
+row of the format contract's comparison table reachable for the first time — a
+version *below* the minimum, which no header could express while the minimum was
+the lowest version ever written.
 
 `result_version` 2 adds one value form, `{"object": {...}}`, and widens a list to
 hold any value. It lists **2 alone**, and the reason is what `supported` means in

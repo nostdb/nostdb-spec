@@ -20,9 +20,9 @@ against a hostile file.
 machine-readable companion, and [`../fixtures/nostdb`](../fixtures/nostdb) is the
 conformance gate.
 
-Version 1 does not fix the internal encoding of section payloads. A reader
+This document does not fix the internal encoding of section payloads. A reader
 locates, bounds, and checksums a section here; how node records are laid out
-inside the `nodes` section is specified when the model lands. That split is
+inside the `nodes` section is `nostdb-core`'s. That split is
 deliberate: the container contract has to be stable before record encodings are
 designed, so an implementation can already reject a corrupt or unsupported file.
 
@@ -39,7 +39,7 @@ atomic commit, and explicit unsupported-version diagnostics.
 ## 3. Layout
 
 ```text
-offset 0                     header, 48 bytes in version 1
+offset 0                     header, 48 bytes
                              ...
 section_table_offset          section table, section_count entries of 32 bytes
                              ...
@@ -88,12 +88,12 @@ reading any length.
 
 Total header length is 48 bytes in every version defined so far.
 
-- `header_length` MUST equal 48 for versions 1 and 2. Carrying the length
+- `header_length` MUST equal 48 in every version defined so far. Carrying the length
   explicitly lets a later version extend the header while an older reader still
   knows where the header ends.
 - `reserved` MUST be 0. A reader MUST reject a non-zero value rather than ignore
   it, so the field stays usable later.
-- `flags` is a bit set. Version 1 defines no flags, and every bit MUST be 0.
+- `flags` is a bit set. No version defines a flag yet, and every bit MUST be 0.
 - `header_crc32c` covers bytes 0 through 43 inclusive, that is the header with the
   checksum field excluded.
 
@@ -170,7 +170,7 @@ from any length it read:
 1. the file is at least 48 bytes;
 2. the magic matches;
 3. `nostdb_format_version` is supported;
-4. `header_length` is exactly 48 for version 1;
+4. `header_length` is exactly 48;
 5. the header checksum matches;
 6. `reserved` is 0 and every `flags` bit is 0;
 7. `section_count` is at most 4096, else `NOSTDB_LIMIT_EXCEEDED`;
@@ -223,18 +223,20 @@ A property value may be an **object**, and a list element is a value rather than
 scalar. The `properties` section therefore carries a map tag it did not have, and
 a list may hold lists and objects.
 
-Version 2 **stays supported**, and that is the difference from the previous bump.
-The two questions a reader asks of a version 2 container both have answers: there
-is no map tag to meet, because version 2 could not write one, and a list element
-is a scalar where version 3's is a value, which is one branch in the element
-reader. So a version 2 database opens, and the next write promotes it to
-version 3 through the atomic path of section 11.
+Version 2 is **not** supported, and it briefly was. It was kept readable on the
+reasoning that a `.nostdb` holds user-owned contributions no analyzer can rebuild
+from source, so refusing it would destroy data to avoid one decode branch.
 
-This is not generosity. A `.nostdb` holds user-owned contributions that no
-analyzer can rebuild from source, so refusing version 2 would destroy data to
-avoid that branch. The previous bump could not offer this — there was no reader
-for the earlier owner tags at all — and telling a user to rebuild was the honest
-answer then rather than the pattern to repeat.
+That reasoning describes a **released** product. NostDB is not released: no
+database exists whose loss would be a user's rather than a developer's, so the
+compatibility was paid for — a version branch in the schema reader, and a version
+field retained on the container to feed it — and bought nothing. Both are gone, and
+a version 2 container is `NOSTDB_FORMAT_UNSUPPORTED`: a database to rebuild.
+
+What the bump does **not** change is the refusal itself. An unsupported version is
+still reported with the version in the diagnostic rather than decoded on a guessed
+layout, which is the migration *detection* the root PRD section 12 requires.
+Rebuilding costs time and, for supported source, no external tokens.
 
 `nostdb_format_version` moves alone. The `.nost` language moved to version 4 for
 the same underlying change, and there it does **not** keep its predecessor

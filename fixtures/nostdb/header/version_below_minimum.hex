@@ -1,18 +1,18 @@
-# valid_current_version
-# A conforming header declaring the version a writer emits.
+# version_below_minimum
+# The format version is below the lowest supported.
 #
-# The three other accepted header fixtures declare version 2, which stays
-# readable so an existing database is not refused. This one covers the version
-# written, so neither end of the supported range is left unfixtured.
+# Reachable only because the supported range is one version wide. While version 2 was still
+# read, no header could exercise the "below the minimum" row of the contract's comparison
+# table, so that row was stated and unfixtured.
 #
 # Whitespace is insignificant and '#' starts a comment.
 
 4E4F535444421A0A                  # magic "NOSTDB" 1A 0A
-03000000                          # nostdb_format_version = 3
+02000000                          # nostdb_format_version = 2
 30000000                          # header_length = 48
 0100000000000000                  # database_generation = 1
 3000000000000000                  # section_table_offset = 48
 00000000                          # section_count = 0
 00000000                          # flags = 0x00000000
 00000000                          # reserved = 0
-1CFAA39B                          # header_crc32c = 0x9BA3FA1C over bytes 0..44
+A0416FA8                          # header_crc32c = 0xA86F41A0 over bytes 0..44

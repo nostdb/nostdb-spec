@@ -1,0 +1,3 @@
+outcome = reject
+code = NOSTDB_FORMAT_UNSUPPORTED
+note = A version below the lowest supported is refused at the header, with the version in the diagnostic, and the checksum passes so this is a version refusal rather than corruption.

@@ -16,7 +16,6 @@
       "key": "nostdb_format_version",
       "current": 3,
       "supported": [
-        2,
         3
       ],
       "status": "specified",
