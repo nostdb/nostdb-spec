@@ -1,0 +1,5 @@
+@nost 4
+
+node sample: Thing {
+  detail: { name: "a", name: "b" },
+}

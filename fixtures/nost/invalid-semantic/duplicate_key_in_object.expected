@@ -1,0 +1,3 @@
+outcome = accept_then_diagnose
+code = NOST_DUPLICATE_PROPERTY_KEY
+note = Two entries of one object literal share a key, which is the rule a record block already follows.

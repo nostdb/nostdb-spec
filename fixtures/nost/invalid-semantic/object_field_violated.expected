@@ -1,0 +1,3 @@
+outcome = accept_then_diagnose
+code = NOST_SCHEMA_VIOLATION
+note = A nested object omits a required key and gives another the wrong type, so validation recurses into an object value.

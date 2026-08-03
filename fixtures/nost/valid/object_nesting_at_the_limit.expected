@@ -1,0 +1,2 @@
+outcome = accept
+note = Eight nesting levels is the depth every implementation must accept. Refusing more is permitted and is not fixtured, because a fixture asserting rejection would forbid an implementation from accepting nine.

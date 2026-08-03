@@ -1,4 +1,4 @@
-@nost 3
+@nost 4
 
 schema Sparse {
   name: string,

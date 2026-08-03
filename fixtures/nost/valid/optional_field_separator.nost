@@ -1,0 +1,13 @@
+@nost 4
+
+schema Mixed {
+  first: string
+  second?: integer,
+  third: boolean
+}
+
+node sample: Mixed {
+  first: "a"
+  second: 1,
+  third: true
+}

@@ -1,4 +1,4 @@
-@nost 3
+@nost 4
 
 module auth id "m_1" source "src/auth.rs" {
   node login: Function {}

@@ -140,6 +140,24 @@ fn the_human_table_agrees_with_the_machine_registry() {
             columns[2]
         );
 
+        // The supported column went unchecked until `nostdb_format_version` first listed
+        // two versions. A row claiming a predecessor is readable when the registry lists
+        // only one, or the reverse, is the kind of disagreement this table exists to
+        // prevent.
+        let supported: Vec<String> = contract["supported"]
+            .as_array()
+            .expect("supported array")
+            .iter()
+            .map(|v| v.as_u64().expect("version number").to_string())
+            .collect();
+        assert_eq!(
+            columns[3],
+            supported.join(", "),
+            "VERSIONS.md row for {key} states supported {}, registry says {}",
+            columns[3],
+            supported.join(", ")
+        );
+
         // The last column must agree too, or a row can name the wrong document, or none,
         // while still stating the right status.
         match contract["specified_in"].as_str() {
@@ -152,5 +170,42 @@ fn the_human_table_agrees_with_the_machine_registry() {
                 "VERSIONS.md row for {key} must read `not yet specified`: {row}"
             ),
         }
+    }
+}
+
+/// Every specified contract document states its own version, and it must be the one the
+/// registry records.
+///
+/// Two of those headers were stale when this test was written: `NOST_LANGUAGE.md` read
+/// `Current version: 2` while the registry said 3, and `NOSTDB_FORMAT.md` read
+/// `Current version: 1` while the registry said 2. Both had survived a bump each. Nothing
+/// compared the line to the registry, so a reader opening the contract was told the wrong
+/// version by the document that owns it.
+#[test]
+fn every_contract_document_states_the_registered_current_version() {
+    let registry = common::read_json("versions.json");
+
+    for contract in registry["contracts"].as_array().expect("contracts array") {
+        let Some(path) = contract["specified_in"].as_str() else {
+            continue;
+        };
+        let key = contract["key"].as_str().expect("key");
+        let current = contract["current"].as_u64().expect("current");
+
+        let document = common::read(path);
+        let line = document
+            .lines()
+            .find(|line| line.starts_with("Current version:"))
+            .unwrap_or_else(|| panic!("{path} has no `Current version:` line"));
+        let stated = line
+            .trim_start_matches("Current version:")
+            .trim()
+            .parse::<u64>()
+            .unwrap_or_else(|error| panic!("{path} states an unreadable version: {error}"));
+
+        assert_eq!(
+            stated, current,
+            "{path} states current version {stated}, but the registry says {key} is at {current}"
+        );
     }
 }

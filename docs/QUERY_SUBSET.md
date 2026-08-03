@@ -74,6 +74,25 @@ The list is non-exhaustive by design. The subset is the closed list; everything 
 is refused, so a construct nobody anticipated is refused rather than accidentally
 accepted.
 
+### 3.1 Reaching inside an object value
+
+`nost_language_version` 4 lets a stored property hold an object or a list of them.
+`RETURN n.dependencies` returns that value whole, encoded as `result_version` 2 defines.
+
+Reaching **inside** it is refused with `CYPHER_UNSUPPORTED`: `n.dependencies[0]`,
+`n.dependencies.name`, and any other path step past the property key. Indexing and nested
+property access are not in section 2, so the general rule already refuses them; they are
+named here because a stored object makes the attempt likely, and a source-ranged refusal
+is the promise this contract makes about anything it does not implement.
+
+`WHERE n.detail = {...}` is refused for the same reason as `SET n = {...}`: there is no
+map literal in an expression position, only the inline property map of section 8, which is
+a pattern filter rather than a value.
+
+This is a gap rather than a decision against the feature. Nothing about it is silently
+approximated, which is what section 1 exists to guarantee, and the subset can gain path
+access later under its own version.
+
 ## 4. Variable-length patterns are bounded
 
 A variable-length pattern MUST declare an upper bound. `*1..5` is accepted; `*`, `*1..`,

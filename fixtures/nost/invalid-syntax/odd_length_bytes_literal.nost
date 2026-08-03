@@ -1,4 +1,4 @@
-@nost 3
+@nost 4
 
 node example: Sample {
   payload: bytes"abc",

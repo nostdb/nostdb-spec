@@ -1,7 +1,7 @@
 # The `.nostdb` format contract
 
 Contract key: `nostdb_format_version`
-Current version: 1
+Current version: 3
 Status: normative
 
 `.nostdb` is a single opaque container holding one NostDB database. It is not
@@ -217,7 +217,31 @@ directory, not inside the container.
 
 ## 13. Version handling and migration
 
-### 13.1 What changed in version 2
+### 13.1 What changed in version 3
+
+A property value may be an **object**, and a list element is a value rather than a
+scalar. The `properties` section therefore carries a map tag it did not have, and
+a list may hold lists and objects.
+
+Version 2 **stays supported**, and that is the difference from the previous bump.
+The two questions a reader asks of a version 2 container both have answers: there
+is no map tag to meet, because version 2 could not write one, and a list element
+is a scalar where version 3's is a value, which is one branch in the element
+reader. So a version 2 database opens, and the next write promotes it to
+version 3 through the atomic path of section 11.
+
+This is not generosity. A `.nostdb` holds user-owned contributions that no
+analyzer can rebuild from source, so refusing version 2 would destroy data to
+avoid that branch. The previous bump could not offer this — there was no reader
+for the earlier owner tags at all — and telling a user to rebuild was the honest
+answer then rather than the pattern to repeat.
+
+`nostdb_format_version` moves alone. The `.nost` language moved to version 4 for
+the same underlying change, and there it does **not** keep its predecessor
+readable, because a `.nost` file is editable text that is usually regenerated. The
+asymmetry is recorded in [`../VERSIONS.md`](../VERSIONS.md).
+
+### 13.2 What changed in version 2
 
 A contribution's owner was one of three tagged shapes — a name and a version, a
 bare contract digest, or the user — and is one interned name. There is no reader
@@ -233,7 +257,7 @@ money.
 `nostdb_format_version` moves alone. The `.nost` language moved for its own
 reason in the same revision, and the two remain independently versioned.
 
-### 13.2 The comparison
+### 13.3 The comparison
 
 A reader compares `nostdb_format_version` against the versions it supports:
 

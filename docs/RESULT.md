@@ -1,7 +1,7 @@
 # The query result envelope contract
 
 Contract key: `result_version`
-Current version: 1
+Current version: 2
 Status: normative
 
 A query result leaves the Engine as an envelope: the columns, the rows, a summary of what
@@ -18,7 +18,23 @@ This document defines the envelope and how each value type is written in it.
 It does not own the query language, which is `query_subset_version`, nor the diagnostic
 codes a warning carries, which belong to the contract that owns each code.
 
-### 1.1 Data and diagnostics are separate
+### 1.1 What changed in version 2
+
+Version 2 adds one value form, `{"object": {...}}`, and widens a list to hold any value
+rather than scalars only. Both follow `nost_language_version` 4, under which a stored
+property may be an object.
+
+Version 1 **stays supported**, because an envelope is a message rather than a stored
+artifact: a version 1 producer emits nothing a version 2 consumer cannot read, and a
+version 1 consumer receives an object only from a database that could not have existed
+under version 1. Nothing has to be rewritten for the two to coexist.
+
+A version 1 consumer meeting `{"object": ...}` MUST treat it as an unknown tag and refuse
+it, exactly as section 3.1 requires of any tag it does not know. That is the reason the
+form is tagged rather than bare: an unknown tag is refusable, while a bare object would
+have been silently misread as one of the tagged forms.
+
+### 1.2 Data and diagnostics are separate
 
 The envelope carries both, and they never mix. `rows` holds only what the query asked
 for; `warnings` holds only what an implementation wants to say about producing it.
@@ -139,7 +155,8 @@ A stored value has one JSON form, and so does each thing only a query can produc
 | string | string | — |
 | bytes | `{"bytes": "<lower-case hex>"}` | tagged, because JSON has no byte string |
 | datetime | `{"datetime": "<RFC 3339>"}` | tagged, so it stays distinguishable from a string |
-| list | array | scalars only |
+| list | array | holds any value, including lists and objects |
+| object | `{"object": {...}}` | tagged, because an entry named `path` must not read as a path |
 | node | `{"node": "n_<uuid>"}` | the record identifier |
 | relationship | `{"relationship": "e_<uuid>"}` | the record identifier |
 | path | `{"path": {"nodes": [...], "relationships": [...]}}` | alternating, in order |
@@ -152,6 +169,22 @@ costs four characters and removes a whole class of misreading.
 
 A tagged object has exactly one member. An implementation MUST NOT add a second, because
 a consumer distinguishes the forms by that member's name.
+
+An **object property value is tagged for that reason and not for symmetry.** Three of the
+tag names — `bytes`, `datetime`, and `node` — are reserved words in `.nost`, so no property
+key can ever be one of them. The other three are not: `relationship`, `path`, and `object`
+are ordinary identifiers, and a stored object may carry any of them as a key.
+
+Emitted bare, `{"path": "src/main.rs"}` would be a path to every consumer following the
+table above, and nothing in the payload could distinguish the two readings. The tag is what
+keeps a user's choice of key from changing the type a consumer infers.
+
+That only three of the six collide is not a reason to emit the object bare and reject those
+three. A property key is the user's to choose, and a rule forbidding `path` as a key so the
+envelope could stay untagged would push a format's problem onto the data.
+
+Inside `{"object": {...}}` the member values are encoded by the same table, recursively,
+so a nested byte string is still tagged and a nested object is tagged again.
 
 ### 3.2 An integer and a double are both JSON numbers
 

@@ -1,7 +1,7 @@
 # The plugin installation contract
 
 Contract key: `plugin_install_version`
-Current version: 1
+Current version: 2
 Status: normative
 
 What a manager fetches, what it checks before writing anything, and what it records so a

@@ -1,0 +1,5 @@
+outcome = reject
+code = NOST_PARSE_ERROR
+reference_line = 6
+reference_column = 5
+note = An object literal takes no contribution block, because ownership attaches to a record rather than to one property's value.

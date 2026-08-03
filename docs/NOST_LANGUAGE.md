@@ -1,7 +1,7 @@
 # The `.nost` language contract
 
 Contract key: `nost_language_version`
-Current version: 2
+Current version: 4
 Status: normative
 
 `.nost` is the optional canonical human-readable representation of a NostDB
@@ -24,7 +24,36 @@ Parsing, comment-preserving CST construction, error recovery, canonical
 formatting, and synchronization are implemented in `nostdb-core`. This document
 specifies what they must produce; it does not implement them.
 
-### 1.1 What changed in version 3
+### 1.1 What changed in version 4
+
+Version 4 is not compatible with version 3. An implementation reading `@nost 3`
+MUST reject it with `NOST_VERSION_UNSUPPORTED`.
+
+| Change | Version 3 | Version 4 |
+| --- | --- | --- |
+| Field type | a scalar, optionally `[]` once | a scalar or an anonymous object type, with any number of `[]` suffixes |
+| Property value | a scalar or a list of scalars | a scalar, an object, or a list of values |
+| List nesting | forbidden; `[[1]]` and `string[][]` were parse errors | permitted |
+| Field and property separator | a comma, with an optional trailing comma | optional, so a newline alone separates two entries |
+
+Every one of those changes is additive: a document written to version 3 means
+exactly what it meant before. Version 3 is still refused, and that is the
+decision rather than an oversight. A reader accepting `@nost 3` would have to
+refuse the syntax version 3 had no production for, or else the version it read
+governed nothing — a field declared and never enforced, which is worse than a
+version that is simply out of range. Gating syntax on a declared version is
+machinery whose whole return is saving a one-line edit to a file that
+`nost: true` regenerates from the database anyway.
+
+`nostdb_format_version` moved to 3 for the same underlying change, and there it
+keeps its predecessor readable. The asymmetry is deliberate and is recorded in
+[`../VERSIONS.md`](../VERSIONS.md): a `.nost` file is text a person can fix and
+is usually generated, while a `.nostdb` is opaque and holds contributions no
+analyzer can rebuild.
+
+Settings, provider, plugin, and server contracts are unchanged.
+
+### 1.2 What changed in version 3
 
 Version 3 is not compatible with version 2. An implementation reading `@nost 2`
 MUST reject it with `NOST_VERSION_UNSUPPORTED` rather than parse it
@@ -46,7 +75,7 @@ Only `nost_language_version` moves. The `.nostdb` format is versioned
 independently and moved for its own reason — an owner is one interned name there
 too — and settings, provider, plugin, and server contracts are unchanged.
 
-### 1.2 What changed in version 2
+### 1.3 What changed in version 2
 
 Version 2 is not compatible with version 1. An implementation reading `@nost 1`
 MUST reject it with `NOST_VERSION_UNSUPPORTED` rather than parse it
@@ -115,7 +144,7 @@ A file is a version header, then link declarations, then schema, node, and edge
 declarations:
 
 ```nost
-@nost 3
+@nost 4
 
 @link "./packages/child"
 @link "./packages/shared" as shared
@@ -142,7 +171,7 @@ benefit.
 ### 5.1 Version header
 
 ```nost
-@nost 3
+@nost 4
 ```
 
 The header is mandatory and first. A version above the highest supported, or a
@@ -197,7 +226,8 @@ model cannot represent.
 | `string` | String | — |
 | `bytes` | Bytes | — |
 | `datetime` | DateTime | RFC 3339 |
-| `T[]` | List of `T` | scalars only; `T[][]` does not exist |
+| `{ … }` | Object | an anonymous object type, written as a field block |
+| `T[]` | List of `T` | `T` is any field type, so `T[][]` and `{ … }[]` both exist |
 
 `double` rather than `float` because the value is a binary64. There is exactly
 one name per model type, so a canonical writer never has to choose between
@@ -205,6 +235,42 @@ spellings.
 
 An unknown type name is `NOST_PARSE_ERROR`, because the grammar admits only the
 names above in type position.
+
+#### 5.3.1.1 Object field types
+
+```nost
+schema Project {
+  name: string
+  description?: string
+  dependencies?: {
+    name: string
+    version?: string
+  }[]
+}
+```
+
+An object type declares the fields a nested value holds, and is written as a
+field block because that is what it is. Every rule of an outer field block
+applies unchanged: a key may be optional, a type may itself be an object, and the
+separator is optional.
+
+The type is **anonymous**. Naming it would add a second way to declare a schema —
+one whose name nothing may reference, since a record names schemas and a nested
+value is not a record. A shape worth naming is worth declaring as a schema, and
+then the field holds records joined by an edge rather than an embedded value.
+
+An object type is satisfied by an object property value, and `{ … }[]` by a list
+of them. Section 7 defines the literals. Before version 4 no literal could
+produce either, so the type would have declared a value nothing could write.
+
+Nesting is bounded. An implementation MUST accept at least **eight** levels of
+nesting in a field type or a property value, counting each object and each array
+or list level, and MAY refuse more with `NOST_PARSE_ERROR`. A bound is required
+because a `.nost` file is untrusted input and each level costs stack; a *minimum*
+is required because a document accepted by one implementation and refused by
+another is not portable. Refusal past the minimum is deliberately not fixtured:
+a fixture asserting rejection at nine levels would forbid an implementation from
+accepting nine.
 
 #### 5.3.2 Edge schemas and endpoint constraints
 
@@ -413,11 +479,18 @@ node example: Sample {
 | String | `"text"` | escapes below |
 | Bytes | `bytes"deadbeef"` | hexadecimal, even digit count |
 | DateTime | `datetime"2026-07-26T09:00:00Z"` | RFC 3339; otherwise `NOST_INVALID_DATETIME` |
-| List | `["a", "b"]` | scalars only, no nesting, no trailing comma |
+| List | `["a", "b"]` | holds any values, including lists and objects; no trailing comma |
+| Object | `{ name: "serde" }` | a record block's property list, with no contribution block |
 
-Properties are separated by commas. A trailing comma after the last property is
-accepted; a canonical writer does not emit one. A list literal admits no
+The separator between two properties is optional, so a comma, a newline, or both
+separate them. A trailing comma after the last property is accepted; a canonical
+writer emits the comma form and no trailing comma. A list literal admits no
 trailing comma, which keeps a one-element list unambiguous.
+
+An optional separator is stated without making a line ending significant. A
+property is `key : value`, so an identifier following a complete value can only
+open the next property, and nothing beyond the current token decides it. Trivia
+therefore stays trivia rather than becoming syntax.
 
 String escapes are `\"`, `\\`, `\n`, `\r`, `\t`, and `\u{H...}`. A raw U+000A or
 U+000D inside a string literal is `NOST_PARSE_ERROR`.
@@ -475,6 +548,31 @@ An `id` value that is not a kind prefix followed by a canonical UUID is
 `NOST_INVALID_ID`. Two declarations claiming one identifier are
 `NOST_DUPLICATE_ID`.
 
+### 7.5 Object values
+
+```nost
+node app: Project {
+  name: "app",
+  dependencies: [{ name: "serde", version: "1" }, { name: "tokio" }],
+}
+```
+
+An object value satisfies an object field type, and a list of them satisfies
+`{ … }[]`. An object carries **no contribution block**: ownership and evidence
+attach to a record, and an object is one property's value rather than a record of
+its own. A `@by` block inside an object literal is `NOST_PARSE_ERROR`.
+
+Every rule that governs a record block's properties governs an object's entries,
+including the duplicate-key rule of section 7.3 and the nesting bound of section
+5.3.1.1. The reserved keys of section 7.4 are **not** reserved inside an object:
+`id` and `labels` identify and label a record, and an object is not one, so a
+nested `id` is an ordinary string property.
+
+An object is an embedded value, not a relationship. Nothing traverses into one,
+and a query reaches its entries through the property rather than through a
+pattern. A shape that should be reachable by traversal belongs in its own schema
+with an edge to it.
+
 ## 8. Identifiers
 
 An identifier starts with a Unicode scalar having `XID_Start`, or `_`, and
@@ -524,7 +622,8 @@ A file that parses is not necessarily valid. An implementation MUST also enforce
 | unique schema name | `NOST_DUPLICATE_SCHEMA_NAME` |
 | unique record identifier per file | `NOST_DUPLICATE_ID` |
 | record identifier is a prefixed canonical UUID | `NOST_INVALID_ID` |
-| unique property key per block | `NOST_DUPLICATE_PROPERTY_KEY` |
+| unique property key per block, including inside an object value | `NOST_DUPLICATE_PROPERTY_KEY` |
+| object and list nesting within the bound of section 5.3.1.1 | `NOST_PARSE_ERROR` |
 | two schemas on one record agree on a shared field type | `NOST_SCHEMA_CONFLICT` |
 | a record satisfies the schemas it names | `NOST_SCHEMA_VIOLATION`, a warning |
 | a contribution and its evidence are well formed | `NOST_INVALID_EVIDENCE` |
@@ -554,18 +653,46 @@ A canonical writer MUST:
    target endpoint, then relation name, then identifier;
 4. sort schema fields, property keys, and label values ascending by Unicode
    scalar value, and sort a record's contribution blocks by owner and then
-   source unit;
+   source unit. This applies at every depth: an object type's fields and an
+   object value's entries sort by the same rule. A **list** is never sorted,
+   because its order is data rather than layout;
 5. indent with two spaces per level, and never with tabs;
-6. place one declaration, one field, and one property per line;
+6. place one declaration, one field, and one property per line, at every depth;
 7. separate fields and properties with a comma, and emit no trailing comma;
-8. emit an empty field, record, or contribution block as `{}`;
-9. emit exactly one blank line between sibling **block** declarations, meaning
+8. expand a value that contains an object, placing each list element and each
+   object entry on its own line at two further spaces of indent, and keep a value
+   holding only scalars on one line. A scalar list is compact data, while an
+   object is structure that rule 6 already asks to be one entry per line;
+9. emit an empty field, record, or contribution block as `{}`, and an empty
+   object value the same way;
+10. emit exactly one blank line between sibling **block** declarations, meaning
    schema, node, and edge declarations within a file, and none before the first
    or after the last. Single-line directives form one group: link declarations
    are separated from the version header and from the first block declaration by
    one blank line, and from each other by none;
-10. terminate the file with exactly one U+000A;
-11. write atomically, and reserialize the whole file rather than patching it.
+11. terminate the file with exactly one U+000A;
+12. write atomically, and reserialize the whole file rather than patching it.
+
+Rule 8 in canonical output, beside a scalar list that stays inline:
+
+```nost
+node app: Project {
+  dependencies: [
+    {
+      name: "serde",
+      version: "1"
+    },
+    {
+      name: "tokio"
+    }
+  ],
+  tags: ["b", "a"]
+}
+```
+
+`tags` keeps the order it was written, because a list is data. `dependencies`
+keeps its element order for the same reason, while the keys inside each element
+sort.
 
 Comment attachment: a comment on its own line attaches as a leading comment to
 the next declaration, field, or property in the same block, or to the enclosing

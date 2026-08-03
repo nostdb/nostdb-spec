@@ -4,9 +4,9 @@
   "contracts": [
     {
       "key": "nost_language_version",
-      "current": 3,
+      "current": 4,
       "supported": [
-        3
+        4
       ],
       "status": "specified",
       "specified_in": "docs/NOST_LANGUAGE.md",
@@ -14,9 +14,10 @@
     },
     {
       "key": "nostdb_format_version",
-      "current": 2,
+      "current": 3,
       "supported": [
-        2
+        2,
+        3
       ],
       "status": "specified",
       "specified_in": "docs/NOSTDB_FORMAT.md",
@@ -64,9 +65,10 @@
     },
     {
       "key": "result_version",
-      "current": 1,
+      "current": 2,
       "supported": [
-        1
+        1,
+        2
       ],
       "status": "specified",
       "specified_in": "docs/RESULT.md",

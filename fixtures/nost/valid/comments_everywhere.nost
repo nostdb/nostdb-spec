@@ -1,4 +1,4 @@
-@nost 3
+@nost 4
 
 // A leading comment on the link group.
 @link "./packages/child" // trailing on a link

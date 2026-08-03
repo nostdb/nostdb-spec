@@ -1,0 +1,3 @@
+outcome = reject
+code = CYPHER_UNSUPPORTED
+note = A path step past the property key is outside the subset, so an object value is returned whole.

@@ -1,4 +1,4 @@
-@nost 3
+@nost 4
 
 @link "./packages/a" as shared
 @link "./packages/b" as shared

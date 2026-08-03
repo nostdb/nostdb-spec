@@ -1,5 +1,5 @@
 (* NostDB `.nost` grammar, normative.
-   nost_language_version = 3
+   nost_language_version = 4
 
    This grammar is parser-generator neutral. grammar/nost.pest is a reference
    encoding of it, and fixtures/nost is the conformance gate. An implementation
@@ -45,7 +45,15 @@ schema_declaration  = "schema" , schema_name , [ endpoint_constraint ] ,
 
 endpoint_constraint = "(" , schema_name , "->" , schema_name , ")" ;
 
-field_block         = "{" , [ field , { "," , field } , [ "," ] ] , "}" ;
+(* The separator between two fields is optional, so a field block may be written
+   comma-separated, newline-separated, or both. The grammar states this without
+   making a line ending significant: a field is `key [?] : type`, so an
+   identifier following a complete type can only open the next field, and no
+   lookahead past the current token decides it. Trivia therefore stays trivia
+   rather than becoming syntax, and a canonical writer keeps emitting the comma.
+   The same optional separator applies to record and evidence blocks below,
+   because one separator rule for every block is one rule to learn. *)
+field_block         = "{" , [ field , { [ "," ] , field } , [ "," ] ] , "}" ;
 
 (* A question mark marks the key optional. It is written on the key rather than
    on the type, because a stored null is unrepresentable: the choice is whether
@@ -53,9 +61,17 @@ field_block         = "{" , [ field , { "," , field } , [ "," ] ] , "}" ;
 field               = field_key , [ "?" ] , ":" , field_type ;
 field_key           = identifier ;
 
-(* An array holds scalars and does not nest, matching the property value rules
-   below, so there is no `string[][]`. *)
-field_type          = scalar_type , [ "[" , "]" ] ;
+(* A field holds a scalar or an object, and any number of array suffixes may
+   follow either, so `string[]`, `{ … }[]`, and `string[][]` are all field types.
+   An object type is spelled as a field block because that is exactly what it is:
+   the fields a nested value declares. It is anonymous, because naming it would
+   introduce a second way to declare a schema whose name nothing references.
+
+   Nesting is bounded. The limit is a semantic rule stated in the language
+   contract rather than a production, because standard EBNF has no way to count
+   repetitions, and an implementation refusing a document past the limit reports
+   NOST_PARSE_ERROR. *)
+field_type          = ( scalar_type | field_block ) , { "[" , "]" } ;
 
 scalar_type         = "boolean" | "integer" | "double" | "string"
                     | "bytes" | "datetime" ;
@@ -72,10 +88,11 @@ node_declaration    = "node" , declaration_name , ":" ,
 edge_declaration    = "edge" , endpoint , "->" , endpoint , ":" ,
                       relation_name , record_block ;
 
-(* Properties are comma separated with an optional trailing comma. Contribution
-   blocks follow them and are not comma separated, because they are blocks
-   rather than fields. *)
-record_block        = "{" , [ property , { "," , property } , [ "," ] ] ,
+(* The separator between two properties is optional, as it is between two fields.
+   Contribution blocks follow the properties and take no separator at all,
+   because they are blocks rather than fields, and `@by` opens one so nothing has
+   to guess where the properties ended. *)
+record_block        = "{" , [ property , { [ "," ] , property } , [ "," ] ] ,
                       { contribution_block } , "}" ;
 
 property            = property_key , ":" , property_value ;
@@ -91,7 +108,8 @@ contribution_block  = "@by" , owner , [ "unit" , string_literal ] ,
 owner               = string_literal ;
 
 evidence_block      = "@evidence" , "{" ,
-                      [ evidence_field , { "," , evidence_field } , [ "," ] ] ,
+                      [ evidence_field , { [ "," ] , evidence_field } ,
+                        [ "," ] ] ,
                       "}" ;
 
 (* Which keys an evidence block accepts, and which value each one takes, is a
@@ -121,18 +139,26 @@ property_value      = boolean_literal
                     | string_literal
                     | bytes_literal
                     | datetime_literal
-                    | list_literal ;
+                    | list_literal
+                    | object_literal ;
 
-(* A list holds scalars only. Lists do not nest. *)
-list_literal        = "[" , [ property_scalar , { "," , property_scalar } ] ,
+(* A list holds values rather than scalars, so a list of objects and a list of
+   lists are both writable. This is what makes an object field type satisfiable:
+   `{ … }[]` declares a list of objects, and before version 4 no literal could
+   produce one, so the type would have described a value nothing could write. *)
+list_literal        = "[" , [ property_value , { "," , property_value } ] ,
                       "]" ;
 
-property_scalar     = boolean_literal
-                    | float_literal
-                    | integer_literal
-                    | string_literal
-                    | bytes_literal
-                    | datetime_literal ;
+(* An object literal is spelled as a record block's property list, and its
+   separator is optional for the same reason. It carries no contribution block:
+   ownership and evidence attach to a record, and an object is one property's
+   value rather than a record of its own.
+
+   Two entries sharing a key are NOST_DUPLICATE_PROPERTY_KEY, the same rule a
+   record block follows, and nesting is bounded by the same semantic limit as an
+   object type. *)
+object_literal      = "{" , [ property , { [ "," ] , property } , [ "," ] ] ,
+                      "}" ;
 
 declaration_name    = identifier ;
 alias_name          = identifier ;

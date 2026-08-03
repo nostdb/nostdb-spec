@@ -1,0 +1,2 @@
+outcome = accept
+note = The separator between two fields and two properties is optional, and mixing it with a comma is accepted.

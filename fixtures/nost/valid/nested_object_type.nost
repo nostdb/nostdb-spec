@@ -1,0 +1,10 @@
+@nost 4
+
+schema Project {
+  name: string
+  description?: string
+  dependencies?: {
+    name: string
+    version?: string
+  }[]
+}

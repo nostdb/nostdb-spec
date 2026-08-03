@@ -1,0 +1,20 @@
+{
+  "result_version": 2,
+  "columns": ["name", "dependencies"],
+  "rows": [
+    [
+      "app",
+      [
+        {"object": {"name": "serde", "version": "1"}},
+        {"object": {"name": "tokio"}}
+      ]
+    ]
+  ],
+  "summary": {
+    "rows": 1,
+    "database_generation": 4,
+    "linked_databases_opened": 0,
+    "partial": false
+  },
+  "warnings": []
+}

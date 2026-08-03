@@ -1,6 +1,6 @@
 // Executable reference encoding of the NostDB `.nost` grammar.
 //
-// nost_language_version = 3
+// nost_language_version = 4
 //
 // The normative grammar is grammar/nost.ebnf, and the normative conformance
 // gate is the fixture suite under fixtures/nost. This file exists so the
@@ -33,12 +33,16 @@ schema_declaration = {
 
 endpoint_constraint = { "(" ~ schema_name ~ "->" ~ schema_name ~ ")" }
 
-field_block = { "{" ~ (field ~ ("," ~ field)* ~ ","?)? ~ "}" }
+// The separator is optional. A failed `","? ~ field` iteration rolls back, so a
+// trailing comma is left for the final `","?` rather than swallowed here.
+field_block = { "{" ~ (field ~ (","? ~ field)* ~ ","?)? ~ "}" }
 
 field     = { field_key ~ "?"? ~ ":" ~ field_type }
 field_key = { identifier }
 
-field_type = { scalar_type ~ ("[" ~ "]")? }
+// An object type is a field block, and any number of array suffixes may follow
+// either form. Nesting depth is bounded semantically, not here.
+field_type = { (scalar_type | field_block) ~ ("[" ~ "]")* }
 
 // Atomic with a trailing boundary check, so `stringy` is not read as `string`
 // followed by a stray identifier.
@@ -57,7 +61,7 @@ edge_declaration = {
 }
 
 record_block = {
-    "{" ~ (property ~ ("," ~ property)* ~ ","?)? ~ contribution_block* ~ "}"
+    "{" ~ (property ~ (","? ~ property)* ~ ","?)? ~ contribution_block* ~ "}"
 }
 
 property     = { property_key ~ ":" ~ property_value }
@@ -74,7 +78,7 @@ owner          = { string_literal }
 
 evidence_block = {
     "@evidence" ~ "{"
-    ~ (evidence_field ~ ("," ~ evidence_field)* ~ ","?)?
+    ~ (evidence_field ~ (","? ~ evidence_field)* ~ ","?)?
     ~ "}"
 }
 
@@ -96,18 +100,17 @@ property_value = {
   | bytes_literal
   | datetime_literal
   | list_literal
+  | object_literal
 }
 
-list_literal = { "[" ~ (property_scalar ~ ("," ~ property_scalar)*)? ~ "]" }
+// A list holds values, so a list of objects and a list of lists both parse. It
+// still takes no trailing comma, which is what `property_scalar` used to guard
+// before a list element became any value.
+list_literal = { "[" ~ (property_value ~ ("," ~ property_value)*)? ~ "]" }
 
-property_scalar = {
-    boolean_literal
-  | float_literal
-  | integer_literal
-  | string_literal
-  | bytes_literal
-  | datetime_literal
-}
+// A record block's property list, with no contribution block: ownership attaches
+// to a record, and an object is a value rather than a record.
+object_literal = { "{" ~ (property ~ (","? ~ property)* ~ ","?)? ~ "}" }
 
 declaration_name = { identifier }
 alias_name       = { identifier }

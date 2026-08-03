@@ -1,0 +1,12 @@
+@nost 4
+
+schema Project {
+  dependencies?: {
+    name: string
+    version?: string
+  }[]
+}
+
+node app: Project {
+  dependencies: [{ version: 1 }],
+}

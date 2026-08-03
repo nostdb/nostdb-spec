@@ -1,0 +1,9 @@
+@nost 4
+
+schema Deep {
+  a: { a: { a: { a: { a: { a: { a: { a: string } } } } } } }
+}
+
+node sample: Deep {
+  a: { a: { a: { a: { a: { a: { a: { a: "leaf" } } } } } } },
+}
